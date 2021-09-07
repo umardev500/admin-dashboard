@@ -28,6 +28,7 @@ const Orders: NextPage = () => {
     const STATUS = (params.status as string) ?? 'none'
 
     const searchHandler = useCallback((value: string) => {
+        setLoading(true)
         setKeyword(value)
     }, [])
 
@@ -56,7 +57,6 @@ const Orders: NextPage = () => {
                 setPerPage(ordersData.per_page ?? 0)
             }
             if (orders === undefined) {
-                console.log('n')
                 if (orderList.length > 0) setOrderList([])
                 if (pages !== 0) setPages(0)
                 if (total !== 0) setTotal(0)
