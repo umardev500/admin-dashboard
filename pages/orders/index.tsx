@@ -9,6 +9,7 @@ import { Pagination } from '../../components/molecules/pagination/Pagination'
 import { Order, OrderResponse } from '../../types'
 
 const API_URL = process.env.API_URL as string
+const DEFAULT_PER_PAGE = 10
 
 const Orders: NextPage = () => {
     const [pages, setPages] = useState<number>(1)
@@ -34,7 +35,7 @@ const Orders: NextPage = () => {
     // Fetch customers order
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const target = `${API_URL}/orders?per_page=1&page=${PAGE}`
+            const target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}`
             const response = await fetch(target)
             const data: OrderResponse = await response.json()
 
