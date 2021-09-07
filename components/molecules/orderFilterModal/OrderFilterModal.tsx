@@ -51,9 +51,11 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
             paths += `&sort=${sort}`
         }
 
-        // add question mark if not exist in first character of params
-        if (paths[0] === '&') paths = '?' + paths.slice(1)
-        if (paths[0] !== '?') paths = '?' + paths
+        if (paths.length > 0) {
+            // add question mark if not exist in first character of params
+            if (paths[0] === '&') paths = '?' + paths.slice(1)
+            if (paths[0] !== '?') paths = '?' + paths
+        }
 
         if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
     }
