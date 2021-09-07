@@ -13,12 +13,14 @@ const ProductPage: NextPage = () => {
     const [perPage] = useState<number>(0)
     const [total] = useState<number>(0)
     const [rows] = useState<number>(0)
-    const [loading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
+    const [keyword, setKeyword] = useState('')
     const [createModal, setCreateModal] = useState(false)
     const [productList, setProductList] = useState<Product[]>([])
 
     const searchHandler = useCallback((value: string) => {
-        console.log(value)
+        setLoading(true)
+        setKeyword(value)
     }, [])
 
     const savedHandler = useCallback(() => {}, [])
@@ -26,10 +28,11 @@ const ProductPage: NextPage = () => {
     // Fetch product data
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const target = `${MEMBERSHIP_API}/products`
+            let target = `${MEMBERSHIP_API}/products`
+            if (keyword !== '') target += `?search=${keyword}`
+
             const response = await fetch(target)
             const data: ProductResponse = await response.json()
-            console.log(data)
 
             if (data.status_code !== 200) return await Promise.reject(data.message)
             const productsData = data.data
@@ -42,8 +45,15 @@ const ProductPage: NextPage = () => {
             }
         }
 
-        fetchData().catch((err) => console.log('err catched', err))
-    }, [])
+        fetchData()
+            .then(() => {
+                setLoading(false)
+            })
+            .catch((err) => {
+                setLoading(false)
+                console.log('err catched', err)
+            })
+    }, [keyword])
 
     return (
         <>
