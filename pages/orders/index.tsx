@@ -10,10 +10,10 @@ import { Order, OrderResponse } from '../../types'
 const API_URL = process.env.API_URL as string
 
 const Orders: NextPage = () => {
-    const [pages] = useState<number>(18)
-    const [perPage] = useState<number>(0)
-    const [total] = useState<number>(0)
-    const [rows] = useState<number>(0)
+    const [pages, setPages] = useState<number>(1)
+    const [perPage, setPerPage] = useState<number>(0)
+    const [total, setTotal] = useState<number>(0)
+    const [rows, setRows] = useState<number>(0)
     const [loading] = useState<boolean>(false)
     const [filterModalShown, setFilterModalShown] = useState(false)
     const [orderList, setOrderList] = useState<Order[]>([])
@@ -38,6 +38,10 @@ const Orders: NextPage = () => {
             const orderList = ordersData.orders
             if (orderList !== undefined) setOrderList(orderList)
             if (orderList === undefined) setOrderList([])
+            if (orderList !== undefined) setPages(ordersData.pages)
+            if (orderList !== undefined) setTotal(ordersData.total)
+            if (orderList !== undefined) setRows(ordersData.rows)
+            if (orderList !== undefined) setPerPage(ordersData.per_page ?? 0)
         }
 
         fetchData().catch((err) => console.log('error catched', err))
