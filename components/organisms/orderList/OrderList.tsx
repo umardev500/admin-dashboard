@@ -32,6 +32,14 @@ export const OrderList = React.memo((props: Props) => {
                         {orderList.map((val, index) => (
                             <OrderListing index={index + 1} {...val} key={val.order_id} />
                         ))}
+
+                        {orderList.length < 1 ? (
+                            <tr>
+                                <td className="px-4 border-r border-b border-slate-200 py-2.5" colSpan={9}>
+                                    No data
+                                </td>
+                            </tr>
+                        ) : null}
                     </tbody>
                 </table>
             </div>
