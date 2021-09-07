@@ -49,13 +49,14 @@ const Orders: NextPage = () => {
             const ordersData = data.data
             const orders = ordersData.orders
             if (orders !== undefined) {
-                setOrderList(orderList)
+                setOrderList(orders)
                 setPages(ordersData.pages)
                 setTotal(ordersData.total)
                 setRows(ordersData.rows)
                 setPerPage(ordersData.per_page ?? 0)
             }
             if (orders === undefined) {
+                console.log('n')
                 if (orderList.length > 0) setOrderList([])
                 if (pages !== 0) setPages(0)
                 if (total !== 0) setTotal(0)
@@ -64,7 +65,11 @@ const Orders: NextPage = () => {
             }
         }
 
-        fetchData().catch((err) => console.log('error catched', err))
+        fetchData()
+            .then(() => {
+                setLoading(false)
+            })
+            .catch((err) => console.log('error catched', err))
     }, [PAGE, SORT, STATUS, keyword])
 
     return (
