@@ -49,6 +49,9 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
         }
         if (sort !== DEFAULT_SORT) {
             paths += `&sort=${sort}`
+        } else {
+            paths = removeParams(params, ['sort'])
+            console.log('asc', paths)
         }
 
         if (paths.length > 0) {
@@ -58,6 +61,7 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
         }
 
         if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
+        if (paths.length < 1) router.push(router.pathname).catch((err) => console.log(err))
     }
 
     return (

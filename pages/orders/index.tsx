@@ -23,6 +23,8 @@ const Orders: NextPage = () => {
     const router = useRouter()
     const params = router.query
     const PAGE = params.page as string
+    const SORT = (params.sort as string) ?? 'asc'
+    console.log('sorting', SORT)
 
     const searchHandler = useCallback((value: string) => {
         console.log(value)
@@ -35,7 +37,8 @@ const Orders: NextPage = () => {
     // Fetch customers order
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}`
+            const target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}&sort=${SORT}`
+
             const response = await fetch(target)
             const data: OrderResponse = await response.json()
 
@@ -51,7 +54,7 @@ const Orders: NextPage = () => {
         }
 
         fetchData().catch((err) => console.log('error catched', err))
-    }, [PAGE])
+    }, [PAGE, SORT])
 
     return (
         <>
