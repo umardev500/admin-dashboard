@@ -12,11 +12,11 @@ const API_URL = process.env.API_URL as string
 const DEFAULT_PER_PAGE = 10
 
 const Orders: NextPage = () => {
-    const [pages, setPages] = useState<number>(1)
+    const [pages, setPages] = useState<number>(0)
     const [perPage, setPerPage] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
     const [rows, setRows] = useState<number>(0)
-    const [loading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
     const [keyword, setKeyword] = useState('')
     const [filterModalShown, setFilterModalShown] = useState(false)
     const [orderList, setOrderList] = useState<Order[]>([])
@@ -37,6 +37,7 @@ const Orders: NextPage = () => {
 
     // Fetch customers order
     useEffect(() => {
+        // setLoading(true)
         const fetchData = async (): Promise<void> => {
             let target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}&sort=${SORT}&status=${STATUS}`
             if (keyword !== '') target += `&search=${keyword}`
@@ -46,20 +47,20 @@ const Orders: NextPage = () => {
 
             if (data.status_code !== 200) return await Promise.reject(data.message)
             const ordersData = data.data
-            const orderList = ordersData.orders
-            if (orderList !== undefined) {
+            const orders = ordersData.orders
+            if (orders !== undefined) {
                 setOrderList(orderList)
                 setPages(ordersData.pages)
                 setTotal(ordersData.total)
                 setRows(ordersData.rows)
                 setPerPage(ordersData.per_page ?? 0)
             }
-            if (orderList === undefined) {
-                setOrderList([])
-                setPages(0)
-                setTotal(0)
-                setRows(0)
-                setPerPage(0)
+            if (orders === undefined) {
+                if (orderList.length > 0) setOrderList([])
+                if (pages !== 0) setPages(0)
+                if (total !== 0) setTotal(0)
+                if (rows !== 0) setRows(0)
+                if (perPage !== 0) setPerPage(0)
             }
         }
 
