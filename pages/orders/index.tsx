@@ -69,7 +69,10 @@ const Orders: NextPage = () => {
             .then(() => {
                 setLoading(false)
             })
-            .catch((err) => console.log('error catched', err))
+            .catch((err) => {
+                console.log('error catched', err)
+                setLoading(false)
+            })
     }, [PAGE, SORT, STATUS, keyword])
 
     return (
