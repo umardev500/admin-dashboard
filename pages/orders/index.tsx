@@ -45,12 +45,20 @@ const Orders: NextPage = () => {
             if (data.status_code !== 200) return await Promise.reject(data.message)
             const ordersData = data.data
             const orderList = ordersData.orders
-            if (orderList !== undefined) setOrderList(orderList)
-            if (orderList === undefined) setOrderList([])
-            if (orderList !== undefined) setPages(ordersData.pages)
-            if (orderList !== undefined) setTotal(ordersData.total)
-            if (orderList !== undefined) setRows(ordersData.rows)
-            if (orderList !== undefined) setPerPage(ordersData.per_page ?? 0)
+            if (orderList !== undefined) {
+                setOrderList(orderList)
+                setPages(ordersData.pages)
+                setTotal(ordersData.total)
+                setRows(ordersData.rows)
+                setPerPage(ordersData.per_page ?? 0)
+            }
+            if (orderList === undefined) {
+                setOrderList([])
+                setPages(0)
+                setTotal(0)
+                setRows(0)
+                setPerPage(0)
+            }
         }
 
         fetchData().catch((err) => console.log('error catched', err))
