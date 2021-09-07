@@ -40,19 +40,23 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
 
     // Save handler
     const handleSave = (): void => {
-        const params = currentParams.split('&')
+        const params = currentParams !== '' ? currentParams.split('&') : []
         const newParams = removeParams(params, ['status', 'sort'])
         let paths = newParams
 
+        // status
         if (status !== DEFAULT_STATUS) {
             paths += `&status=${status}`
         }
+
+        // sorting
         if (sort !== DEFAULT_SORT) {
             paths += `&sort=${sort}`
-        } else {
-            paths = removeParams(params, ['sort'])
-            console.log('asc', paths)
         }
+
+        // if (paths.length < 1) {
+        //     console.log('less than 1')
+        // }
 
         if (paths.length > 0) {
             // add question mark if not exist in first character of params
@@ -61,7 +65,9 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
         }
 
         if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
-        if (paths.length < 1) router.push(router.pathname).catch((err) => console.log(err))
+        if (paths.length < 1 && params.length > 0) {
+            router.push(router.pathname).catch((err) => console.log(err))
+        }
     }
 
     return (
