@@ -17,6 +17,7 @@ const Orders: NextPage = () => {
     const [total, setTotal] = useState<number>(0)
     const [rows, setRows] = useState<number>(0)
     const [loading] = useState<boolean>(false)
+    const [keyword, setKeyword] = useState('')
     const [filterModalShown, setFilterModalShown] = useState(false)
     const [orderList, setOrderList] = useState<Order[]>([])
 
@@ -27,7 +28,7 @@ const Orders: NextPage = () => {
     const STATUS = (params.status as string) ?? 'none'
 
     const searchHandler = useCallback((value: string) => {
-        console.log(value)
+        setKeyword(value)
     }, [])
 
     const filterHandler = useCallback((value: string) => {
@@ -37,7 +38,8 @@ const Orders: NextPage = () => {
     // Fetch customers order
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}&sort=${SORT}&status=${STATUS}`
+            let target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}&sort=${SORT}&status=${STATUS}`
+            if (keyword !== '') target += `&search=${keyword}`
 
             const response = await fetch(target)
             const data: OrderResponse = await response.json()
@@ -62,7 +64,7 @@ const Orders: NextPage = () => {
         }
 
         fetchData().catch((err) => console.log('error catched', err))
-    }, [PAGE, SORT, STATUS])
+    }, [PAGE, SORT, STATUS, keyword])
 
     return (
         <>
