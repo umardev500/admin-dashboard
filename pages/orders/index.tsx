@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { OrderList } from '../../components'
 import { Search } from '../../components/atoms'
@@ -18,6 +19,10 @@ const Orders: NextPage = () => {
     const [filterModalShown, setFilterModalShown] = useState(false)
     const [orderList, setOrderList] = useState<Order[]>([])
 
+    const router = useRouter()
+    const params = router.query
+    const PAGE = params.page as string
+
     const searchHandler = useCallback((value: string) => {
         console.log(value)
     }, [])
@@ -29,7 +34,7 @@ const Orders: NextPage = () => {
     // Fetch customers order
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const target = `${API_URL}/orders`
+            const target = `${API_URL}/orders?per_page=1&page=${PAGE}`
             const response = await fetch(target)
             const data: OrderResponse = await response.json()
 
@@ -45,7 +50,7 @@ const Orders: NextPage = () => {
         }
 
         fetchData().catch((err) => console.log('error catched', err))
-    }, [])
+    }, [PAGE])
 
     return (
         <>
