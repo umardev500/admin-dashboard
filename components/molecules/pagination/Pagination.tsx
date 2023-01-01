@@ -7,9 +7,10 @@ interface Props {
     setPage: Dispatch<SetStateAction<number>>
 }
 
-export const Pagination: React.FC<Props> = ({ pageCount, setPage }) => {
+export const Pagination = React.memo(({ pageCount, setPage }: Props) => {
     const router = useRouter()
     const currentPath = router.pathname
+    const activePage = parseInt(router.query.page as string)
 
     const handlePageChange = useCallback(({ selected }: { selected: number }) => {
         setPage(selected)
@@ -28,6 +29,7 @@ export const Pagination: React.FC<Props> = ({ pageCount, setPage }) => {
                 breakLabel="..."
                 nextLabel="Next"
                 pageRangeDisplayed={5}
+                forcePage={activePage}
                 pageCount={pageCount}
                 previousLabel="Prev"
                 renderOnZeroPageCount={undefined}
@@ -35,4 +37,6 @@ export const Pagination: React.FC<Props> = ({ pageCount, setPage }) => {
             />
         </div>
     )
-}
+})
+
+Pagination.displayName = 'Pagination'

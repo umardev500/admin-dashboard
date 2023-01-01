@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React, { useRef, useState } from 'react'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 
@@ -6,11 +7,18 @@ interface Props {
     saveCallback: (sort: string, status: string) => void
 }
 
+const DEFAULT_STATUS = 'none'
+const DEFAULT_SORT = 'asc'
+
 export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback }) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
-    const [sortType] = useState<string>('asc')
-    const [selectedStatus] = useState<string>('none')
+    const [sort, setsort] = useState<string>(DEFAULT_SORT)
+    const [status, setStatus] = useState<string>(DEFAULT_STATUS)
+
+    const router = useRouter()
+    const currentFullPath = router.asPath
+    const currentParams = currentFullPath.split('?')[1] ?? ''
 
     // modal effect
     useModalShowEffect({ modal: modalRef })
@@ -20,6 +28,50 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
 
     // back handler
     const backHandler = useModalCloseHandler({ status: modalSetState })
+
+    const handleSortSelect = (value: string): void => {
+        setsort(value)
+    }
+
+    const handleStatusSelect = (value: string): void => {
+        setStatus(value)
+    }
+
+    const removeParam = (params: string[], compares: string[]): string => {
+        const newParams = params.filter((param) => {
+            for (let i = 0; i < compares.length; i++) {
+                if (param.includes(compares[i])) {
+                    return undefined
+                }
+            }
+
+            return param
+        })
+
+        return newParams.join('&')
+    }
+
+    // Save handler
+    const handleSave = (): void => {
+        const params = currentParams.split('&')
+        const newParams = removeParam(params, ['status', 'sort'])
+        let paths = newParams
+
+        if (status !== DEFAULT_STATUS) {
+            paths += `&status=${status}`
+        }
+        if (sort !== DEFAULT_SORT) {
+            paths += `&sort=${sort}`
+        }
+
+        // add question mark if not exist in first character of params
+        if (paths[0] === '&') paths = '?' + paths.slice(1)
+        if (paths[0] !== '?') paths = '?' + paths
+
+        if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
+
+        console.log('the paths', paths)
+    }
 
     return (
         <div className="modal pt-5 px-5" ref={modalRef}>
@@ -42,11 +94,11 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
                     <div>
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Order by:</span>
                         <div className="inline-flex items-center">
-                            <input checked={sortType === 'desc'} type="radio" value={'newest'} className="w-4 h-4" name="orderby" />
+                            <input onChange={() => handleSortSelect('desc')} checked={sort === 'desc'} type="radio" value={'newest'} className="w-4 h-4" name="orderby" />
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">Terbaru</span>
                         </div>
                         <div className="inline-flex items-center ml-5">
-                            <input checked={sortType === 'asc'} type="radio" value={'oldest'} className="w-4 h-4" name="orderby" />
+                            <input onChange={() => handleSortSelect('asc')} checked={sort === 'asc'} type="radio" value={'oldest'} className="w-4 h-4" name="orderby" />
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">Terlama</span>
                         </div>
                     </div>
@@ -54,19 +106,26 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
                     <div className="mt-8">
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Status type:</span>
                         <div className="inline-flex items-center mr-5 mb-3">
-                            <input checked={selectedStatus === 'none'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <input onChange={() => handleStatusSelect('none')} checked={status === 'none'} type="radio" value={'all'} className="w-4 h-4" name="status" />
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">None</span>
                         </div>
                         <div className="inline-flex items-center mr-5 mb-3">
-                            <input checked={selectedStatus === 'pending'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <input onChange={() => handleStatusSelect('pending')} checked={status === 'pending'} type="radio" value={'all'} className="w-4 h-4" name="status" />
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">Pending</span>
                         </div>
                         <div className="inline-flex items-center mr-5 mb-3">
-                            <input checked={selectedStatus === 'accepted'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <input
+                                onChange={() => handleStatusSelect('settlement')}
+                                checked={status === 'settlement'}
+                                type="radio"
+                                value={'all'}
+                                className="w-4 h-4"
+                                name="status"
+                            />
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">Lunas</span>
                         </div>
                         <div className="inline-flex items-center mr-5 mb-3">
-                            <input checked={selectedStatus === 'returned'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <input onChange={() => handleStatusSelect('cancel')} checked={status === 'cancel'} type="radio" value={'all'} className="w-4 h-4" name="status" />
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">Dibatalkan</span>
                         </div>
                     </div>
@@ -74,7 +133,9 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
 
                 {/* footer */}
                 <div className="px-5 py-4 flex justify-center flex-col">
-                    <button className={`roboto font-medium bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 text-white`}>Simpan</button>
+                    <button onClick={handleSave} className={`roboto font-medium bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 text-white`}>
+                        Simpan
+                    </button>
                     <button
                         onClick={backHandler}
                         className="roboto font-medium bg-white border border-gray-200 hover:border-gray-300 mt-1.5 text-gray-500 hover:text-gray-600 hover:bg-gray-100 rounded-md px-3 py-2"
