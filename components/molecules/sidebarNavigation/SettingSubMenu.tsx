@@ -15,7 +15,7 @@ export const SettingSubMenu = React.forwardRef(({ className = '', shown }: Props
         <ul ref={ref} className={`sidebar-navigation sidebar-submenu ${shown === true ? 'shown' : ''} ${className}`} id="jo">
             <li>
                 <Link
-                    href={'/setting/account'}
+                    href={'/settings/account'}
                     className={`flex outline-none px-4 items-center text-base my-1.5 ${currPath === '/setting/account' ? 'sub-active bg-gray-100' : ''}`}
                 >
                     <div className="flex items-center flex-1">
