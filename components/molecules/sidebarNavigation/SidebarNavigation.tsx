@@ -70,21 +70,6 @@ const SidebarElement = (): any => {
                     </Link>
                 </li>
                 <li className="overflow-hidden">
-                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/customers')}`} href="/customers">
-                        <div className="flex items-center flex-1">
-                            <span
-                                style={{
-                                    ['--icon' as any]: "url('/assets/icons/receipt.svg') no-repeat center",
-                                    ['--icon-active' as any]: "url('/assets/icons/receipt-filled.svg') no-repeat center",
-                                    ['--size' as any]: '24px',
-                                }}
-                                className="icon inline-flex items-center justify-center mr-4"
-                            ></span>
-                            Pelanggan
-                        </div>
-                    </Link>
-                </li>
-                <li className="overflow-hidden">
                     <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/orders')}`} href="/orders">
                         <div className="flex items-center flex-1">
                             <span
@@ -99,6 +84,22 @@ const SidebarElement = (): any => {
                         </div>
                     </Link>
                 </li>
+                <li className="overflow-hidden">
+                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/customers')}`} href="/customers">
+                        <div className="flex items-center flex-1">
+                            <span
+                                style={{
+                                    ['--icon' as any]: "url('/assets/icons/receipt.svg') no-repeat center",
+                                    ['--icon-active' as any]: "url('/assets/icons/receipt-filled.svg') no-repeat center",
+                                    ['--size' as any]: '24px',
+                                }}
+                                className="icon inline-flex items-center justify-center mr-4"
+                            ></span>
+                            Pelanggan
+                        </div>
+                    </Link>
+                </li>
+
                 <li ref={settingItemRef} className="overflow-hidden">
                     <a
                         onClick={(e) => onDropdownClick(e, settingSubShown, setSettingSubShown, settingItemRef)}
