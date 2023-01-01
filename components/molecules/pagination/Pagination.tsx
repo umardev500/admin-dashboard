@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useCallback } from 'react'
 import ReactPaginate from 'react-paginate'
+import { removeParams } from '../../../helpers'
 
 interface Props {
     pageCount: number
@@ -8,19 +9,34 @@ interface Props {
 
 export const Pagination = React.memo(({ pageCount }: Props) => {
     const router = useRouter()
-    const currentPath = router.pathname
     let initialPage = parseInt(router.query.page as string)
     if (Number.isNaN(initialPage) || initialPage === undefined) initialPage = 0 // handle NaN or undefined
 
+    const currentFullPath = router.asPath
+    const currentParams = currentFullPath.split('?')[1] ?? ''
+
     const handlePageChange = useCallback(
         ({ selected }: { selected: number }) => {
+            const params = currentParams.split('&')
+            const newParams = removeParams(params, ['page'])
+            let paths = newParams
+
             if (selected === 0) {
-                router.push(`${currentPath}`).catch((err) => console.log(err))
+                if (paths.length > 0) {
+                    paths = `?${paths}`
+                }
+                router.push(paths).catch((err) => console.log(err))
             } else {
-                router.push(`${currentPath}?page=${selected}`).catch((err) => console.log(err))
+                if (paths.length > 0) {
+                    paths = `?page=${selected}&${paths}`
+                } else {
+                    paths = `?page=${selected}`
+                }
+
+                router.push(paths).catch((err) => console.log(err))
             }
         },
-        [initialPage]
+        [initialPage, currentParams]
     )
 
     return (
