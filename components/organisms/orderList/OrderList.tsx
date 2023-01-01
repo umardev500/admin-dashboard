@@ -8,8 +8,6 @@ export const OrderList = React.memo((props: Props) => {
     // const router = useRouter()
     // const currentPage = router.query.page ?? '0' // get current page
 
-    console.log('render list')
-
     return (
         <div>
             <div className="bg-white overflow-auto rounded-lg border-l border-r border-b mb-5">

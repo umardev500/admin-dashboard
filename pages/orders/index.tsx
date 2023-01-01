@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { OrderList } from '../../components'
 import { Search } from '../../components/atoms'
@@ -15,8 +14,6 @@ const Orders: NextPage = () => {
     const [loading] = useState<boolean>(false)
     const [filterModalShown, setFilterModalShown] = useState(false)
 
-    const router = useRouter()
-
     const searchHandler = useCallback((value: string) => {
         console.log(value)
     }, [])
@@ -25,7 +22,7 @@ const Orders: NextPage = () => {
         console.log(value)
     }, [])
 
-    console.log('RENDER', router.query)
+    // console.log('RENDER', router.query)
 
     return (
         <>

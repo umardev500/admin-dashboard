@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useRef, useState } from 'react'
+import { removeParams } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 
 interface Props {
@@ -37,24 +38,10 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
         setStatus(value)
     }
 
-    const removeParam = (params: string[], compares: string[]): string => {
-        const newParams = params.filter((param) => {
-            for (let i = 0; i < compares.length; i++) {
-                if (param.includes(compares[i])) {
-                    return undefined
-                }
-            }
-
-            return param
-        })
-
-        return newParams.join('&')
-    }
-
     // Save handler
     const handleSave = (): void => {
         const params = currentParams.split('&')
-        const newParams = removeParam(params, ['status', 'sort'])
+        const newParams = removeParams(params, ['status', 'sort'])
         let paths = newParams
 
         if (status !== DEFAULT_STATUS) {
