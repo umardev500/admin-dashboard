@@ -14,9 +14,9 @@ export const ProductList = React.memo((props: Props) => {
                     <thead>
                         <tr className="">
                             <th className="text-center border-r py-3 px-4 w-16 whitespace-nowrap">No.</th>
-                            <th className="text-left border-r py-3 px-4 whitespace-nowrap w-60">ID Produk</th>
-                            <th className="text-left border-r py-3 px-4 whitespace-nowrap">Nama Produck</th>
-                            <th className="text-left border-r py-3 px-4 whitespace-nowrap">Harga Produk</th>
+                            <th className="text-left border-r py-3 px-4 whitespace-nowrap w-60">Nomor Produk</th>
+                            <th className="text-left border-r py-3 px-4 whitespace-nowrap">Nama Produk</th>
+                            <th className="text-left border-r py-3 px-4 whitespace-nowrap">Harga</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Durasi</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Dibuat Pada</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Tindakan</th>

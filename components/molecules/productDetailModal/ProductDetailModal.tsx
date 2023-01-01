@@ -63,10 +63,19 @@ export const ProductDetailModal = React.memo(({ setModalState }: Props) => {
                             <span className="text-base font-medium roboto text-gray-500">Diupdate Pada:</span>
                             <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Dec 25, 2022 11:25:05</span>
                         </div>
-                        <div className="mt-4 border-t pt-2.5 mb-2">
+                        <div className="mt-2 pt-2.5 mb-2">
+                            <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
                             <span className="text-base font-normal text-gray-400 whitespace-normal roboto">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis
                             </span>
+                        </div>
+                        <div className="text-right">
+                            <button
+                                onClick={backHandler}
+                                className={`mt-4 roboto font-medium hover:bg-red-700 border border-red-600 rounded-md px-4 py-2 text-red-600 hover:text-gray-50`}
+                            >
+                                Kembali
+                            </button>
                         </div>
                     </div>
                 </div>

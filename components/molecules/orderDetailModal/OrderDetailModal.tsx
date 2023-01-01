@@ -75,7 +75,8 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState }) => {
                             <span className="text-base font-medium roboto text-gray-500">Update Pada:</span>
                             <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Sep 30, 2022 25:11:10</span>
                         </div>
-                        <div className="mt-4 border-t pt-2.5 mb-2">
+                        <div className="mt-2 border-t pt-2.5 mb-2">
+                            <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
                             <span className="text-base font-normal text-gray-400 whitespace-normal roboto">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis
                             </span>
