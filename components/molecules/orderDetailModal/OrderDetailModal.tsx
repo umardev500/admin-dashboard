@@ -80,6 +80,14 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState }) => {
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis
                             </span>
                         </div>
+                        <div className="text-right">
+                            <button
+                                onClick={backHandler}
+                                className={`mt-4 roboto font-medium hover:bg-red-700 border border-red-600 rounded-md px-4 py-2 text-red-600 hover:text-gray-50`}
+                            >
+                                Kembali
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
