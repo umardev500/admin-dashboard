@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback, useState } from 'react'
+import { OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal } from '../../components/molecules'
 
@@ -34,6 +35,7 @@ const Orders: NextPage = () => {
                         </button>
                         <Search callback={searchHandler} title="Search" placeholder="Search here..." />
                     </div>
+                    <OrderList />
                 </div>
             </div>
 
