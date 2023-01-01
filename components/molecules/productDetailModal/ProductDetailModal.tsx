@@ -1,11 +1,13 @@
 import React, { useRef } from 'react'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
+import { Product } from '../../../types'
 
-interface Props {
+interface Props extends Product {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const ProductDetailModal = React.memo(({ setModalState }: Props) => {
+export const ProductDetailModal = React.memo(({ setModalState, ...props }: Props) => {
+    const { productId, name, price, duration, description, createdAt, updatedAt } = props
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
 
@@ -40,34 +42,32 @@ export const ProductDetailModal = React.memo(({ setModalState }: Props) => {
                     <div className="px-6 pb-5">
                         <div className="border-b mb-4">
                             <div className="mt-2">
-                                <span className="text-xl text-gray-500 whitespace-normal roboto font-medium">Premium Extra</span>
+                                <span className="text-xl text-gray-500 whitespace-normal roboto font-medium">{name}</span>
                             </div>
                             <div className="mt-2 mb-4 flex items-center">
                                 {/* <span className="text-base font-semibold">Product ID:</span> */}
-                                <span className="text-base text-gray-400 whitespace-normal roboto">16679292732</span>
+                                <span className="text-base text-gray-400 whitespace-normal roboto">{productId}</span>
                             </div>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Harga Produk:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Rp50.000</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{price}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Durasi:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">30 Hari</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{duration} Hari</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Dibuat Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Sep 30, 2022 15:05:12</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{createdAt}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Diupdate Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Dec 25, 2022 11:25:05</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{updatedAt}</span>
                         </div>
                         <div className="mt-2 pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
-                            <span className="text-base font-normal text-gray-400 whitespace-normal roboto">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis
-                            </span>
+                            <span className="flex mt-1 text-base font-normal text-gray-400 whitespace-normal roboto">{description}</span>
                         </div>
                         <div className="text-right">
                             <button

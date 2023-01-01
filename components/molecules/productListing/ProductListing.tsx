@@ -1,9 +1,13 @@
 import React, { useCallback, useState } from 'react'
+import { Product } from '../../../types'
 import { CreateProductModal } from '../createProductModal'
 import { ProductDeleteModal } from '../productDeleteModal'
 import { ProductDetailModal } from '../productDetailModal'
 
-export const ProductListing: React.FC = () => {
+interface Props extends Product {}
+
+export const ProductListing: React.FC<Props> = ({ ...props }) => {
+    const { name, price, duration, createdAt } = props
     const [deleteModal, setDeleteModal] = useState(false)
     const [detailModal, setDetailModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
@@ -24,10 +28,10 @@ export const ProductListing: React.FC = () => {
                     16678923762730
                 </span>
             </td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Paket Lite Cocok</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Rp50.000</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">30 Days</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Sep 20, 2022 15:10:20</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{name}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{price}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{duration} Hari</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{createdAt}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="flex items-center">
                     <button onClick={handleClickDelete} className="bg-red-700 hover:bg-red-800 px-1.5 py-1.5 rounded-lg text-gray-100">
@@ -49,7 +53,7 @@ export const ProductListing: React.FC = () => {
                     </button>
                 </div>
                 {deleteModal ? <ProductDeleteModal modalSetState={setDeleteModal} /> : null}
-                {detailModal ? <ProductDetailModal setModalState={setDetailModal} /> : null}
+                {detailModal ? <ProductDetailModal {...props} setModalState={setDetailModal} /> : null}
                 {editModal ? <CreateProductModal callback={saveHandler} modalSetState={setEditModal} /> : null}
             </td>
         </tr>

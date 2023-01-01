@@ -24,7 +24,15 @@ export const ProductList = React.memo((props: Props) => {
                     </thead>
 
                     <tbody>
-                        <ProductListing />
+                        <ProductListing
+                            productId="16667839839487"
+                            name="Paket Ultimate"
+                            price={500000}
+                            duration={100}
+                            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis"
+                            createdAt={16725665993}
+                            updatedAt={16725665993}
+                        />
                     </tbody>
                 </table>
             </div>

@@ -4,4 +4,6 @@ export interface Product {
     price: number
     duration: number
     description: string
+    createdAt: number
+    updatedAt: number
 }
