@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React from 'react'
 import { OrderListing } from '../../molecules'
 
@@ -5,7 +6,10 @@ import { OrderListing } from '../../molecules'
 interface Props {}
 
 export const OrderList = React.memo((props: Props) => {
-    // const [data] = useState([])
+    const router = useRouter()
+    const currentPage = router.query.page ?? '0' // get current page
+
+    console.log('current page', currentPage)
 
     return (
         <div>

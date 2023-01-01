@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React, { Dispatch, SetStateAction, useCallback } from 'react'
 import ReactPaginate from 'react-paginate'
 
@@ -7,8 +8,16 @@ interface Props {
 }
 
 export const Pagination: React.FC<Props> = ({ pageCount, setPage }) => {
+    const router = useRouter()
+    const currentPath = router.pathname
+
     const handlePageChange = useCallback(({ selected }: { selected: number }) => {
         setPage(selected)
+        if (selected === 0) {
+            router.push(`${currentPath}`).catch((err) => console.log(err))
+        } else {
+            router.push(`${currentPath}?page=${selected}`).catch((err) => console.log(err))
+        }
     }, [])
 
     return (
