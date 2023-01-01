@@ -26,12 +26,6 @@ export const OrderList = React.memo((props: Props) => {
 
                     <tbody>
                         <OrderListing />
-                        <OrderListing />
-                        <OrderListing />
-                        <OrderListing />
-                        <OrderListing />
-                        <OrderListing />
-                        <OrderListing />
                     </tbody>
                 </table>
             </div>

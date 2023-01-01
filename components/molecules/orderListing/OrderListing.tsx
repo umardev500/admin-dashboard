@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { ProductDetailModal } from '../productDetailModal'
+import { OrderDetailModal } from '../orderDetailModal'
 
 export const OrderListing: React.FC = () => {
     const [detailModal, setDetailModal] = useState(false)
@@ -36,7 +36,7 @@ export const OrderListing: React.FC = () => {
                         </svg>
                     </button>
                 </div>
-                {detailModal ? <ProductDetailModal setModalState={setDetailModal} /> : null}
+                {detailModal ? <OrderDetailModal setModalState={setDetailModal} /> : null}
             </td>
         </tr>
     )
