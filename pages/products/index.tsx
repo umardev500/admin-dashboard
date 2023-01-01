@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { Search } from '../../components/atoms'
 import { CreateProductModal } from '../../components/molecules'
@@ -15,6 +16,9 @@ const Product: NextPage = () => {
 
     return (
         <>
+            <Head>
+                <title>Products</title>
+            </Head>
             <div className="pt-4">
                 <div className="bg-white pt-4 pb-2 px-10 rounded-lg">
                     <h1 className="text-2xl font-bold text-gray-500 mb-6 mt-2 roboto">Data Produk</h1>
