@@ -56,8 +56,6 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
         if (paths[0] !== '?') paths = '?' + paths
 
         if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
-
-        console.log('the paths', paths)
     }
 
     return (
