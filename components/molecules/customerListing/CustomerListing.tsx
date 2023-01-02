@@ -8,14 +8,14 @@ export const CustomerListing: React.FC<Props> = () => {
         <tr>
             <td className="px-4 border-r border-b border-slate-200 py-2 text-center">1.</td>
             <td className="px-4 border-r border-b border-slate-200 py-2">
-                <span className="cursor-pointer text-gray-400 hover:text-gray-500">16678923762730</span>
+                <span className="cursor-pointer text-gray-500 hover:text-gray-400">16678923762730</span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">SMK Setiabudi Jakarta</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">setiabudiJak</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">High School</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">cs@setiabudi.com</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Jan 01, 2023 10:11:12</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">
-                <span className="bg-yellow-400 text-gray-500 px-1 py-0.5 rounded text-sm">Expired</span>
+                <span className="bg-slate-200 text-gray-500 px-1 py-1 rounded text-sm">Pending</span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="flex items-center">

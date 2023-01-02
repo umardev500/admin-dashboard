@@ -17,7 +17,7 @@ export const CustomerList = React.memo((props: Props) => {
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap w-60">Nomor Pelanggan</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Nama</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Username</th>
-                            <th className="text-left border-r py-3 px-4 whitespace-nowrap">Level</th>
+                            <th className="text-left border-r py-3 px-4 whitespace-nowrap">Email</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Pendaftaran</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Status</th>
                             <th className="text-left border-r py-3 px-4 whitespace-nowrap">Tindakan</th>
