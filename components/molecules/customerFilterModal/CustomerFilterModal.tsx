@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router'
 import React, { useRef, useState } from 'react'
-import { removeParams } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 
 interface Props {
@@ -16,10 +14,6 @@ export const CustomerFilterModal: React.FC<Props> = ({ modalSetState, saveCallba
     const modalInnerRef = useRef<HTMLDivElement>(null)
     const [sort, setsort] = useState<string>(DEFAULT_SORT)
     const [status, setStatus] = useState<string>(DEFAULT_STATUS)
-
-    const router = useRouter()
-    const currentFullPath = router.asPath
-    const currentParams = currentFullPath.split('?')[1] ?? ''
 
     // modal effect
     useModalShowEffect({ modal: modalRef })
@@ -39,24 +33,7 @@ export const CustomerFilterModal: React.FC<Props> = ({ modalSetState, saveCallba
     }
 
     // Save handler
-    const handleSave = (): void => {
-        const params = currentParams.split('&')
-        const newParams = removeParams(params, ['status', 'sort'])
-        let paths = newParams
-
-        if (status !== DEFAULT_STATUS) {
-            paths += `&status=${status}`
-        }
-        if (sort !== DEFAULT_SORT) {
-            paths += `&sort=${sort}`
-        }
-
-        // add question mark if not exist in first character of params
-        if (paths[0] === '&') paths = '?' + paths.slice(1)
-        if (paths[0] !== '?') paths = '?' + paths
-
-        if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
-    }
+    const handleSave = (): void => {}
 
     return (
         <div className="modal pt-5 px-5" ref={modalRef}>
@@ -99,19 +76,20 @@ export const CustomerFilterModal: React.FC<Props> = ({ modalSetState, saveCallba
                             <span className="text-gray-400 font-medium roboto leading-none ml-2">Pending</span>
                         </div>
                         <div className="inline-flex items-center mr-5 mb-3">
-                            <input
-                                onChange={() => handleStatusSelect('settlement')}
-                                checked={status === 'settlement'}
-                                type="radio"
-                                value={'all'}
-                                className="w-4 h-4"
-                                name="status"
-                            />
-                            <span className="text-gray-400 font-medium roboto leading-none ml-2">Lunas</span>
+                            <input onChange={() => handleStatusSelect('expired')} checked={status === 'expired'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <span className="text-gray-400 font-medium roboto leading-none ml-2">Kadaluarsa</span>
                         </div>
                         <div className="inline-flex items-center mr-5 mb-3">
-                            <input onChange={() => handleStatusSelect('cancel')} checked={status === 'cancel'} type="radio" value={'all'} className="w-4 h-4" name="status" />
-                            <span className="text-gray-400 font-medium roboto leading-none ml-2">Dibatalkan</span>
+                            <input onChange={() => handleStatusSelect('suspended')} checked={status === 'suspended'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <span className="text-gray-400 font-medium roboto leading-none ml-2">Dibekukan</span>
+                        </div>
+                        <div className="inline-flex items-center mr-5 mb-3">
+                            <input onChange={() => handleStatusSelect('active')} checked={status === 'active'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <span className="text-gray-400 font-medium roboto leading-none ml-2">Aktif</span>
+                        </div>
+                        <div className="inline-flex items-center mr-5 mb-3">
+                            <input onChange={() => handleStatusSelect('deleted')} checked={status === 'deleted'} type="radio" value={'all'} className="w-4 h-4" name="status" />
+                            <span className="text-gray-400 font-medium roboto leading-none ml-2">Dihapus</span>
                         </div>
                     </div>
                 </div>
