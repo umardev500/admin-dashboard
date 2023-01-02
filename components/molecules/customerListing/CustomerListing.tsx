@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { CustomerDetailModal } from '../customerDetailModal'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props {}
 
 export const CustomerListing: React.FC<Props> = () => {
+    const [detailModal, setDetailModal] = useState(false)
+
     return (
         <tr>
             <td className="px-4 border-r border-b border-slate-200 py-2 text-center">1.</td>
             <td className="px-4 border-r border-b border-slate-200 py-2">
-                <span className="cursor-pointer text-gray-500 hover:text-gray-400">16678923762730</span>
+                <span onClick={() => setDetailModal(true)} className="cursor-pointer text-gray-500 hover:text-gray-400">
+                    16678923762730
+                </span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">SMK Setiabudi Jakarta</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">setiabudiJak</td>
@@ -28,7 +33,7 @@ export const CustomerListing: React.FC<Props> = () => {
                         </svg>
                     </button>
                     <div className="inline-flex ml-1.5 border-l border-gray-300 h-5"></div>
-                    <button className="ml-1.5 bg-yellow-600 hover:bg-yellow-700 px-1.5 py-1.5 rounded-lg text-gray-100">
+                    <button onClick={() => setDetailModal(true)} className="ml-1.5 bg-yellow-600 hover:bg-yellow-700 px-1.5 py-1.5 rounded-lg text-gray-100">
                         <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M20.3646 8.76874C18.1508 5.28999 14.9117 3.28708 11.5 3.28708C9.79416 3.28708 8.13624 3.78541 6.62207 4.715C5.10791 5.65416 3.74707 7.02458 2.63541 8.76874C1.67707 10.2733 1.67707 12.7171 2.63541 14.2217C4.84916 17.71 8.08832 19.7033 11.5 19.7033C13.2058 19.7033 14.8637 19.205 16.3779 18.2754C17.8921 17.3362 19.2529 15.9658 20.3646 14.2217C21.3229 12.7267 21.3229 10.2733 20.3646 8.76874V8.76874ZM11.5 15.3717C9.35332 15.3717 7.62832 13.6371 7.62832 11.5C7.62832 9.36291 9.35332 7.62833 11.5 7.62833C13.6467 7.62833 15.3717 9.36291 15.3717 11.5C15.3717 13.6371 13.6467 15.3717 11.5 15.3717Z"
@@ -41,6 +46,8 @@ export const CustomerListing: React.FC<Props> = () => {
                         </svg>
                     </button>
                 </div>
+
+                {detailModal ? <CustomerDetailModal setModalState={setDetailModal} /> : null}
             </td>
         </tr>
     )
