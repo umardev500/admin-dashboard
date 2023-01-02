@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback } from 'react'
+import { CustomerList } from '../../components'
 import { Search } from '../../components/atoms'
 
 const Customers: NextPage = () => {
@@ -11,7 +12,7 @@ const Customers: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Products</title>
+                <title>Customers</title>
             </Head>
             <div className="pt-4">
                 <div className="bg-white pt-4 pb-2 px-10 rounded-lg">
@@ -23,6 +24,8 @@ const Customers: NextPage = () => {
                         </button>
                         <Search callback={searchHandler} title="Search" placeholder="Search here..." />
                     </div>
+
+                    <CustomerList />
                 </div>
             </div>
         </>
