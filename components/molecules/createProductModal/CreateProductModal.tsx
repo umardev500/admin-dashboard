@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { toCurrency } from '../../../helpers'
-import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
+import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect, usePriceTyping } from '../../../hooks'
 
 interface Props {
     name?: string
@@ -35,11 +35,6 @@ export const CreateProductModal: React.FC<Props> = ({ name, price, duration, des
         if (descriptionRef.current != null && description !== undefined) descriptionRef.current.value = description
     }, [])
 
-    // price typing handler
-    const onTypePrice = useCallback(() => {
-        console.log('ok')
-    }, [])
-
     // Post update
     const postData = (): void => {}
 
@@ -47,6 +42,8 @@ export const CreateProductModal: React.FC<Props> = ({ name, price, duration, des
     const handleSave = (): void => {
         postData()
     }
+
+    const handlePriceTyping = usePriceTyping()
 
     return (
         <div className="modal pt-5 px-5" ref={modalRef}>
@@ -80,6 +77,7 @@ export const CreateProductModal: React.FC<Props> = ({ name, price, duration, des
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Harga:</span>
                         <input
                             ref={priceRef}
+                            onChange={handlePriceTyping}
                             name="category"
                             className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
                             type="text"
