@@ -8,8 +8,10 @@ export const toCurrency = (src: number): string => {
 
     if (tho != null && tho.length > 0) {
         const sep = left > 0 ? '.' : ''
-        result = `Rp${leftNum}${sep}${tho.join('.')}`
+        result = `${leftNum}${sep}${tho.join('.')}`
     }
+
+    if (result.length !== 0) result = 'Rp' + result
 
     return result
 }
