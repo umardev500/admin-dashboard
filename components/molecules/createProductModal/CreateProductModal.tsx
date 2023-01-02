@@ -11,10 +11,13 @@ interface Props {
     callback: () => void
 }
 
-export const CreateProductModal: React.FC<Props> = ({ name, modalSetState, callback }) => {
+export const CreateProductModal: React.FC<Props> = ({ name, price, duration, description, modalSetState, callback }) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
-    const catRef = useRef<HTMLInputElement>(null)
+    const nameRef = useRef<HTMLInputElement>(null)
+    const priceRef = useRef<HTMLInputElement>(null)
+    const durationRef = useRef<HTMLInputElement>(null)
+    const descriptionRef = useRef<HTMLTextAreaElement>(null)
     const [nameVal, setNameVal] = useState('')
     const [priceVal, setPriceVal] = useState('')
     const [durVal, setDurVal] = useState('')
@@ -29,13 +32,11 @@ export const CreateProductModal: React.FC<Props> = ({ name, modalSetState, callb
     // back handler
     const backHandler = useModalCloseHandler({ status: modalSetState })
 
-    // check status updating or posting
-    const isUpdating = name !== '' && name !== undefined
-
     useEffect(() => {
-        if (isUpdating) {
-            if (catRef.current != null) catRef.current.value = name
-        }
+        if (nameRef.current != null && name !== undefined) nameRef.current.value = name
+        if (priceRef.current != null && price !== undefined) priceRef.current.value = price.toString()
+        if (durationRef.current != null && duration !== undefined) durationRef.current.value = duration.toString()
+        if (descriptionRef.current != null && description !== undefined) descriptionRef.current.value = description
     }, [])
 
     // Post update
@@ -67,6 +68,7 @@ export const CreateProductModal: React.FC<Props> = ({ name, modalSetState, callb
                     <div className="">
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Nama Produk:</span>
                         <input
+                            ref={nameRef}
                             onChange={(e) => handleChange(e, setNameVal)}
                             name="category"
                             className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
@@ -78,10 +80,11 @@ export const CreateProductModal: React.FC<Props> = ({ name, modalSetState, callb
                     <div className="mt-2">
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Harga:</span>
                         <input
+                            ref={priceRef}
                             onChange={(e) => handleChange(e, setPriceVal)}
                             name="category"
                             className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
-                            type="number"
+                            type="text"
                             placeholder="5000"
                             value={priceVal}
                         />
@@ -89,6 +92,7 @@ export const CreateProductModal: React.FC<Props> = ({ name, modalSetState, callb
                     <div className="mt-2">
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Durasi Produk:</span>
                         <input
+                            ref={durationRef}
                             onChange={(e) => handleChange(e, setDurVal)}
                             name="category"
                             className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
@@ -100,6 +104,7 @@ export const CreateProductModal: React.FC<Props> = ({ name, modalSetState, callb
                     <div className="mt-2">
                         <span className="roboto font-medium text-gray-500 mb-2 flex">Deskripsi:</span>
                         <textarea
+                            ref={descriptionRef}
                             onChange={(e) => handleChange(e, setDescVal)}
                             name="category"
                             className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
