@@ -2,10 +2,14 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { Search } from '../../components/atoms'
-import { CreateProductModal } from '../../components/molecules'
+import { CreateProductModal, TableDataInfo } from '../../components/molecules'
 import { ProductList } from '../../components/organisms/productList/ProductList'
 
 const Product: NextPage = () => {
+    const [perPage] = useState<number>(0)
+    const [total] = useState<number>(0)
+    const [rows] = useState<number>(0)
+    const [loading] = useState<boolean>(false)
     const [createModal, setCreateModal] = useState(false)
 
     const searchHandler = useCallback((value: string) => {
@@ -34,6 +38,9 @@ const Product: NextPage = () => {
                     </div>
 
                     <ProductList />
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
+                        <TableDataInfo loading={loading} total={total} perPage={perPage} rows={rows} />
+                    </div>
                 </div>
             </div>
             {createModal ? <CreateProductModal modalSetState={setCreateModal} callback={savedHandler} /> : null}
