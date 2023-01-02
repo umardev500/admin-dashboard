@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { Search } from '../../components/atoms'
 import { CreateProductModal, TableDataInfo } from '../../components/molecules'
-import { ProductList } from '../../components/organisms/productList/ProductList'
+import { ProductList } from '../../components/organisms'
 
 const Product: NextPage = () => {
     const [perPage] = useState<number>(0)
