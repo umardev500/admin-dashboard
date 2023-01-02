@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import { parseDate, toCurrency } from '../../../helpers'
 import { Product } from '../../../types'
 import { CreateProductModal } from '../createProductModal'
 import { ProductDeleteModal } from '../productDeleteModal'
@@ -29,9 +30,9 @@ export const ProductListing: React.FC<Props> = ({ ...props }) => {
                 </span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{name}</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{price}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toCurrency(price)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{duration} Hari</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{createdAt}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdAt)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="flex items-center">
                     <button onClick={handleClickDelete} className="bg-red-700 hover:bg-red-800 px-1.5 py-1.5 rounded-lg text-gray-100">

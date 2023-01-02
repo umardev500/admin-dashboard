@@ -30,8 +30,8 @@ export const ProductList = React.memo((props: Props) => {
                             price={500000}
                             duration={100}
                             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis"
-                            createdAt={16725665993}
-                            updatedAt={16725665993}
+                            createdAt={1672567928}
+                            updatedAt={1672623354}
                         />
                     </tbody>
                 </table>

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { toCurrency } from '../../../helpers'
+import { parseDate, toCurrency } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 import { Product } from '../../../types'
 
@@ -60,11 +60,11 @@ export const ProductDetailModal = React.memo(({ setModalState, ...props }: Props
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Dibuat Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{createdAt}</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(createdAt)}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Diupdate Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{updatedAt}</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(updatedAt)}</span>
                         </div>
                         <div className="mt-2 pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
