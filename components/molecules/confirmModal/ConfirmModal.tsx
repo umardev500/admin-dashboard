@@ -55,7 +55,7 @@ export const ConfirmModal: React.FC<Props> = ({ modalSetState, confirmedCallback
                     </svg>
 
                     <h3 className="text-center text-lg whitespace-normal text-gray-500 roboto font-normal">{text}</h3>
-                    <div className="mt-5 mb-4">
+                    <div className="mt-8 mb-4 flex flex-col w-full">
                         <button
                             onClick={confirmedHandler}
                             className="bg-red-600 hover:bg-red-700 px-5 py-2.5 rounded-md text-center font-medium whitespace-nowrap text-white roboto"
@@ -64,7 +64,7 @@ export const ConfirmModal: React.FC<Props> = ({ modalSetState, confirmedCallback
                         </button>
                         <button
                             onClick={backHandler}
-                            className="bg-white hover:bg-gray-100 px-5 py-2.5 border border-gray-200 font-medium rounded-md text-center whitespace-nowrap text-gray-500 ml-2 roboto"
+                            className="mt-2 bg-white hover:bg-gray-100 px-5 py-2.5 border border-gray-200 font-medium rounded-md text-center whitespace-nowrap text-gray-500  roboto"
                         >
                             Batalkan
                         </button>
