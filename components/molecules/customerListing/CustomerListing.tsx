@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import { CustomerDeleteModal } from '../customerDeleteModal'
 import { CustomerDetailModal } from '../customerDetailModal'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -6,8 +7,11 @@ interface Props {}
 
 export const CustomerListing: React.FC<Props> = () => {
     const [detailModal, setDetailModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
 
-    const handleClickDelete = useCallback(() => {}, [])
+    const handleClickDelete = useCallback(() => {
+        setDeleteModal(true)
+    }, [])
 
     return (
         <tr>
@@ -50,6 +54,7 @@ export const CustomerListing: React.FC<Props> = () => {
                 </div>
 
                 {detailModal ? <CustomerDetailModal setModalState={setDetailModal} /> : null}
+                {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} /> : null}
             </td>
         </tr>
     )
