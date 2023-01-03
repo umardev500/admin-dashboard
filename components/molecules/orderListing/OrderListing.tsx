@@ -28,7 +28,15 @@ export const OrderListing = React.memo(({ index, ...props }: Props) => {
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{name}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{productName}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toCurrency(productPrice)}</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toUpperFirst(status)}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">
+                <span
+                    className={`${status === 'cancel' ? 'bg-amber-300 text-gray-500' : ''} ${status === 'pending' ? 'bg-slate-200 text-gray-500' : ''} ${
+                        status === 'settlement' ? 'bg-emerald-400 text-gray-100' : ''
+                    } py-1 px-2 rounded text-sm`}
+                >
+                    {toUpperFirst(status)}
+                </span>
+            </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdTime)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="text-center">
