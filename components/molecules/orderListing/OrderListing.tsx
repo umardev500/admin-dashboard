@@ -1,7 +1,16 @@
 import React, { useCallback, useState } from 'react'
+import { parseDate, toCurrency, toUpperFirst } from '../../../helpers'
+import { Order } from '../../../types'
 import { OrderDetailModal } from '../orderDetailModal'
 
-export const OrderListing = React.memo(() => {
+interface Props extends Order {
+    index: number
+}
+
+export const OrderListing = React.memo(({ index, ...props }: Props) => {
+    const { order_id: orderId, status, buyer, product, created_at: createdTime } = props
+    const { name } = buyer
+    const { name: productName, price: productPrice } = product[0]
     const [detailModal, setDetailModal] = useState(false)
 
     const handleClickDetail = useCallback(() => {
@@ -10,17 +19,17 @@ export const OrderListing = React.memo(() => {
 
     return (
         <tr>
-            <td className="px-4 border-r border-b border-slate-200 py-2 text-center">1.</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 text-center">{index}.</td>
             <td className="px-4 border-r border-b border-slate-200 py-2">
                 <span className="cursor-pointer hover:text-gray-400" onClick={() => setDetailModal(true)}>
-                    16678923762730
+                    {orderId}
                 </span>
             </td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">SMK Setiabudi</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Paket Premium</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Rp50.000</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Settlement</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Sep 20, 2022 14:50:10</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{name}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{productName}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toCurrency(productPrice)}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toUpperFirst(status)}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdTime)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="text-center">
                     <button onClick={handleClickDetail} className="bg-yellow-600 hover:bg-yellow-700 px-2 py-1.5 rounded-lg">

@@ -29,8 +29,8 @@ export const OrderList = React.memo((props: Props) => {
                     </thead>
 
                     <tbody>
-                        {orderList.map((val) => (
-                            <OrderListing key={val.order_id} />
+                        {orderList.map((val, index) => (
+                            <OrderListing index={index + 1} {...val} key={val.order_id} />
                         ))}
                     </tbody>
                 </table>
