@@ -18,7 +18,7 @@ export interface Order {
     product: OrderProduct[]
     status: string
     created_at: number
-    updated_at: number
+    updated_at?: number
 }
 
 export interface OrderData {
