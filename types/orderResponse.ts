@@ -15,7 +15,7 @@ export interface OrderProduct {
 export interface Order {
     order_id: string
     buyer: OrderUser
-    product: OrderProduct
+    product: OrderProduct[]
     status: string
     created_at: number
     updated_at: number
