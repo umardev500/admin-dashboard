@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    API_URL: 'http://localhost:8000/api'
+    MEMBERSHIP_API: 'http://localhost:8000/membership/api'
   }
 }
 

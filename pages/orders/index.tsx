@@ -8,7 +8,7 @@ import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
 import { Order, OrderResponse } from '../../types'
 
-const API_URL = process.env.API_URL as string
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 const DEFAULT_PER_PAGE = 10
 
 const Orders: NextPage = () => {
@@ -40,7 +40,7 @@ const Orders: NextPage = () => {
     useEffect(() => {
         // setLoading(true)
         const fetchData = async (): Promise<void> => {
-            let target = `${API_URL}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}&sort=${SORT}&status=${STATUS}`
+            let target = `${MEMBERSHIP_API}/orders?per_page=${DEFAULT_PER_PAGE}&page=${PAGE}&sort=${SORT}&status=${STATUS}`
             if (keyword !== '') target += `&search=${keyword}`
 
             const response = await fetch(target)
