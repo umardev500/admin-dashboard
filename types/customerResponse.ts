@@ -19,6 +19,8 @@ export interface CustomerDetail {
 }
 
 export interface CustomerResponse {
+    status_code: number
+    message: string
     customer_id: string
     user: string
     pass: string

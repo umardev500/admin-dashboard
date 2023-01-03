@@ -13,6 +13,8 @@ export interface OrderProduct {
 }
 
 export interface OrderResponse {
+    status_code: number
+    message: string
     order_id: string
     buyer: OrderUser
     product: OrderProduct
