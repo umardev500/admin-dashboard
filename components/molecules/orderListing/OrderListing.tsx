@@ -45,7 +45,7 @@ export const OrderListing = React.memo(({ index, ...props }: Props) => {
                         </svg>
                     </button>
                 </div>
-                {detailModal ? <OrderDetailModal setModalState={setDetailModal} /> : null}
+                {detailModal ? <OrderDetailModal {...props} setModalState={setDetailModal} /> : null}
             </td>
         </tr>
     )

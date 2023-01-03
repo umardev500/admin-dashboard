@@ -1,11 +1,17 @@
 import React, { useRef } from 'react'
+import { parseDate, toCurrency } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
+import { Order } from '../../../types'
 
-interface Props {
+interface Props extends Order {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const OrderDetailModal: React.FC<Props> = ({ setModalState }) => {
+export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) => {
+    const { order_id: orderId, buyer, product, created_at: createdTime, updated_at: updatedTime } = props
+    const { name: buyerName } = buyer
+    const { product_id: productId, name: productName, price: productPrice, duration, description } = product[0]
+
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
 
@@ -40,28 +46,28 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState }) => {
                     <div className="px-6 pb-5">
                         <div className="border-b mb-4">
                             <div className="mt-2">
-                                <span className="text-xl text-gray-500 whitespace-normal roboto font-medium">SMK Setiabudi Jakarta</span>
+                                <span className="text-xl text-gray-500 whitespace-normal roboto font-medium">{buyerName}</span>
                             </div>
                             <div className="mt-2 mb-4 flex items-center">
                                 {/* <span className="text-base font-semibold">Product ID:</span> */}
-                                <span className="text-base text-gray-400 whitespace-normal roboto">16679292732210</span>
+                                <span className="text-base text-gray-400 whitespace-normal roboto">{orderId}</span>
                             </div>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Produk:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Paket Premium Extra</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{productName}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Nomor:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">16678973673482</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{productId}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Harga Produk:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Rp500.000</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(productPrice)}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Durasi:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">90 Hari</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{duration} Hari</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
@@ -69,17 +75,15 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState }) => {
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Pemesanan:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Sep 30, 2022 15:05:12</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(createdTime)}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Update Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Sep 30, 2022 25:11:10</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{updatedTime}</span>
                         </div>
                         <div className="mt-2 border-t pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
-                            <span className="text-base font-normal text-gray-400 whitespace-normal roboto">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis
-                            </span>
+                            <span className="text-base font-normal text-gray-400 whitespace-normal roboto">{description}</span>
                         </div>
                         <div className="text-right">
                             <button
