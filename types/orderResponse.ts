@@ -12,7 +12,7 @@ export interface OrderProduct {
     description: string
 }
 
-export interface OrderList {
+export interface Order {
     order_id: string
     buyer: OrderUser
     product: OrderProduct
@@ -22,7 +22,7 @@ export interface OrderList {
 }
 
 export interface OrderData {
-    orders: OrderList
+    orders: Order
     rows: number
     pages: number
     per_page: number
