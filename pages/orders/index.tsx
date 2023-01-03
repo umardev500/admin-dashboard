@@ -5,7 +5,7 @@ import { OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
-import { OrderResponse } from '../../types'
+import { Order, OrderResponse } from '../../types'
 
 const API_URL = process.env.API_URL as string
 
@@ -16,7 +16,7 @@ const Orders: NextPage = () => {
     const [rows] = useState<number>(0)
     const [loading] = useState<boolean>(false)
     const [filterModalShown, setFilterModalShown] = useState(false)
-    // const [customerList, setCustomerList] = useState<OrderResponse[]>([])
+    const [orderList, setOrderList] = useState<Order[]>([])
 
     const searchHandler = useCallback((value: string) => {
         console.log(value)
@@ -32,9 +32,12 @@ const Orders: NextPage = () => {
             const target = `${API_URL}/orders`
             const response = await fetch(target)
             const data: OrderResponse = await response.json()
-            console.log(data)
 
             if (data.status_code !== 200) return await Promise.reject(data.message)
+            const ordersData = data.data
+            const orderList = ordersData.orders
+            if (orderList !== undefined) setOrderList(orderList)
+            if (orderList === undefined) setOrderList([])
         }
 
         fetchData().catch((err) => console.log('error catched', err))
@@ -59,7 +62,7 @@ const Orders: NextPage = () => {
                         </button>
                         <Search callback={searchHandler} title="Search" placeholder="Search here..." />
                     </div>
-                    <OrderList />
+                    <OrderList orderList={orderList} />
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                         <TableDataInfo loading={loading} total={total} perPage={perPage} rows={rows} />
 

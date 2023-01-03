@@ -1,10 +1,13 @@
 import React from 'react'
+import { Order } from '../../../types'
 import { OrderListing } from '../../molecules'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {}
+interface Props {
+    orderList: Order[]
+}
 
 export const OrderList = React.memo((props: Props) => {
+    const { orderList } = props
     // const router = useRouter()
     // const currentPage = router.query.page ?? '0' // get current page
 
@@ -26,7 +29,9 @@ export const OrderList = React.memo((props: Props) => {
                     </thead>
 
                     <tbody>
-                        <OrderListing />
+                        {orderList.map((val) => (
+                            <OrderListing key={val.order_id} />
+                        ))}
                     </tbody>
                 </table>
             </div>
