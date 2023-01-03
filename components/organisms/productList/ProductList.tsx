@@ -1,10 +1,13 @@
 import React from 'react'
+import { Product } from '../../../types'
 import { ProductListing } from '../../molecules'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {}
+interface Props {
+    productList: Product[]
+}
 
 export const ProductList = React.memo((props: Props) => {
+    const { productList } = props
     // const [data] = useState([])
 
     return (
@@ -24,15 +27,9 @@ export const ProductList = React.memo((props: Props) => {
                     </thead>
 
                     <tbody>
-                        <ProductListing
-                            productId="16667839839487"
-                            name="Paket Ultimate"
-                            price={500000}
-                            duration={100}
-                            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolores aperiam facilis"
-                            createdAt={1672567928}
-                            updatedAt={1672623354}
-                        />
+                        {productList.map((val, index) => (
+                            <ProductListing index={index + 1} key={val.product_id} {...val} />
+                        ))}
                     </tbody>
                 </table>
             </div>
