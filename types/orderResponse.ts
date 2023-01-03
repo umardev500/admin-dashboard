@@ -12,13 +12,26 @@ export interface OrderProduct {
     description: string
 }
 
-export interface OrderResponse {
-    status_code: number
-    message: string
+export interface OrderList {
     order_id: string
     buyer: OrderUser
     product: OrderProduct
     status: string
     created_at: number
     updated_at: number
+}
+
+export interface OrderData {
+    orders: OrderList
+    rows: number
+    pages: number
+    per_page: number
+    active_page: number
+    total: number
+}
+
+export interface OrderResponse {
+    status_code: number
+    message: string
+    data: OrderData
 }

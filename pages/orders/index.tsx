@@ -1,10 +1,13 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
+import { OrderResponse } from '../../types'
+
+const API_URL = process.env.API_URL as string
 
 const Orders: NextPage = () => {
     const [pages] = useState<number>(18)
@@ -13,6 +16,7 @@ const Orders: NextPage = () => {
     const [rows] = useState<number>(0)
     const [loading] = useState<boolean>(false)
     const [filterModalShown, setFilterModalShown] = useState(false)
+    // const [customerList, setCustomerList] = useState<OrderResponse[]>([])
 
     const searchHandler = useCallback((value: string) => {
         console.log(value)
@@ -22,7 +26,19 @@ const Orders: NextPage = () => {
         console.log(value)
     }, [])
 
-    // console.log('RENDER', router.query)
+    // Fetch customers order
+    useEffect(() => {
+        const fetchData = async (): Promise<void> => {
+            const target = `${API_URL}/orders`
+            const response = await fetch(target)
+            const data: OrderResponse = await response.json()
+            console.log(data)
+
+            if (data.status_code !== 200) return await Promise.reject(data.message)
+        }
+
+        fetchData().catch((err) => console.log('error catched', err))
+    }, [])
 
     return (
         <>

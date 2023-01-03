@@ -18,9 +18,7 @@ export interface CustomerDetail {
     location: CustomerLocation
 }
 
-export interface CustomerResponse {
-    status_code: number
-    message: string
+export interface CustomerData {
     customer_id: string
     user: string
     pass: string
@@ -30,4 +28,10 @@ export interface CustomerResponse {
     created_at: number
     updated_at: number
     deleted_at: number
+}
+
+export interface CustomerResponse {
+    status_code: number
+    message: string
+    data: CustomerData
 }
