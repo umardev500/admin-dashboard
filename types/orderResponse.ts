@@ -22,7 +22,7 @@ export interface Order {
 }
 
 export interface OrderData {
-    orders: Order
+    orders: Order[]
     rows: number
     pages: number
     per_page: number
