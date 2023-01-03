@@ -85,7 +85,9 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Update Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{updatedTime ?? 'not yet'}</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">
+                                {(updatedTime !== undefined ? parseDate(updatedTime) : undefined) ?? 'not yet'}
+                            </span>
                         </div>
                         <div className="mt-2 border-t pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
