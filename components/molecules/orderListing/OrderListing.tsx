@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { OrderDetailModal } from '../orderDetailModal'
 
-export const OrderListing: React.FC = () => {
+export const OrderListing = React.memo(() => {
     const [detailModal, setDetailModal] = useState(false)
 
     const handleClickDetail = useCallback(() => {
@@ -40,4 +40,6 @@ export const OrderListing: React.FC = () => {
             </td>
         </tr>
     )
-}
+})
+
+OrderListing.displayName = 'OrderListing'
