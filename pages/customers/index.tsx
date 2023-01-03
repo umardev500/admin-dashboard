@@ -3,9 +3,15 @@ import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { CustomerList } from '../../components'
 import { Search } from '../../components/atoms'
-import { CustomerFilterModal } from '../../components/molecules'
+import { CustomerFilterModal, TableDataInfo } from '../../components/molecules'
+import { Pagination } from '../../components/molecules/pagination/Pagination'
 
 const Customers: NextPage = () => {
+    const [pages] = useState<number>(18)
+    const [perPage] = useState<number>(0)
+    const [total] = useState<number>(0)
+    const [rows] = useState<number>(0)
+    const [loading] = useState<boolean>(false)
     const [filterModal, setFilterModal] = useState(false)
 
     const searchHandler = useCallback((value: string) => {
@@ -34,6 +40,11 @@ const Customers: NextPage = () => {
                     </div>
 
                     <CustomerList />
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <TableDataInfo loading={loading} total={total} perPage={perPage} rows={rows} />
+
+                        <Pagination pageCount={pages} />
+                    </div>
                 </div>
             </div>
 
