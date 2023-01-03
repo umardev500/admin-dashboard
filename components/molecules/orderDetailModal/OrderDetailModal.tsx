@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { parseDate, toCurrency } from '../../../helpers'
+import { parseDate, toCurrency, toUpperFirst } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 import { Order } from '../../../types'
 
@@ -8,7 +8,7 @@ interface Props extends Order {
 }
 
 export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) => {
-    const { order_id: orderId, buyer, product, created_at: createdTime, updated_at: updatedTime } = props
+    const { order_id: orderId, buyer, product, status, created_at: createdTime, updated_at: updatedTime } = props
     const { name: buyerName } = buyer
     const { product_id: productId, name: productName, price: productPrice, duration, description } = product[0]
 
@@ -71,7 +71,13 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span className="text-base ml-2 text-emerald-600 whitespace-normal roboto">Lunas</span>
+                            <span
+                                className={`text-base ml-2 ${status === 'pending' ? 'text-yellow-600' : ''} ${status === 'settlement' ? 'text-emerald-600' : ''} ${
+                                    status === 'cancel' ? 'text-red-400' : ''
+                                } whitespace-normal roboto`}
+                            >
+                                {toUpperFirst(status)}
+                            </span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Pemesanan:</span>
@@ -79,7 +85,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Update Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{updatedTime}</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{updatedTime ?? 'not yet'}</span>
                         </div>
                         <div className="mt-2 border-t pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
