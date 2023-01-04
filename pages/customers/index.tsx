@@ -12,10 +12,10 @@ const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 const DEFAULT_PER_PAGE = 10
 
 const Customers: NextPage = () => {
-    const [pages] = useState<number>(18)
-    const [perPage] = useState<number>(0)
-    const [total] = useState<number>(0)
-    const [rows] = useState<number>(0)
+    const [pages, setPages] = useState<number>(0)
+    const [perPage] = useState<number>(DEFAULT_PER_PAGE)
+    const [total, setTotal] = useState<number>(0)
+    const [rows, setRows] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(false)
     const [keyword, setKeyword] = useState('')
     const [customerList, setCustomerList] = useState<Customer[]>([])
@@ -51,9 +51,15 @@ const Customers: NextPage = () => {
             const customers = customersData.customers
             if (customers !== undefined) {
                 setCustomerList(customers)
+                setPages(customersData.pages)
+                setTotal(customersData.total)
+                setRows(customersData.rows)
             }
             if (customers === undefined) {
                 if (customerList.length > 0) setCustomerList([])
+                if (pages > 0) setPages(0)
+                if (total > 0) setTotal(0)
+                if (rows > 0) setRows(0)
             }
         }
 
