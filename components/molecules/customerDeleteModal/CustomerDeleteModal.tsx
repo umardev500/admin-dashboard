@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { ConfirmModal } from '../confirmModal'
 
 interface Props {
@@ -6,6 +6,8 @@ interface Props {
 }
 
 export const CustomerDeleteModal: React.FC<Props> = ({ modalSetState }) => {
+    const [loading] = useState(false)
+    const [status] = useState('')
     const msg = `Apakah kamu yakin? ini akan dihapus secara permanen`
 
     // Do delete
@@ -15,5 +17,5 @@ export const CustomerDeleteModal: React.FC<Props> = ({ modalSetState }) => {
         deleteBook(closer)
     }, [])
 
-    return <ConfirmModal confirmedCallback={confirmedCallback} modalSetState={modalSetState} text={msg} />
+    return <ConfirmModal loading={loading} status={status} confirmedCallback={confirmedCallback} modalSetState={modalSetState} text={msg} />
 }
