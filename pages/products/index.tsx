@@ -7,12 +7,12 @@ import { ProductList } from '../../components/organisms'
 import { Product, ProductResponse } from '../../types'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
-// const DEFAULT_PER_PAGE = 10
+const DEFAULT_PER_PAGE = 10
 
 const ProductPage: NextPage = () => {
-    const [perPage] = useState<number>(0)
-    const [total] = useState<number>(0)
-    const [rows] = useState<number>(0)
+    const [perPage] = useState<number>(DEFAULT_PER_PAGE)
+    const [total, setTotal] = useState<number>(0)
+    const [rows, setRows] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(false)
     const [keyword, setKeyword] = useState('')
     const [createModal, setCreateModal] = useState(false)
@@ -39,9 +39,13 @@ const ProductPage: NextPage = () => {
             const products = productsData.products
             if (products !== undefined) {
                 setProductList(products)
+                setTotal(productsData.total)
+                setRows(productsData.rows)
             }
             if (products === undefined) {
                 if (productList.length > 0) setProductList([])
+                if (total > 0) setTotal(0)
+                if (rows > 0) setRows(0)
             }
         }
 
