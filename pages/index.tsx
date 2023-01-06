@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { FeaturedList } from '../components'
+import { FeaturedList, FramerLayout } from '../components'
 import { CustomerResponse } from '../types'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
@@ -60,7 +60,9 @@ export default function Home(): React.ReactNode {
             <Head>
                 <title>Dashboard</title>
             </Head>
-            <FeaturedList customerCount={customerCount} expiredCount={expiredCount} orderPendingCount={orderPendingCount} />
+            <FramerLayout>
+                <FeaturedList customerCount={customerCount} expiredCount={expiredCount} orderPendingCount={orderPendingCount} />
+            </FramerLayout>
         </>
     )
 }
