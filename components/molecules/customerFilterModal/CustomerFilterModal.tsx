@@ -1,4 +1,6 @@
+import { useRouter } from 'next/router'
 import React, { useRef, useState } from 'react'
+import { removeParams } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 
 interface Props {
@@ -14,6 +16,10 @@ export const CustomerFilterModal: React.FC<Props> = ({ modalSetState, saveCallba
     const modalInnerRef = useRef<HTMLDivElement>(null)
     const [sort, setsort] = useState<string>(DEFAULT_SORT)
     const [status, setStatus] = useState<string>(DEFAULT_STATUS)
+
+    const router = useRouter()
+    const currentFullPath = router.asPath
+    const currentParams = currentFullPath.split('?')[1] ?? ''
 
     // modal effect
     useModalShowEffect({ modal: modalRef })
@@ -33,7 +39,36 @@ export const CustomerFilterModal: React.FC<Props> = ({ modalSetState, saveCallba
     }
 
     // Save handler
-    const handleSave = (): void => {}
+    const handleSave = (): void => {
+        const params = currentParams !== '' ? currentParams.split('&') : []
+        const newParams = removeParams(params, ['status', 'sort'])
+        let paths = newParams
+
+        // status
+        if (status !== DEFAULT_STATUS) {
+            paths += `&status=${status}`
+        }
+
+        // sorting
+        if (sort !== DEFAULT_SORT) {
+            paths += `&sort=${sort}`
+        }
+
+        // if (paths.length < 1) {
+        //     console.log('less than 1')
+        // }
+
+        if (paths.length > 0) {
+            // add question mark if not exist in first character of params
+            if (paths[0] === '&') paths = '?' + paths.slice(1)
+            if (paths[0] !== '?') paths = '?' + paths
+        }
+
+        if (paths.length > 0) router.push(paths).catch((err) => console.log(err))
+        if (paths.length < 1 && params.length > 0) {
+            router.push(router.pathname).catch((err) => console.log(err))
+        }
+    }
 
     return (
         <div className="modal pt-5 px-5" ref={modalRef}>
