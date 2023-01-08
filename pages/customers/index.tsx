@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { CustomerList } from '../../components'
 import { Search } from '../../components/atoms'
@@ -8,7 +9,7 @@ import { Pagination } from '../../components/molecules/pagination/Pagination'
 import { Customer, CustomerResponse } from '../../types'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
-// const DEFAULT_PER_PAGE = 10
+const DEFAULT_PER_PAGE = 10
 
 const Customers: NextPage = () => {
     const [pages] = useState<number>(18)
@@ -20,6 +21,12 @@ const Customers: NextPage = () => {
     const [customerList, setCustomerList] = useState<Customer[]>([])
     const [filterModal, setFilterModal] = useState(false)
 
+    const router = useRouter()
+    const params = router.query
+    const PAGE = params.page as string
+    const SORT = (params.sort as string) ?? 'asc'
+    const STATUS = (params.status as string) ?? 'none'
+
     const searchHandler = useCallback((value: string) => {
         setKeyword(value)
         setLoading(true)
@@ -30,7 +37,10 @@ const Customers: NextPage = () => {
     // Fetch cusomters data
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
-            const target = `${MEMBERSHIP_API}/customers`
+            let target = `${MEMBERSHIP_API}/customers?per_page=${DEFAULT_PER_PAGE}`
+            if (PAGE !== undefined) target += `&page=${PAGE}`
+            if (SORT !== undefined) target += `&sort=${SORT}`
+            if (STATUS !== undefined) target += `&status=${STATUS}`
 
             const response = await fetch(target)
             const data: CustomerResponse = await response.json()
@@ -55,7 +65,7 @@ const Customers: NextPage = () => {
                 console.log('catched error', err)
                 setLoading(false)
             })
-    }, [keyword])
+    }, [keyword, PAGE, SORT, STATUS])
 
     return (
         <>
