@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { toCurrency } from '../../../helpers'
+import { removeNoNum, toCurrency } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect, usePriceTyping } from '../../../hooks'
 
 interface Props {
@@ -10,6 +10,8 @@ interface Props {
     modalSetState: React.Dispatch<React.SetStateAction<boolean>>
     callback: () => void
 }
+
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
 export const CreateProductModal: React.FC<Props> = ({ name, price, duration, description, modalSetState, callback }) => {
     const modalRef = useRef<HTMLDivElement>(null)
@@ -35,12 +37,41 @@ export const CreateProductModal: React.FC<Props> = ({ name, price, duration, des
         if (descriptionRef.current != null && description !== undefined) descriptionRef.current.value = description
     }, [])
 
-    // Post update
-    const postData = (): void => {}
+    const isUpdating = name !== undefined || price !== undefined || duration !== undefined || description !== undefined
+
+    // Post/update
+    const postData = async (): Promise<void> => {
+        let target = `${MEMBERSHIP_API}/products`
+        let method = 'POST'
+        if (isUpdating) {
+            target += `/id`
+            method = 'PUT'
+        }
+
+        const priceNum = removeNoNum(priceRef.current?.value ?? '0')
+
+        const bodyContent = JSON.stringify({
+            name: nameRef.current?.value ?? '',
+            price: priceNum,
+            duration: parseInt(durationRef.current?.value ?? '0'),
+            description: descriptionRef.current?.value ?? '',
+        })
+
+        const response = await fetch(target, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: bodyContent,
+        })
+
+        const data = await response.json()
+        console.log(data)
+    }
 
     // Handle save
     const handleSave = (): void => {
-        postData()
+        postData().catch((err) => console.log(err))
     }
 
     const handlePriceTyping = usePriceTyping()
