@@ -1,5 +1,6 @@
 import React from 'react'
 import { Customer } from '../../../types'
+import { NoDataTable } from '../../atoms'
 import { CustomerListing } from '../../molecules'
 
 interface Props {
@@ -31,6 +32,8 @@ export const CustomerList = React.memo((props: Props) => {
                         {customerList.map((val, index) => (
                             <CustomerListing index={index + 1} {...val} key={val.customer_id} />
                         ))}
+
+                        <NoDataTable list={customerList} />
                     </tbody>
                 </table>
             </div>
