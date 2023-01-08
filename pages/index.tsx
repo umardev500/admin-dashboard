@@ -7,10 +7,16 @@ import { CustomerResponse } from '../types'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
-export default function Home(): React.ReactNode {
+interface GetServerSidePropsResult {
+    userId: string
+}
+
+export default function Home(props: any): React.ReactNode {
     const [customerCount, setCustomerCount] = useState(0)
     const [expiredCount, setExpiredCount] = useState(0)
     const [orderPendingCount, setOrderPendingCount] = useState(0)
+
+    console.log(props)
 
     const fetchData = async (route: string): Promise<number> => {
         // localhost:8000/membership/api/customers?status=none&count_only=true
@@ -69,7 +75,7 @@ export default function Home(): React.ReactNode {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<GetServerSidePropsResult> = async (ctx) => {
     const cipherText = generateId()
 
     return {
