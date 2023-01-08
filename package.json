@@ -17,6 +17,7 @@
     "eslint-config-next": "13.0.7",
     "framer-motion": "^8.1.9",
     "next": "13.0.7",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-paginate": "^8.1.4",
