@@ -1,11 +1,16 @@
 import React, { useRef } from 'react'
+import { parseDate, toUpperFirst } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
+import { Customer } from '../../../types'
 
-interface Props {
+interface Props extends Customer {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CustomerDetailModal = React.memo(({ setModalState }: Props) => {
+export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Props) => {
+    const { customer_id: customerId, user, detail, status, created_at: createdTime } = props
+    const { npsn, name, email, wa, type, level, about, location } = detail
+    const { address, village, district, city, province, postal_code: postalCode } = location ?? {}
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
 
@@ -40,52 +45,60 @@ export const CustomerDetailModal = React.memo(({ setModalState }: Props) => {
                     <div className="px-6 pb-5">
                         <div className="border-b mb-4">
                             <div className="mt-2">
-                                <span className="text-xl text-gray-500 whitespace-normal roboto font-medium">SMK Setiabudi Jakarta</span>
+                                <span className="text-xl text-gray-500 whitespace-normal roboto font-medium">{name}</span>
                             </div>
                             <div className="mt-2 mb-4 flex items-center">
                                 {/* <span className="text-base font-semibold">Product ID:</span> */}
-                                <span className="text-base text-gray-400 whitespace-normal roboto">166678282728737</span>
+                                <span className="text-base text-gray-400 whitespace-normal roboto">{customerId}</span>
                             </div>
                         </div>
                         <div className="mt-2">
-                            <span className="text-base font-medium roboto text-gray-500">NPSN:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">S192238A14</span>
+                            <span className="text-base font-medium roboto text-gray-500">NPSN: </span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{npsn ?? '-'}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Username:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">setiabudi</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{user}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Jenis:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Swasta</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{type ?? '-'}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Level:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Sekolah Menegah Atas / Setara</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{level ?? '-'}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Wa:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">+62 8387923728</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{wa}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Email:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">cs@setiabudi.com</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{email}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Alamat:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Jl. Raya Labuan Km. 13 Ciputri, Menes, Pandeglang, Banten 42262</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">
+                                {address ?? '-'}, Ds. {village ?? '-'}, Kec. {district ?? '-'}, Kab. {city ?? '-'}, Prov. {province ?? '-'}, {postalCode ?? '-'}
+                            </span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span className="text-sm ml-2 text-gray-500 whitespace-normal roboto bg-slate-200 rounded p-1">Pending</span>
+                            <span
+                                className={`${status === 'cancel' ? 'bg-amber-400 text-gray-100' : ''} ${status === 'pending' ? 'bg-indigo-300 text-gray-100' : ''} ${
+                                    status === 'settlement' ? 'bg-green-400 text-gray-100' : ''
+                                } text-sm ml-2 whitespace-normal roboto rounded p-1`}
+                            >
+                                {toUpperFirst(status)}
+                            </span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Pendaftaran:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">Jan 01, 2023 10:11:12</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(createdTime)}</span>
                         </div>
                         <div className="mt-4 border-t pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Kilasan:</span>
-                            <span className="flex mt-1 text-base text-gray-400 whitespace-normal roboto">About the school</span>
+                            <span className="flex mt-1 text-base text-gray-400 whitespace-normal roboto">{about ?? '-'}</span>
                         </div>
                         <div className="text-right">
                             <button

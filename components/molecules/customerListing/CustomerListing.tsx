@@ -31,7 +31,13 @@ export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{email}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdTime)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">
-                <span className="bg-slate-200 text-gray-500 px-1 py-1 rounded text-sm">{toUpperFirst(status)}</span>
+                <span
+                    className={`${status === 'cancel' ? 'bg-amber-400 text-gray-100' : ''} ${status === 'pending' ? 'bg-indigo-300 text-gray-100' : ''} ${
+                        status === 'settlement' ? 'bg-green-400 text-gray-100' : ''
+                    } px-1 py-1 rounded text-sm`}
+                >
+                    {toUpperFirst(status)}
+                </span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="flex items-center">
@@ -58,7 +64,7 @@ export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
                     </button>
                 </div>
 
-                {detailModal ? <CustomerDetailModal setModalState={setDetailModal} /> : null}
+                {detailModal ? <CustomerDetailModal {...props} setModalState={setDetailModal} /> : null}
                 {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} /> : null}
             </td>
         </tr>
