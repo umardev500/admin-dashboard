@@ -18,7 +18,7 @@ export interface CustomerDetail {
     location: CustomerLocation
 }
 
-export interface CustomerData {
+export interface Customer {
     customer_id: string
     user: string
     pass: string
@@ -28,6 +28,15 @@ export interface CustomerData {
     created_at: number
     updated_at: number
     deleted_at: number
+}
+
+export interface CustomerData {
+    customers: Customer[]
+    rows: number
+    pages: number
+    per_page: number
+    active_page: number
+    total: number
 }
 
 export interface CustomerResponse {
