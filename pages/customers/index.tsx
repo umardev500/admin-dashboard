@@ -41,6 +41,7 @@ const Customers: NextPage = () => {
             if (PAGE !== undefined) target += `&page=${PAGE}`
             if (SORT !== undefined) target += `&sort=${SORT}`
             if (STATUS !== undefined) target += `&status=${STATUS}`
+            if (keyword !== '') target += `&search=${keyword}`
 
             const response = await fetch(target)
             const data: CustomerResponse = await response.json()
