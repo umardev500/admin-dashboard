@@ -55,7 +55,7 @@ export const ProductListing: React.FC<Props> = ({ index, ...props }) => {
                         </svg>
                     </button>
                 </div>
-                {deleteModal ? <ProductDeleteModal modalSetState={setDeleteModal} /> : null}
+                {deleteModal ? <ProductDeleteModal productId={productId} modalSetState={setDeleteModal} /> : null}
                 {detailModal ? <ProductDetailModal {...props} setModalState={setDetailModal} /> : null}
                 {editModal ? <CreateProductModal {...props} callback={saveHandler} modalSetState={setEditModal} /> : null}
             </td>
