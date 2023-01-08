@@ -15,12 +15,14 @@ const Customers: NextPage = () => {
     const [perPage] = useState<number>(0)
     const [total] = useState<number>(0)
     const [rows] = useState<number>(0)
-    const [loading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
+    const [keyword, setKeyword] = useState('')
     const [customerList, setCustomerList] = useState<Customer[]>([])
     const [filterModal, setFilterModal] = useState(false)
 
     const searchHandler = useCallback((value: string) => {
-        console.log(value)
+        setKeyword(value)
+        setLoading(true)
     }, [])
 
     const filterSaveHandler = useCallback(() => {}, [])
@@ -29,6 +31,7 @@ const Customers: NextPage = () => {
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
             const target = `${MEMBERSHIP_API}/customers`
+
             const response = await fetch(target)
             const data: CustomerResponse = await response.json()
 
@@ -46,9 +49,13 @@ const Customers: NextPage = () => {
         fetchData()
             .then(() => {
                 console.log('then')
+                setLoading(false)
             })
-            .catch((err) => console.log('catched error', err))
-    }, [])
+            .catch((err) => {
+                console.log('catched error', err)
+                setLoading(false)
+            })
+    }, [keyword])
 
     return (
         <>
