@@ -1,11 +1,16 @@
 import React, { useCallback, useState } from 'react'
+import { parseDate, toUpperFirst } from '../../../helpers'
+import { Customer } from '../../../types'
 import { CustomerDeleteModal } from '../customerDeleteModal'
 import { CustomerDetailModal } from '../customerDetailModal'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {}
+interface Props extends Customer {
+    index: number
+}
 
-export const CustomerListing: React.FC<Props> = () => {
+export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
+    const { customer_id: customerId, user, detail, created_at: createdTime, status } = props
+    const { name, email } = detail
     const [detailModal, setDetailModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
 
@@ -15,18 +20,18 @@ export const CustomerListing: React.FC<Props> = () => {
 
     return (
         <tr>
-            <td className="px-4 border-r border-b border-slate-200 py-2 text-center">1.</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 text-center">{index}.</td>
             <td className="px-4 border-r border-b border-slate-200 py-2">
                 <span onClick={() => setDetailModal(true)} className="cursor-pointer text-gray-500 hover:text-gray-400">
-                    16678923762730
+                    {customerId}
                 </span>
             </td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">SMK Setiabudi Jakarta</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">setiabudiJak</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">cs@setiabudi.com</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">Jan 01, 2023 10:11:12</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{name}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{user}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{email}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdTime)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">
-                <span className="bg-slate-200 text-gray-500 px-1 py-1 rounded text-sm">Pending</span>
+                <span className="bg-slate-200 text-gray-500 px-1 py-1 rounded text-sm">{toUpperFirst(status)}</span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="flex items-center">

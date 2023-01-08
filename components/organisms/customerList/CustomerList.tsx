@@ -1,10 +1,13 @@
 import React from 'react'
+import { Customer } from '../../../types'
 import { CustomerListing } from '../../molecules'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {}
+interface Props {
+    customerList: Customer[]
+}
 
 export const CustomerList = React.memo((props: Props) => {
+    const { customerList } = props
     // const [data] = useState([])
 
     return (
@@ -25,7 +28,9 @@ export const CustomerList = React.memo((props: Props) => {
                     </thead>
 
                     <tbody>
-                        <CustomerListing />
+                        {customerList.map((val, index) => (
+                            <CustomerListing index={index + 1} {...val} key={val.customer_id} />
+                        ))}
                     </tbody>
                 </table>
             </div>

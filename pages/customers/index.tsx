@@ -1,10 +1,14 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { CustomerList } from '../../components'
 import { Search } from '../../components/atoms'
 import { CustomerFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
+import { Customer, CustomerResponse } from '../../types'
+
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
+// const DEFAULT_PER_PAGE = 10
 
 const Customers: NextPage = () => {
     const [pages] = useState<number>(18)
@@ -12,6 +16,7 @@ const Customers: NextPage = () => {
     const [total] = useState<number>(0)
     const [rows] = useState<number>(0)
     const [loading] = useState<boolean>(false)
+    const [customerList, setCustomerList] = useState<Customer[]>([])
     const [filterModal, setFilterModal] = useState(false)
 
     const searchHandler = useCallback((value: string) => {
@@ -19,6 +24,31 @@ const Customers: NextPage = () => {
     }, [])
 
     const filterSaveHandler = useCallback(() => {}, [])
+
+    // Fetch cusomters data
+    useEffect(() => {
+        const fetchData = async (): Promise<void> => {
+            const target = `${MEMBERSHIP_API}/customers`
+            const response = await fetch(target)
+            const data: CustomerResponse = await response.json()
+
+            if (data.status_code !== 200) return await Promise.reject(data.message)
+            const customersData = data.data
+            const customers = customersData.customers
+            if (customers !== undefined) {
+                setCustomerList(customers)
+            }
+            if (customers === undefined) {
+                if (customerList.length > 0) setCustomerList([])
+            }
+        }
+
+        fetchData()
+            .then(() => {
+                console.log('then')
+            })
+            .catch((err) => console.log('catched error', err))
+    }, [])
 
     return (
         <>
@@ -39,7 +69,7 @@ const Customers: NextPage = () => {
                         <Search callback={searchHandler} title="Search" placeholder="Search here..." />
                     </div>
 
-                    <CustomerList />
+                    <CustomerList customerList={customerList} />
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                         <TableDataInfo loading={loading} total={total} perPage={perPage} rows={rows} />
 
