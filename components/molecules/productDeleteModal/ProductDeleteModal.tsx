@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { BasicAPIResponse } from '../../../types'
 import { ConfirmModal } from '../confirmModal'
 
@@ -8,8 +8,11 @@ interface Props {
 }
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
+const MODAL_RESPONSE_TIMEOUT = 1000
 
 export const ProductDeleteModal: React.FC<Props> = ({ productId, modalSetState }) => {
+    const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState('')
     const msg = `Apakah kamu yakin? ini akan dihapus secara permanen`
 
     // Do delete
@@ -23,8 +26,23 @@ export const ProductDeleteModal: React.FC<Props> = ({ productId, modalSetState }
     }
 
     const confirmedCallback = useCallback((closer: () => void) => {
-        deleteBook(closer).catch((err) => console.log(err))
+        deleteBook(closer)
+            .then(() => {
+                setLoading(false)
+                setStatus('succeed')
+                setTimeout(() => {
+                    modalSetState(false)
+                }, MODAL_RESPONSE_TIMEOUT)
+            })
+            .catch((err) => {
+                setLoading(false)
+                setStatus('error')
+                setTimeout(() => {
+                    modalSetState(false)
+                }, MODAL_RESPONSE_TIMEOUT)
+                console.log(err)
+            })
     }, [])
 
-    return <ConfirmModal confirmedCallback={confirmedCallback} modalSetState={modalSetState} text={msg} />
+    return <ConfirmModal loading={loading} status={status} confirmedCallback={confirmedCallback} modalSetState={modalSetState} text={msg} />
 }
