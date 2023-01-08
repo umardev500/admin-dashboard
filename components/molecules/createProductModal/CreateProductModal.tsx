@@ -4,6 +4,7 @@ import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect, usePri
 import { BasicAPIResponse } from '../../../types'
 
 interface Props {
+    product_id?: string
     name?: string
     price?: number
     duration?: number
@@ -15,7 +16,7 @@ interface Props {
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 const MODAL_RESPONSE_TIMEOUT = 1000
 
-export const CreateProductModal: React.FC<Props> = ({ name, price, duration, description, modalSetState, callback }) => {
+export const CreateProductModal: React.FC<Props> = ({ product_id: productId, name, price, duration, description, modalSetState, callback }) => {
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
@@ -41,25 +42,31 @@ export const CreateProductModal: React.FC<Props> = ({ name, price, duration, des
         if (descriptionRef.current != null && description !== undefined) descriptionRef.current.value = description
     }, [])
 
-    const isUpdating = name !== undefined || price !== undefined || duration !== undefined || description !== undefined
+    const isUpdating = productId !== undefined || name !== undefined || price !== undefined || duration !== undefined || description !== undefined
 
     // Post/update
     const postData = async (): Promise<void> => {
         let target = `${MEMBERSHIP_API}/products`
         let method = 'POST'
-        if (isUpdating) {
-            target += `/id`
+        if (isUpdating && productId !== undefined) {
+            target += `/${productId}`
             method = 'PUT'
         }
 
         const priceNum = removeNoNum(priceRef.current?.value ?? '0')
 
-        const bodyContent = JSON.stringify({
+        let bodyContent: any = {
             name: nameRef.current?.value ?? '',
             price: priceNum,
             duration: parseInt(durationRef.current?.value ?? '0'),
             description: descriptionRef.current?.value ?? '',
-        })
+        }
+
+        if (isUpdating) {
+            bodyContent = { detail: bodyContent, product_id: productId }
+        }
+
+        bodyContent = JSON.stringify(bodyContent)
 
         const response = await fetch(target, {
             method,
@@ -70,6 +77,7 @@ export const CreateProductModal: React.FC<Props> = ({ name, price, duration, des
         })
 
         const data: BasicAPIResponse = await response.json()
+
         const statusCode = data.status_code
         if (statusCode !== 200) return await Promise.reject(data.message)
     }
