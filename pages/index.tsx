@@ -1,6 +1,8 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { FeaturedList, FramerLayout } from '../components'
+import { generateId } from '../helpers'
 import { CustomerResponse } from '../types'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
@@ -65,4 +67,14 @@ export default function Home(): React.ReactNode {
             </FramerLayout>
         </>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const cipherText = generateId()
+
+    return {
+        props: {
+            userId: cipherText,
+        },
+    }
 }
