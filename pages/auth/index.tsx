@@ -9,7 +9,7 @@ const Auth: NextPage = () => {
             <div className="mt-20 max-w-xs w-80">
                 <div className="text-center">
                     <h1 className="roboto font-medium text-gray-700 text-4xl">Login</h1>
-                    <div className="mt-2 text-gray-600 roboto">Authentication needed for access</div>
+                    <div className="mt-2 text-gray-500 roboto">Authentication needed for access</div>
                 </div>
                 <div className="mt-7">
                     <div className="flex">
