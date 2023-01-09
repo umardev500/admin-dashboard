@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    MEMBERSHIP_API: 'http://localhost:8000/membership/api'
+    MEMBERSHIP_API: 'http://localhost:8000/membership/api',
+    SECRET: 'taiAyam'
   }
 }
 
