@@ -22,6 +22,33 @@ const Auth: NextPage = () => {
         }
     }, [])
 
+    const handleSave = useCallback(() => {
+        const save = async (): Promise<void> => {
+            const target = `http://localhost:8000/auth/admin`
+            const requestBody = JSON.stringify({
+                username: 'jackuser',
+                password: 'password',
+            })
+
+            const response = await fetch(target, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    userid: 'seyDhgklsmsnsiowrjhsdflkhsusalkfhlksahfsdio5',
+                    'Content-Type': 'application/json',
+                },
+                body: requestBody,
+            })
+
+            const data = await response.json()
+            const entries = [...response.headers.entries()]
+            console.log(entries)
+            console.log(data)
+        }
+
+        save().catch((err) => console.log(err))
+    }, [])
+
     return (
         <>
             <Head>
@@ -85,7 +112,10 @@ const Auth: NextPage = () => {
                                 </>
                             ) : null}
                         </div>
-                        <button className="bg-indigo-500 hover:bg-indigo-600 w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-medium roboto">
+                        <button
+                            onClick={handleSave}
+                            className="bg-indigo-500 hover:bg-indigo-600 w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-medium roboto"
+                        >
                             Submit
                         </button>
                     </div>
