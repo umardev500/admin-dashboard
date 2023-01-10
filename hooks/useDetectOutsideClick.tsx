@@ -11,7 +11,7 @@ export const useDetectOutsideClick = ({ parent, target, setState, toActivate }: 
     useEffect(() => {
         const handleClick = (e: MouseEvent): void => {
             const isInner = target.current?.contains(e.target as Node)
-            // if (toActivate === true && isInner === true) status(true)
+            if (toActivate === true && isInner === true) setState(true)
 
             if (isInner !== undefined && !isInner) {
                 setState(false)
