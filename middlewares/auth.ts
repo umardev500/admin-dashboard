@@ -3,12 +3,13 @@ import { jwtVerify } from 'jose'
 import { NextRequest } from 'next/server'
 
 export const auth = async (req: NextRequest): Promise<void> => {
-    const limiter = req.cookies.get('limiter')
+    const tokenCookie = req.cookies.get('token')
     let token = ''
-    if (limiter === undefined) {
-        // req.cookies.set('limiter', 'foobar')
+    if (token === undefined) {
+        const err = 'Uauthorized'
+        return await Promise.reject(err)
     } else {
-        token = limiter.value
+        token = tokenCookie?.value as string
     }
 
     const key = process.env.SECRET
