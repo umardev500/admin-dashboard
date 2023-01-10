@@ -45,8 +45,8 @@ const SidebarElement = (): any => {
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
-                                    ['--icon' as any]: "url('/assets/icons/dashboard_icon.svg') no-repeat center",
-                                    ['--icon-active' as any]: "url('/assets/icons/dashboard_icon_solid.svg') no-repeat center",
+                                    ['--icon' as any]: "url('/app/assets/icons/dashboard_icon.svg') no-repeat center",
+                                    ['--icon-active' as any]: "url('/app/assets/icons/dashboard_icon_solid.svg') no-repeat center",
                                 }}
                                 className="icon inline-flex items-center justify-center mr-4"
                             ></span>
@@ -59,8 +59,8 @@ const SidebarElement = (): any => {
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
-                                    ['--icon' as any]: "url('/assets/icons/book.svg') no-repeat center",
-                                    ['--icon-active' as any]: "url('/assets/icons/book-filled.svg') no-repeat center",
+                                    ['--icon' as any]: "url('/app/assets/icons/book.svg') no-repeat center",
+                                    ['--icon-active' as any]: "url('/app/assets/icons/book-filled.svg') no-repeat center",
                                     ['--size' as any]: '24px',
                                 }}
                                 className="icon inline-flex items-center justify-center mr-4"
@@ -74,8 +74,8 @@ const SidebarElement = (): any => {
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
-                                    ['--icon' as any]: "url('/assets/icons/task.svg') no-repeat center",
-                                    ['--icon-active' as any]: "url('/assets/icons/task-solid.svg') no-repeat center",
+                                    ['--icon' as any]: "url('/app/assets/icons/task.svg') no-repeat center",
+                                    ['--icon-active' as any]: "url('/app/assets/icons/task-solid.svg') no-repeat center",
                                     ['--size' as any]: '24px',
                                 }}
                                 className="icon inline-flex items-center justify-center mr-4"
@@ -89,8 +89,8 @@ const SidebarElement = (): any => {
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
-                                    ['--icon' as any]: "url('/assets/icons/receipt.svg') no-repeat center",
-                                    ['--icon-active' as any]: "url('/assets/icons/receipt-filled.svg') no-repeat center",
+                                    ['--icon' as any]: "url('/app/assets/icons/receipt.svg') no-repeat center",
+                                    ['--icon-active' as any]: "url('/app/assets/icons/receipt-filled.svg') no-repeat center",
                                     ['--size' as any]: '24px',
                                 }}
                                 className="icon inline-flex items-center justify-center mr-4"
@@ -109,15 +109,15 @@ const SidebarElement = (): any => {
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
-                                    ['--icon' as any]: "url('/assets/icons/settings.svg') no-repeat center",
-                                    ['--icon-active' as any]: "url('/assets/icons/settings.svg') no-repeat center",
+                                    ['--icon' as any]: "url('/app/assets/icons/settings.svg') no-repeat center",
+                                    ['--icon-active' as any]: "url('/app/assets/icons/settings.svg') no-repeat center",
                                 }}
                                 className="icon inline-flex items-center justify-center mr-4"
                             ></span>
                             Pengaturan
                         </div>
                         <span
-                            style={{ ['--icon' as any]: "url('/assets/icons/chevron-right.svg') no-repeat center" }}
+                            style={{ ['--icon' as any]: "url('/app/assets/icons/chevron-right.svg') no-repeat center" }}
                             className="arrow-icon inline-flex items-center justify-center"
                         ></span>
                     </a>
