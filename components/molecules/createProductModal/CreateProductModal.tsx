@@ -30,7 +30,7 @@ export const CreateProductModal: React.FC<Props> = ({ product_id: productId, nam
     useModalShowEffect({ modal: modalRef })
 
     // Detect outside modal click
-    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, status: modalSetState })
+    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, setState: modalSetState })
 
     // back handler
     const backHandler = useModalCloseHandler({ status: modalSetState })

@@ -18,7 +18,7 @@ export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Prop
 
     useModalShowEffect({ modal: modalRef })
 
-    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, status: setModalState })
+    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, setState: setModalState })
 
     // back handler
     const backHandler = useModalCloseHandler({ status: setModalState })

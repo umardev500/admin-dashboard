@@ -16,7 +16,7 @@ export const ProductDetailModal = React.memo(({ setModalState, ...props }: Props
 
     useModalShowEffect({ modal: modalRef })
 
-    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, status: setModalState })
+    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, setState: setModalState })
 
     // back handler
     const backHandler = useModalCloseHandler({ status: setModalState })

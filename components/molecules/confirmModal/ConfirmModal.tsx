@@ -15,7 +15,7 @@ export const ConfirmModal: React.FC<Props> = ({ loading, status, modalSetState, 
 
     useModalShowEffect({ modal: modalRef })
 
-    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, status: modalSetState })
+    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, setState: modalSetState })
 
     const modalCloser = useModalCloseHandler({ status: modalSetState })
 

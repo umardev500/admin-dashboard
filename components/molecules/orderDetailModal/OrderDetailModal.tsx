@@ -19,7 +19,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
 
     useModalShowEffect({ modal: modalRef })
 
-    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, status: setModalState })
+    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, setState: setModalState })
 
     // back handler
     const backHandler = useModalCloseHandler({ status: setModalState })

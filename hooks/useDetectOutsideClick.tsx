@@ -3,18 +3,18 @@ import React, { useEffect } from 'react'
 interface Props {
     parent: React.RefObject<HTMLElement>
     target: React.RefObject<HTMLElement>
-    status: React.Dispatch<React.SetStateAction<boolean>>
+    setState: React.Dispatch<React.SetStateAction<boolean>>
     toActivate?: boolean
 }
 
-export const useDetectOutsideClick = ({ parent, target, status, toActivate }: Props): void => {
+export const useDetectOutsideClick = ({ parent, target, setState, toActivate }: Props): void => {
     useEffect(() => {
         const handleClick = (e: MouseEvent): void => {
             const isInner = target.current?.contains(e.target as Node)
             // if (toActivate === true && isInner === true) status(true)
 
             if (isInner !== undefined && !isInner) {
-                status(isInner as boolean)
+                setState(false)
             }
         }
 

@@ -25,7 +25,7 @@ export const OrderFilterModal: React.FC<Props> = ({ modalSetState, saveCallback 
     useModalShowEffect({ modal: modalRef })
 
     // Detect outside modal click
-    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, status: modalSetState })
+    useDetectOutsideClick({ parent: modalRef, target: modalInnerRef, setState: modalSetState })
 
     // back handler
     const backHandler = useModalCloseHandler({ status: modalSetState })
