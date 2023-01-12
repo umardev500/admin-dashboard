@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { getHeader } from '../../helpers'
 import { useDetectOutsideClick, useTimeoutSetState } from '../../hooks'
@@ -18,6 +19,8 @@ const Auth: NextPage = () => {
     const userRef = useRef<HTMLInputElement>(null)
     const passInputRef = useRef<HTMLInputElement>(null)
     const retryTimeRef = useRef<HTMLSpanElement>(null)
+
+    const router = useRouter()
 
     useDetectOutsideClick({ parent: wrapRef, target: passRef, setState: setIsPassOn, toActivate: true })
 
@@ -85,6 +88,12 @@ const Auth: NextPage = () => {
                 setNomatch(true)
             }
             if (statusCode === 400) setValidationErr(true)
+            if (statusCode === 200) {
+                const redirectRoute: string = router.query.redirect as string
+                if (redirectRoute !== undefined) {
+                    router.replace(redirectRoute).catch((err) => console.log(err))
+                }
+            }
 
             const headers = [...response.headers.entries()]
 

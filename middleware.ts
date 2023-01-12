@@ -3,11 +3,11 @@ import { auth } from './middlewares/auth'
 
 export async function middleware(req: NextRequest): Promise<NextResponse> {
     if (req.nextUrl.pathname.startsWith('/products')) {
+        const href = req.nextUrl.href
         try {
             await auth(req)
         } catch (err) {
-            console.log(err)
-            return NextResponse.redirect(new URL('/auth', req.url))
+            return NextResponse.redirect(new URL(`/auth?redirect=${href}`, req.url))
         }
     }
 
