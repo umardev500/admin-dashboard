@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { getHeader } from '../../helpers'
 import { useDetectOutsideClick, useTimeoutSetState } from '../../hooks'
 import { BasicAPIResponse } from '../../types'
