@@ -93,6 +93,8 @@ const Auth: NextPage = () => {
                 if (redirectRoute !== undefined) {
                     router.replace(redirectRoute).catch((err) => console.log(err))
                 }
+
+                if (redirectRoute === undefined) router.replace('/').catch((err) => console.log(err))
             }
 
             const headers = [...response.headers.entries()]
