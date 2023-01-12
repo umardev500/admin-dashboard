@@ -1,13 +1,18 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import { getHeader } from '../../helpers'
-import { useDetectOutsideClick } from '../../hooks'
+import { useDetectOutsideClick, useTimeoutSetState } from '../../hooks'
+import { BasicAPIResponse } from '../../types'
 
 const Auth: NextPage = () => {
     const [isPassOn, setIsPassOn] = useState(false)
     const [showPass, setShowPass] = useState(false)
     const [retryTime, setRetryTime] = useState(0)
+    const [noMatch, setNomatch] = useState(false)
+    const [validationErr, setValidationErr] = useState(false)
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
     const wrapRef = useRef<HTMLDivElement>(null)
     const passRef = useRef<HTMLDivElement>(null)
     const userRef = useRef<HTMLInputElement>(null)
@@ -51,8 +56,13 @@ const Auth: NextPage = () => {
         }
     }, [retryTime])
 
+    useTimeoutSetState(3000, setNomatch, false, [noMatch])
+    useTimeoutSetState(3000, setValidationErr, false, [validationErr])
+    useTimeoutSetState(3000, setError, false, [error])
+
     const handleSave = (): void => {
         const save = async (): Promise<void> => {
+            setLoading(true)
             const target = `http://localhost:8000/auth/admin`
             const requestBody = JSON.stringify({
                 username: userRef.current?.value,
@@ -69,16 +79,26 @@ const Auth: NextPage = () => {
                 body: requestBody,
             })
 
-            // const data = await response.json()
+            const data: BasicAPIResponse = await response.json()
+            const statusCode = data.status_code
+            if (statusCode === 404) {
+                setNomatch(true)
+            }
+            if (statusCode === 400) setValidationErr(true)
+
             const headers = [...response.headers.entries()]
 
             const retry = getHeader(headers, 'retry-after')
             if (retry !== undefined) {
                 setRetryTime(parseInt(retry[1]))
             }
+            setLoading(false)
         }
 
-        save().catch((err) => console.log(err))
+        save().catch(() => {
+            setError(true)
+            setLoading(false)
+        })
     }
 
     return (
@@ -148,9 +168,9 @@ const Auth: NextPage = () => {
                         </div>
                         <button
                             onClick={handleSave}
-                            disabled={retryTime !== 0}
+                            disabled={retryTime !== 0 || loading}
                             className={`${
-                                retryTime !== 0 ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-600'
+                                retryTime !== 0 || loading ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-600'
                             } w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-semibold quicksand`}
                         >
                             Submit
@@ -159,10 +179,30 @@ const Auth: NextPage = () => {
                     {retryTime !== 0 ? (
                         <div className="mt-4 text-center">
                             <p className="text-slate-400 roboto">
-                                Too many requests wait after <span ref={retryTimeRef}>{retryTime}</span>
+                                Too many requests retry after <span ref={retryTimeRef}>{retryTime}</span>
                             </p>
                         </div>
                     ) : null}
+
+                    {noMatch ? (
+                        <div className="bg-slate-200 mt-4 text-center p-2.5 rounded-lg">
+                            <span className="roboto text-gray-500">Username or password is wrong</span>
+                        </div>
+                    ) : null}
+
+                    {validationErr ? (
+                        <div className="bg-slate-200 mt-4 text-center p-2.5 rounded-lg">
+                            <span className="roboto leading-none text-gray-500">Insert the right username and password.</span>
+                        </div>
+                    ) : null}
+
+                    {error ? (
+                        <div className="bg-slate-200 mt-4 text-center p-2.5 rounded-lg">
+                            <span className="roboto leading-none text-gray-500">Something went wrong.</span>
+                        </div>
+                    ) : null}
+
+                    {loading ? <p className="text-slate-500 mt-3 text-center roboto">Loading...</p> : null}
                 </div>
             </div>
         </>
