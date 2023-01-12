@@ -8,13 +8,14 @@ const Auth: NextPage = () => {
     const [showPass, setShowPass] = useState(false)
     const wrapRef = useRef<HTMLDivElement>(null)
     const passRef = useRef<HTMLDivElement>(null)
-    const inputRef = useRef<HTMLInputElement>(null)
+    const userRef = useRef<HTMLInputElement>(null)
+    const passInputRef = useRef<HTMLInputElement>(null)
 
     useDetectOutsideClick({ parent: wrapRef, target: passRef, setState: setIsPassOn, toActivate: true })
 
     const handleEyeClick = useCallback((): void => {
         setShowPass((prev) => !prev)
-        const input = inputRef.current
+        const input = passInputRef.current
         if (input !== undefined && input !== null) {
             setTimeout(() => {
                 input?.focus()
@@ -22,12 +23,12 @@ const Auth: NextPage = () => {
         }
     }, [])
 
-    const handleSave = useCallback(() => {
+    const handleSave = (): void => {
         const save = async (): Promise<void> => {
             const target = `http://localhost:8000/auth/admin`
             const requestBody = JSON.stringify({
-                username: 'jackuser',
-                password: 'password',
+                username: userRef.current?.value,
+                password: passInputRef.current?.value,
             })
 
             const response = await fetch(target, {
@@ -47,7 +48,7 @@ const Auth: NextPage = () => {
         }
 
         save().catch((err) => console.log(err))
-    }, [])
+    }
 
     return (
         <>
@@ -63,6 +64,7 @@ const Auth: NextPage = () => {
                     <div className="mt-7">
                         <div className="flex">
                             <input
+                                ref={userRef}
                                 className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
                                 type="text"
                                 placeholder="Username"
@@ -73,7 +75,7 @@ const Auth: NextPage = () => {
                             className={`flex px-4 py-2 relative rounded-md mt-2 items-center border border-gray-200 ${isPassOn ? 'ring-2 ring-indigo-400' : ''} bg-white`}
                         >
                             <input
-                                ref={inputRef}
+                                ref={passInputRef}
                                 className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
                                 type={showPass ? 'text' : 'password'}
                                 placeholder="Password"
