@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useCallback, useRef, useState } from 'react'
+import { getHeader } from '../../helpers'
 import { useDetectOutsideClick } from '../../hooks'
 
 const Auth: NextPage = () => {
@@ -41,10 +42,13 @@ const Auth: NextPage = () => {
                 body: requestBody,
             })
 
-            const data = await response.json()
-            const entries = [...response.headers.entries()]
-            console.log(entries)
-            console.log(data)
+            // const data = await response.json()
+            const headers = [...response.headers.entries()]
+
+            const retry = getHeader(headers, 'retry-after')
+            if (retry !== undefined) {
+                console.log('retry after', retry[1])
+            }
         }
 
         save().catch((err) => console.log(err))
@@ -121,6 +125,9 @@ const Auth: NextPage = () => {
                         >
                             Submit
                         </button>
+                    </div>
+                    <div className="mt-4 text-center">
+                        <p className="text-gray-400 roboto">Too many requests wait after 2s</p>
                     </div>
                 </div>
             </div>
