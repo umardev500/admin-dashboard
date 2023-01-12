@@ -76,6 +76,7 @@ const Auth: NextPage = () => {
                         >
                             <input
                                 ref={passInputRef}
+                                onFocus={() => setIsPassOn(true)}
                                 className="w-full outline-none rounded-md text-gray-500 text-base font-semibold quicksand"
                                 type={showPass ? 'text' : 'password'}
                                 placeholder="Password"
