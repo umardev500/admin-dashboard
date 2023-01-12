@@ -58,14 +58,14 @@ const Auth: NextPage = () => {
             <div className="flex justify-center" ref={wrapRef}>
                 <div className="mt-20 max-w-xs w-80">
                     <div className="text-center">
-                        <h1 className="roboto font-medium text-gray-700 text-4xl">Login</h1>
-                        <div className="mt-2 text-gray-500 roboto">Authentication needed for access</div>
+                        <h1 className="quicksand font-bold text-gray-700 text-4xl">Login</h1>
+                        <div className="mt-2 text-gray-500 quicksand font-semibold">Authentication needed for access</div>
                     </div>
                     <div className="mt-7">
                         <div className="flex">
                             <input
                                 ref={userRef}
-                                className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
+                                className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-semibold quicksand"
                                 type="text"
                                 placeholder="Username"
                             />
@@ -76,7 +76,7 @@ const Auth: NextPage = () => {
                         >
                             <input
                                 ref={passInputRef}
-                                className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
+                                className="w-full outline-none rounded-md text-gray-500 text-base font-semibold quicksand"
                                 type={showPass ? 'text' : 'password'}
                                 placeholder="Password"
                             />
@@ -116,7 +116,7 @@ const Auth: NextPage = () => {
                         </div>
                         <button
                             onClick={handleSave}
-                            className="bg-indigo-500 hover:bg-indigo-600 w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-medium roboto"
+                            className="bg-indigo-500 hover:bg-indigo-600 w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-semibold quicksand"
                         >
                             Submit
                         </button>

@@ -41,3 +41,31 @@
 .poppins {
     font-family: "PoppinsFont";
 }
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../assets/fonts/quicksand/Quicksand-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../assets/fonts/quicksand/Quicksand-Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../assets/fonts/quicksand/Quicksand-SemiBold.ttf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "QuicksandFont";
+    src: url("../assets/fonts/quicksand/Quicksand-Bold.ttf");
+    font-weight: 800;
+}
+
+.quicksand {
+    font-family: "QuicksandFont";
+}
