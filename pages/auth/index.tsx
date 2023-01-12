@@ -1,16 +1,18 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { getHeader } from '../../helpers'
 import { useDetectOutsideClick } from '../../hooks'
 
 const Auth: NextPage = () => {
     const [isPassOn, setIsPassOn] = useState(false)
     const [showPass, setShowPass] = useState(false)
+    const [retryTime, setRetryTime] = useState(0)
     const wrapRef = useRef<HTMLDivElement>(null)
     const passRef = useRef<HTMLDivElement>(null)
     const userRef = useRef<HTMLInputElement>(null)
     const passInputRef = useRef<HTMLInputElement>(null)
+    const retryTimeRef = useRef<HTMLSpanElement>(null)
 
     useDetectOutsideClick({ parent: wrapRef, target: passRef, setState: setIsPassOn, toActivate: true })
 
@@ -23,6 +25,31 @@ const Auth: NextPage = () => {
             }, 10)
         }
     }, [])
+
+    useEffect(() => {
+        if (retryTime !== 0) {
+            const retry = retryTimeRef.current
+            let tempRetry = retryTime
+
+            const handler = (): void => {
+                if (retry != null) {
+                    if (tempRetry !== 0) {
+                        tempRetry -= 1
+                        retry.innerText = tempRetry.toString()
+                    } else {
+                        clearInterval(interval)
+                        setRetryTime(0)
+                    }
+                }
+            }
+
+            const interval = setInterval(handler, 1000)
+
+            return () => {
+                clearInterval(interval)
+            }
+        }
+    }, [retryTime])
 
     const handleSave = (): void => {
         const save = async (): Promise<void> => {
@@ -47,7 +74,7 @@ const Auth: NextPage = () => {
 
             const retry = getHeader(headers, 'retry-after')
             if (retry !== undefined) {
-                console.log('retry after', retry[1])
+                setRetryTime(parseInt(retry[1]))
             }
         }
 
@@ -62,14 +89,14 @@ const Auth: NextPage = () => {
             <div className="flex justify-center" ref={wrapRef}>
                 <div className="mt-20 max-w-xs w-80">
                     <div className="text-center">
-                        <h1 className="quicksand font-bold text-gray-700 text-4xl">Login</h1>
+                        <h1 className="roboto font-semibold text-gray-600 text-4xl">Login</h1>
                         <div className="mt-2 text-gray-500 quicksand font-semibold">Authentication needed for access</div>
                     </div>
                     <div className="mt-7">
                         <div className="flex">
                             <input
                                 ref={userRef}
-                                className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-semibold quicksand"
+                                className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
                                 type="text"
                                 placeholder="Username"
                             />
@@ -81,7 +108,7 @@ const Auth: NextPage = () => {
                             <input
                                 ref={passInputRef}
                                 onFocus={() => setIsPassOn(true)}
-                                className="w-full outline-none rounded-md text-gray-500 text-base font-semibold quicksand"
+                                className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
                                 type={showPass ? 'text' : 'password'}
                                 placeholder="Password"
                             />
@@ -121,14 +148,21 @@ const Auth: NextPage = () => {
                         </div>
                         <button
                             onClick={handleSave}
-                            className="bg-indigo-500 hover:bg-indigo-600 w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-semibold quicksand"
+                            disabled={retryTime !== 0}
+                            className={`${
+                                retryTime !== 0 ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-600'
+                            } w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-semibold quicksand`}
                         >
                             Submit
                         </button>
                     </div>
-                    <div className="mt-4 text-center">
-                        <p className="text-gray-400 roboto">Too many requests wait after 2s</p>
-                    </div>
+                    {retryTime !== 0 ? (
+                        <div className="mt-4 text-center">
+                            <p className="text-slate-400 roboto">
+                                Too many requests wait after <span ref={retryTimeRef}>{retryTime}</span>
+                            </p>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </>
