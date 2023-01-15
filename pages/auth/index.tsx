@@ -127,7 +127,6 @@ const Auth: NextPage = () => {
                         <div className="flex">
                             <input
                                 ref={userRef}
-                                value="umardev"
                                 className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
                                 type="text"
                                 placeholder="Username"
@@ -139,7 +138,6 @@ const Auth: NextPage = () => {
                         >
                             <input
                                 ref={passInputRef}
-                                value="secret_password"
                                 onFocus={() => setIsPassOn(true)}
                                 className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
                                 type={showPass ? 'text' : 'password'}
