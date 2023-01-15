@@ -8,23 +8,12 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     const isAssets = pathname.startsWith('/assets')
 
     if (!isNext && !isAssets) {
-        if (!req.nextUrl.pathname.startsWith('/auth')) {
-            const href = encodeURI(req.nextUrl.href)
-
-            try {
-                await auth(req)
-            } catch (err) {
-                return NextResponse.redirect(new URL(`/app/auth?redirect=${href}`, req.url))
-            }
-        }
-
-        if (req.nextUrl.pathname.startsWith('/auth')) {
-            try {
-                await auth(req)
-                return NextResponse.redirect(new URL('/app', req.url))
-            } catch (err) {
-                console.log(err)
-            }
+        const href = encodeURI(req.nextUrl.href)
+        try {
+            await auth(req)
+            return NextResponse.next()
+        } catch (err) {
+            return NextResponse.rewrite(new URL(`/app/auth?redirect=${href}`, req.url))
         }
     }
 
