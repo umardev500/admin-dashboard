@@ -11,6 +11,10 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
         const href = encodeURI(req.nextUrl.href)
         try {
             await auth(req)
+
+            if (pathname.startsWith('/auth')) {
+                return NextResponse.redirect(new URL('/app', req.url))
+            }
             return NextResponse.next()
         } catch (err) {
             return NextResponse.rewrite(new URL(`/app/auth?redirect=${href}`, req.url))
