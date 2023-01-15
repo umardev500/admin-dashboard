@@ -89,7 +89,7 @@ const Auth: NextPage = () => {
             }
             if (statusCode === 400) setValidationErr(true)
             if (statusCode === 200) {
-                const redirectRoute: string = router.query.redirect as string
+                const redirectRoute: string = decodeURI(router.query.redirect as string)
                 if (redirectRoute !== undefined) {
                     router.replace(redirectRoute).catch((err) => console.log(err))
                 }

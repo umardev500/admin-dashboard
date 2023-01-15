@@ -9,7 +9,8 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 
     if (!isNext && !isAssets) {
         if (!req.nextUrl.pathname.startsWith('/auth')) {
-            const href = req.nextUrl.href
+            const href = encodeURI(req.nextUrl.href)
+
             try {
                 await auth(req)
             } catch (err) {
