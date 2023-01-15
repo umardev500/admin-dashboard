@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
+import { toast, Toaster } from 'react-hot-toast'
 import { getHeader, notify } from '../../helpers'
 import { useDetectOutsideClick } from '../../hooks'
 import { BasicAPIResponse } from '../../types'
@@ -80,30 +80,35 @@ const Auth: NextPage = () => {
                 const data: BasicAPIResponse = await response.json()
                 const statusCode = data.status_code
                 if (statusCode === 404) {
-                    notify('Account not found', { id: 'notify', icon: '👏' })
+                    notify.error('Account not found', { id: 'notify', className: 'roboto' })
+                    return await Promise.resolve()
                 }
                 if (statusCode === 400) {
-                    notify('Bad request...', { id: 'notify', icon: '👏' })
+                    notify.error('Bad request...', { id: 'notify', className: 'roboto' })
+                    return await Promise.resolve()
                 }
                 if (statusCode === 200) {
+                    notify.success('Login succeed', { id: 'notify', className: 'roboto' })
+
                     const redirectRoute: string = decodeURI(router.query.redirect as string)
                     if (redirectRoute !== undefined) {
                         router.replace(redirectRoute).catch((err) => console.log(err))
                     }
 
                     if (redirectRoute === undefined) router.replace('/').catch((err) => console.log(err))
+                    return await Promise.resolve()
                 }
 
                 const headers = [...response.headers.entries()]
 
                 const retry = getHeader(headers, 'retry-after')
                 if (retry !== undefined) {
-                    notify('Throttling...', { id: 'notify', icon: '👏' })
-
+                    notify.error('Throttling...', { id: 'notify', className: 'roboto' })
                     setRetryTime(parseInt(retry[1]))
+                    return await Promise.resolve()
                 }
             } catch (err) {
-                notify('Something went wrong...', { id: 'notify', icon: '👏' })
+                notify.error('Something went wrong...', { id: 'notify', className: 'roboto' })
             }
         }
 
@@ -116,7 +121,7 @@ const Auth: NextPage = () => {
                 <title>Auth</title>
             </Head>
             <div className="flex justify-center" ref={wrapRef}>
-                <div className="mt-20 max-w-xs w-80">
+                <div className="mt-36 max-w-xs w-80">
                     <div className="text-center">
                         <h1 className="roboto font-semibold text-gray-600 text-4xl">Login</h1>
                         <div className="mt-2 text-gray-500 quicksand font-semibold">Authentication needed for access</div>
