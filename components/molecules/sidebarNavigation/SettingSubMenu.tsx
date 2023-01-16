@@ -16,11 +16,14 @@ export const SettingSubMenu = React.forwardRef(({ className = '', shown }: Props
             <li>
                 <Link
                     href={'/settings/account'}
-                    className={`flex outline-none px-4 items-center text-base my-1.5 ${currPath === '/setting/account' ? 'sub-active bg-gray-100' : ''}`}
+                    className={`flex outline-none active px-4 items-center text-base my-1.5 ${currPath === '/setting/account' ? 'sub-active bg-gray-100' : ''}`}
                 >
                     <div className="flex items-center flex-1">
                         <span
-                            style={{ ['--icon' as any]: "url('/assets/icons/circle-outline.svg') no-repeat center" }}
+                            style={{
+                                ['--icon' as any]: "url('/app/assets/icons/circle-outline.svg') no-repeat center",
+                                ['--icon-active' as any]: "url('/app/assets/icons/circle-outline.svg') no-repeat center",
+                            }}
                             className="icon inline-flex items-center justify-center mr-4"
                         ></span>
                         Akun
