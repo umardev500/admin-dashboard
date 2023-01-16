@@ -1,7 +1,7 @@
 import { NextRouter } from 'next/router'
 
 export const checkPath = (router: NextRouter, path: string): boolean => {
-    const curPath = router.pathname
+    const isMatch = router.pathname === path
 
-    return curPath === path
+    return isMatch
 }

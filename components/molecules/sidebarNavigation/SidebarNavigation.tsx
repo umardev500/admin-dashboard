@@ -13,10 +13,15 @@ const SidebarElement = (): any => {
 
     const router = useRouter()
 
-    const getActiveClass = (path: string): string => {
-        if (checkPath(router, path)) return 'active'
+    const getActiveClass = (path: string[]): string => {
+        let className = ''
+        path.forEach((val) => {
+            if (checkPath(router, val)) {
+                className = 'active'
+            }
+        })
 
-        return ''
+        return className
     }
 
     const onDropdownClick = useCallback(
@@ -41,7 +46,7 @@ const SidebarElement = (): any => {
         <div className="sidebar-navigation-container px-2">
             <ul className="sidebar-navigation">
                 <li className="overflow-hidden">
-                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/')}`} href="/">
+                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/'])}`} href="/">
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
@@ -55,7 +60,7 @@ const SidebarElement = (): any => {
                     </Link>
                 </li>
                 <li className="overflow-hidden">
-                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/products')}`} href="/products">
+                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/products'])}`} href="/products">
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
@@ -70,7 +75,7 @@ const SidebarElement = (): any => {
                     </Link>
                 </li>
                 <li className="overflow-hidden">
-                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/orders')}`} href="/orders">
+                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/orders'])}`} href="/orders">
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
@@ -85,7 +90,7 @@ const SidebarElement = (): any => {
                     </Link>
                 </li>
                 <li className="overflow-hidden">
-                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/customers')}`} href="/customers">
+                    <Link className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/customers'])}`} href="/customers">
                         <div className="flex items-center flex-1">
                             <span
                                 style={{
@@ -103,7 +108,7 @@ const SidebarElement = (): any => {
                 <li ref={settingItemRef} className="overflow-hidden">
                     <a
                         onClick={(e) => onDropdownClick(e, settingSubShown, setSettingSubShown, settingItemRef)}
-                        className={`flex px-4 items-center text-base my-1.5 ${getActiveClass('/settings')}`}
+                        className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/settings', '/settings/account'])}`}
                         href="#"
                     >
                         <div className="flex items-center flex-1">
