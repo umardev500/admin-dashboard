@@ -1,0 +1,28 @@
+import React from 'react'
+
+export const OverviewDetail: React.FC = () => {
+    return (
+        <div className="bg-white rounded-xl px-6 py-5 w-96">
+            <span className="roboto font-medium text-lg text-gray-500">Details</span>
+            <div className="flex justify-between items-center mt-4 border-b h-11 border-b-gray-100">
+                <span className="roboto font-medium text-gray-500">Email</span>
+                <span className="roboto text-gray-400">umar.dev500@gmail.com</span>
+            </div>
+            <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
+                <span className="roboto font-medium text-gray-500">Username</span>
+                <span className="roboto text-gray-400">umaralfaruq</span>
+            </div>
+            <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
+                <span className="roboto font-medium text-gray-500">Password</span>
+                <span className="roboto mt-1 text-gray-400">***************</span>
+            </div>
+            <div className="flex justify-between items-center h-11 border-b-gray-100">
+                <span className="roboto font-medium text-gray-500">Address</span>
+                <span className="roboto mt-1 text-gray-400">California, United States</span>
+            </div>
+            <div className="mt-6">
+                <button className="roboto font-medium bg-indigo-100 px-4 py-1.5 rounded text-indigo-400 w-full">See more</button>
+            </div>
+        </div>
+    )
+}
