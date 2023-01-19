@@ -7,8 +7,8 @@ export const AccountHeading: React.FC = () => {
             <div className="mt-10 flex items-center">
                 <Image src={'/app/assets/avatars/avatar-2.png'} className="border-3 border-white rounded-full" width={150} height={150} alt="avatar" />
                 <div className="flex flex-col ml-6">
-                    <div className="flex items-center roboto text-2xl font-medium text-gray-600">
-                        <span>Umar Alfaruq Assegaf</span>
+                    <div className="flex items-center text-2xl font-semibold text-gray-600">
+                        <span className="lexend">Umar Alfaruq Assegaf</span>
                         <Image className="ml-2.5" src={'/app/assets/icons/verify.png'} width={22} height={22} alt="icon" />
                     </div>
                     <span className="roboto text-15 text-gray-500 mt-1">Owner & Founder</span>

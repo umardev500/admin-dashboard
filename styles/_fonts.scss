@@ -70,6 +70,28 @@
     font-family: "QuicksandFont";
 }
 
+@font-face {
+    font-family: "Lexend";
+    src: url("../assets/fonts/lexend/Lexend-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Lexend";
+    src: url("../assets/fonts/lexend/Lexend-Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Lexend";
+    src: url("../assets/fonts/lexend/Lexend-SemiBold.ttf");
+    font-weight: 600;
+}
+
+.lexend {
+    font-family: "Lexend";
+}
+
 .text-15 {
     font-size: 15px;
 }
