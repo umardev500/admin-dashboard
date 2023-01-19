@@ -5,7 +5,7 @@ export const AccountHeading: React.FC = () => {
     return (
         <>
             <div className="mt-10 flex items-center">
-                <Image src={'/app/assets/avatars/avatar.png'} width={150} height={150} alt="avatar" />
+                <Image src={'/app/assets/avatars/avatar-2.png'} width={150} height={150} alt="avatar" />
                 <div className="flex flex-col ml-6">
                     <span className="roboto text-2xl font-medium text-gray-600">Umar Alfaruq</span>
                     <span className="roboto text-15 text-gray-500 mt-1">Owner & Founder</span>
