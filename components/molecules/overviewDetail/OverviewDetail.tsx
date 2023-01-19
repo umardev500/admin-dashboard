@@ -21,7 +21,19 @@ export const OverviewDetail: React.FC = () => {
                 <span className="roboto mt-1 text-gray-400">California, United States</span>
             </div>
             <div className="mt-6">
-                <button className="roboto font-medium bg-indigo-100 px-4 py-1.5 rounded text-indigo-400 w-full">See more</button>
+                <button className="flex h-10 items-center justify-center roboto font-medium bg-indigo-100 px-4 py-1.5 rounded text-indigo-400 w-full">
+                    <span className="mr-2">See more</span>
+                    <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.7274 5.43582L19.2916 11L13.7274 16.5642M3.70825 11H19.1358"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeMiterlimit="10"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
         </div>
     )

@@ -11,7 +11,7 @@ const Account: NextPage = () => {
             </Head>
 
             <FramerLayout>
-                <div className="no-padding">
+                <div className="no-padding pb-40">
                     <Banner />
                     <div className="account-content">
                         <AccountHeading />
