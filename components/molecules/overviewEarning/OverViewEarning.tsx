@@ -7,8 +7,8 @@ interface Props {
 
 export const OverviewEarning: React.FC<Props> = ({ isPage }) => {
     return (
-        <div className="bg-white flex flex-1 flex-col rounded-xl px-6 py-5">
-            <div className={`flex items-center ${isPage !== true ? 'justify-between' : 'gap-5'} roboto font-medium text-lg text-gray-500`}>
+        <div className="bg-white flex flex-1 flex-col rounded-xl px-6 pt-2 pb-6">
+            <div className={`flex h-14 items-center ${isPage !== true ? 'justify-between' : 'gap-5'} roboto font-medium text-lg text-gray-500`}>
                 {isPage === true ? (
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -35,8 +35,8 @@ export const OverviewEarning: React.FC<Props> = ({ isPage }) => {
                     </svg>
                 ) : null}
             </div>
-            <div className="flex-1 flex items-center">
-                <Image className="ml-5" src={'/app/assets/icons/money-bag.png'} width={179} height={179} alt="icon" />
+            <div className="flex-1 flex items-center justify-center py-4">
+                <Image className="ml-5 opacity-50" src={'/app/assets/icons/money-bag.png'} width={211} height={210} alt="icon" />
                 <span className="text-8xl font-bold ml-4 text-gray-500 roboto">80.000.000</span>
             </div>
         </div>
