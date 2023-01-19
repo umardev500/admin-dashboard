@@ -6,15 +6,15 @@ export const OverviewDetail: React.FC = () => {
             <span className="roboto font-medium text-lg text-gray-500">Details</span>
             <div className="flex justify-between items-center mt-4 border-b h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Email</span>
-                <span className="roboto text-gray-400">umar.dev500@gmail.com</span>
+                <span className="roboto text-gray-400">smith.dev500@gmail.com</span>
             </div>
             <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Username</span>
-                <span className="roboto text-gray-400">umaralfaruq</span>
+                <span className="roboto text-gray-400">wilsmith</span>
             </div>
             <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
-                <span className="roboto font-medium text-gray-500">Password</span>
-                <span className="roboto mt-1 text-gray-400">***************</span>
+                <span className="roboto font-medium text-gray-500">Full Name</span>
+                <span className="roboto mt-1 text-gray-400">Mark Wilson Smith</span>
             </div>
             <div className="flex justify-between items-center h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Address</span>
