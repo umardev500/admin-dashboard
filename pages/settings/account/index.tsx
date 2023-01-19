@@ -1,9 +1,10 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
-import { AccountContent, AccountHeading, FramerLayout } from '../../../components'
+import { ReactElement } from 'react'
+import { AccountContent, AccountHeading, Dashboard, FramerLayout } from '../../../components'
 import { Banner } from '../../../components/atoms'
+import { NextPageWithLayout } from '../../_app'
 
-const Account: NextPage = () => {
+const Account: NextPageWithLayout = () => {
     return (
         <>
             <Head>
@@ -21,6 +22,10 @@ const Account: NextPage = () => {
             </FramerLayout>
         </>
     )
+}
+
+Account.getLayout = (page: ReactElement) => {
+    return <Dashboard>{page}</Dashboard>
 }
 
 export default Account

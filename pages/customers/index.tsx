@@ -1,17 +1,17 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import { CustomerList, FramerLayout } from '../../components'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { CustomerList, Dashboard, FramerLayout } from '../../components'
 import { Search } from '../../components/atoms'
 import { CustomerFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
 import { Customer, CustomerResponse } from '../../types'
+import { NextPageWithLayout } from '../_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 const DEFAULT_PER_PAGE = 10
 
-const Customers: NextPage = () => {
+const Customers: NextPageWithLayout = () => {
     const [pages, setPages] = useState<number>(0)
     const [perPage] = useState<number>(DEFAULT_PER_PAGE)
     const [total, setTotal] = useState<number>(0)
@@ -107,6 +107,10 @@ const Customers: NextPage = () => {
             </FramerLayout>
         </>
     )
+}
+
+Customers.getLayout = (page: ReactElement) => {
+    return <Dashboard>{page}</Dashboard>
 }
 
 export default Customers

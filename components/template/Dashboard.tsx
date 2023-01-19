@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion'
 import React, { useContext, useEffect, useRef } from 'react'
 import { AppContext, AppContextType } from '../../contexts'
 import { Header, Sidebar } from '../organisms'
@@ -26,9 +27,9 @@ export const Dashboard: React.FC<Props> = ({ children }) => {
         <div ref={bodyRef} className="app-container">
             <Header />
             <Sidebar />
-            <div>
+            <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
                 <div className="content">{children}</div>
-            </div>
+            </AnimatePresence>
         </div>
     )
 }

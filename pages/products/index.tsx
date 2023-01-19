@@ -1,16 +1,16 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
-import { useCallback, useEffect, useState } from 'react'
-import { FramerLayout } from '../../components'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { Dashboard, FramerLayout } from '../../components'
 import { Search } from '../../components/atoms'
 import { CreateProductModal, TableDataInfo } from '../../components/molecules'
 import { ProductList } from '../../components/organisms'
 import { Product, ProductResponse } from '../../types'
+import { NextPageWithLayout } from '../_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 const DEFAULT_PER_PAGE = 10
 
-const ProductPage: NextPage = () => {
+const ProductPage: NextPageWithLayout = () => {
     const [perPage] = useState<number>(DEFAULT_PER_PAGE)
     const [total, setTotal] = useState<number>(0)
     const [rows, setRows] = useState<number>(0)
@@ -90,6 +90,10 @@ const ProductPage: NextPage = () => {
             </FramerLayout>
         </>
     )
+}
+
+ProductPage.getLayout = (page: ReactElement) => {
+    return <Dashboard>{page}</Dashboard>
 }
 
 export default ProductPage

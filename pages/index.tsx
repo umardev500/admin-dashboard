@@ -1,9 +1,10 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import { FeaturedList, FramerLayout } from '../components'
+import { ReactElement, useEffect, useState } from 'react'
+import { Dashboard, FeaturedList, FramerLayout } from '../components'
 import { setCookie } from '../helpers'
 import { CustomerResponse } from '../types'
+import { NextPageWithLayout } from './_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
@@ -11,7 +12,7 @@ interface GetServerSidePropsResult {
     userId: string
 }
 
-export default function Home(props: any): React.ReactNode {
+const Home: NextPageWithLayout = () => {
     const [customerCount, setCustomerCount] = useState(0)
     const [expiredCount, setExpiredCount] = useState(0)
     const [orderPendingCount, setOrderPendingCount] = useState(0)
@@ -73,6 +74,10 @@ export default function Home(props: any): React.ReactNode {
     )
 }
 
+Home.getLayout = (page: ReactElement) => {
+    return <Dashboard>{page}</Dashboard>
+}
+
 export const getServerSideProps: GetServerSideProps<GetServerSidePropsResult> = async (ctx) => {
     const cipherText = setCookie(ctx)
 
@@ -82,3 +87,5 @@ export const getServerSideProps: GetServerSideProps<GetServerSidePropsResult> = 
         },
     }
 }
+
+export default Home

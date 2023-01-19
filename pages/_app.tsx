@@ -1,29 +1,23 @@
-import '../styles/app.scss'
+import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
+import { ReactElement, ReactNode } from 'react'
 import { AppProvider, MainProvider } from '../contexts'
-import { Dashboard } from '../components'
-import { AnimatePresence } from 'framer-motion'
+import '../styles/app.scss'
 
-export default function App({ Component, pageProps, router }: AppProps): React.ReactNode {
-    const { pathname } = router
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+    getLayout?: (page: ReactElement) => ReactNode
+}
 
-    const noAuth = ['/auth', '/register']
+type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout
+}
 
-    const isOk = noAuth.find((val) => val === pathname)
+export default function App({ Component, pageProps }: AppPropsWithLayout): React.ReactNode {
+    const getLayout = Component.getLayout ?? ((page) => page)
 
     return (
         <MainProvider>
-            <AppProvider>
-                {isOk === undefined ? (
-                    <Dashboard>
-                        <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
-                            <Component {...pageProps} />
-                        </AnimatePresence>
-                    </Dashboard>
-                ) : (
-                    <Component {...pageProps} />
-                )}
-            </AppProvider>
+            <AppProvider>{getLayout(<Component {...pageProps} />)}</AppProvider>
         </MainProvider>
     )
 }

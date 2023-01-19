@@ -1,17 +1,17 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import { FramerLayout, OrderList } from '../../components'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { Dashboard, FramerLayout, OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
 import { Order, OrderResponse } from '../../types'
+import { NextPageWithLayout } from '../_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 const DEFAULT_PER_PAGE = 10
 
-const Orders: NextPage = () => {
+const Orders: NextPageWithLayout = () => {
     const [pages, setPages] = useState<number>(0)
     const [perPage, setPerPage] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
@@ -108,6 +108,10 @@ const Orders: NextPage = () => {
             </FramerLayout>
         </>
     )
+}
+
+Orders.getLayout = (page: ReactElement) => {
+    return <Dashboard>{page}</Dashboard>
 }
 
 export default Orders
