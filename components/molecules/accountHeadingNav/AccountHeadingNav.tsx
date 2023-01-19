@@ -9,12 +9,12 @@ export const AccountHeadingNav: React.FC = () => {
                 </a>
             </li>
             <li>
-                <a href="#" className="outline-none inline-flex items-center justify-center roboto font-medium text-gray-500 px-4 h-10">
+                <a href="#" className="outline-none inline-flex items-center justify-center roboto font-medium text-gray-500 hover:text-gray-600 px-4 h-10">
                     Earnings
                 </a>
             </li>
             <li>
-                <a href="#" className="outline-none inline-flex items-center justify-center roboto font-medium text-gray-500 px-4 h-10">
+                <a href="#" className="outline-none inline-flex items-center justify-center roboto font-medium text-gray-500 hover:text-gray-600 px-4 h-10">
                     Profiles
                 </a>
             </li>
