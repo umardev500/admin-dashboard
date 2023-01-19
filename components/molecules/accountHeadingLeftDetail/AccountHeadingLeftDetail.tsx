@@ -8,8 +8,8 @@ export const AccountHeadingLeftDetail: React.FC = () => {
                 <span className="lexend">Mark Wilson Smith</span>
                 <Image className="ml-2.5" src={'/app/assets/icons/verify.png'} width={22} height={22} alt="icon" />
             </div>
-            <span className="roboto text-15 text-gray-500 mt-1">Owner & Founder</span>
-            <div className="roboto text-15 text-gray-500 mt-1 flex items-center">
+            <span className="roboto text-15 text-gray-500 mt-2">Owner & Founder</span>
+            <div className="roboto text-15 text-gray-500 mt-2 flex items-center">
                 <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_220_50)">
                         <path
