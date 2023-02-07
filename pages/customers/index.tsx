@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
-import { CustomerList, Dashboard, FramerLayout } from '../../components'
+import { CustomerList, Dashboard } from '../../components'
 import { Search } from '../../components/atoms'
 import { CustomerFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
@@ -79,32 +79,30 @@ const Customers: NextPageWithLayout = () => {
             <Head>
                 <title>Customers</title>
             </Head>
-            <FramerLayout>
-                <div className="pt-4">
-                    <div className="bg-white pt-4 pb-2 px-10 rounded-lg">
-                        <h1 className="text-2xl font-bold text-gray-500 mb-6 mt-2 roboto">Data Pelanggan</h1>
+            <div className="pt-4">
+                <div className="bg-white pt-4 pb-2 px-10 rounded-lg">
+                    <h1 className="text-2xl font-bold text-gray-500 mb-6 mt-2 roboto">Data Pelanggan</h1>
 
-                        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-5">
-                            <button
-                                onClick={() => setFilterModal(true)}
-                                className="outline-none bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-md font-medium roboto whitespace-nowrap mb-4 lg:mb-0 flex items-center justify-center lg:justify-start"
-                            >
-                                Filter tampilan
-                            </button>
-                            <Search callback={searchHandler} title="Search" placeholder="Search here..." />
-                        </div>
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-5">
+                        <button
+                            onClick={() => setFilterModal(true)}
+                            className="outline-none bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-md font-medium roboto whitespace-nowrap mb-4 lg:mb-0 flex items-center justify-center lg:justify-start"
+                        >
+                            Filter tampilan
+                        </button>
+                        <Search callback={searchHandler} title="Search" placeholder="Search here..." />
+                    </div>
 
-                        <CustomerList customerList={customerList} />
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                            <TableDataInfo loading={loading} total={total} perPage={perPage} rows={rows} />
+                    <CustomerList customerList={customerList} />
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <TableDataInfo loading={loading} total={total} perPage={perPage} rows={rows} />
 
-                            <Pagination pageCount={pages} />
-                        </div>
+                        <Pagination pageCount={pages} />
                     </div>
                 </div>
+            </div>
 
-                {filterModal ? <CustomerFilterModal saveCallback={filterSaveHandler} modalSetState={setFilterModal} /> : null}
-            </FramerLayout>
+            {filterModal ? <CustomerFilterModal saveCallback={filterSaveHandler} modalSetState={setFilterModal} /> : null}
         </>
     )
 }

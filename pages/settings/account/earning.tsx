@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { FramerLayout } from '../../../components'
+import { Dashboard } from '../../../components'
 import { OverviewEarning } from '../../../components/molecules'
 import { NextPageWithLayout } from '../../_app'
 import { Layout } from './Layout'
@@ -7,15 +7,17 @@ import { Layout } from './Layout'
 const Earning: NextPageWithLayout = () => {
     return (
         <div className="mt-10">
-            <FramerLayout>
-                <OverviewEarning isPage />
-            </FramerLayout>
+            <OverviewEarning isPage />
         </div>
     )
 }
 
 Earning.getLayout = (page: ReactElement) => {
-    return <Layout>{page}</Layout>
+    return (
+        <Dashboard>
+            <Layout>{page}</Layout>
+        </Dashboard>
+    )
 }
 
 export default Earning

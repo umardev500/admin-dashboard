@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { ReactElement, useEffect, useState } from 'react'
-import { Dashboard, FeaturedList, FramerLayout } from '../components'
+import { Dashboard, FeaturedList } from '../components'
 import { setCookie } from '../helpers'
 import { CustomerResponse } from '../types'
 import { NextPageWithLayout } from './_app'
@@ -67,9 +67,7 @@ const Home: NextPageWithLayout = () => {
             <Head>
                 <title>Dashboard</title>
             </Head>
-            <FramerLayout>
-                <FeaturedList customerCount={customerCount} expiredCount={expiredCount} orderPendingCount={orderPendingCount} />
-            </FramerLayout>
+            <FeaturedList customerCount={customerCount} expiredCount={expiredCount} orderPendingCount={orderPendingCount} />
         </>
     )
 }
