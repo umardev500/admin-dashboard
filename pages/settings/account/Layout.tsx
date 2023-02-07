@@ -1,6 +1,5 @@
-import { AnimatePresence } from 'framer-motion'
 import React from 'react'
-import { AccountHeading } from '../../../components'
+import { AccountHeading, Dashboard } from '../../../components'
 import { Banner } from '../../../components/atoms'
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 }
 export const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
     return (
-        <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
+        <Dashboard>
             <div className="no-padding pb-40">
                 <Banner />
                 <div className="account-content">
@@ -16,6 +15,6 @@ export const Layout: React.FC<Props> = ({ children }): React.ReactElement => {
                     {children}
                 </div>
             </div>
-        </AnimatePresence>
+        </Dashboard>
     )
 }

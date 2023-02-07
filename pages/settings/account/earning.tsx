@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Dashboard, FramerLayout } from '../../../components'
+import { FramerLayout } from '../../../components'
 import { OverviewEarning } from '../../../components/molecules'
 import { NextPageWithLayout } from '../../_app'
 import { Layout } from './Layout'
@@ -15,11 +15,7 @@ const Earning: NextPageWithLayout = () => {
 }
 
 Earning.getLayout = (page: ReactElement) => {
-    return (
-        <Dashboard>
-            <Layout>{page}</Layout>
-        </Dashboard>
-    )
+    return <Layout>{page}</Layout>
 }
 
 export default Earning

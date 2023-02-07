@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { ReactElement } from 'react'
-import { AccountContent, Dashboard, FramerLayout } from '../../../components'
+import { AccountContent, FramerLayout } from '../../../components'
 import { NextPageWithLayout } from '../../_app'
 import { Layout } from './Layout'
 
@@ -19,11 +19,7 @@ const Account: NextPageWithLayout = () => {
 }
 
 Account.getLayout = (page: ReactElement) => {
-    return (
-        <Dashboard>
-            <Layout>{page}</Layout>
-        </Dashboard>
-    )
+    return <Layout>{page}</Layout>
 }
 
 export default Account
