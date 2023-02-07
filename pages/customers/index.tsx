@@ -86,7 +86,7 @@ const Customers: NextPageWithLayout = () => {
                     <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-5">
                         <button
                             onClick={() => setFilterModal(true)}
-                            className="outline-none bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-md font-medium roboto whitespace-nowrap mb-4 lg:mb-0 flex items-center justify-center lg:justify-start"
+                            className="outline-none bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-md font-medium roboto whitespace-nowrap mb-4 lg:mb-0 flex items-center justify-center lg:justify-start"
                         >
                             Filter tampilan
                         </button>
