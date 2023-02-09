@@ -148,6 +148,7 @@ export const CreateProductModal: React.FC<Props> = ({ product_id: productId, nam
                                     name="category"
                                     className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
                                     type="text"
+                                    autoComplete="off"
                                     placeholder="Masukan nama produk"
                                 />
                             </div>
@@ -159,6 +160,7 @@ export const CreateProductModal: React.FC<Props> = ({ product_id: productId, nam
                                     name="category"
                                     className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
                                     type="text"
+                                    autoComplete="off"
                                     placeholder="5000"
                                 />
                             </div>
@@ -169,6 +171,7 @@ export const CreateProductModal: React.FC<Props> = ({ product_id: productId, nam
                                     name="category"
                                     className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
                                     type="number"
+                                    autoComplete="off"
                                     placeholder="5000"
                                 />
                             </div>
@@ -177,6 +180,7 @@ export const CreateProductModal: React.FC<Props> = ({ product_id: productId, nam
                                 <textarea
                                     ref={descriptionRef}
                                     name="category"
+                                    autoComplete="off"
                                     className="roboto w-full text-base font-medium text-gray-500 focus:ring-2 outline-none bg-gray-50 py-2 px-3.5 border border-gray-300 focus:border-blue-300 rounded-lg"
                                     placeholder="Masukan deskripsi yg simpel"
                                 ></textarea>
