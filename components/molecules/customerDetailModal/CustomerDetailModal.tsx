@@ -8,7 +8,7 @@ interface Props extends Customer {
 }
 
 export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Props) => {
-    const { customer_id: customerId, user, detail, status, created_at: createdTime } = props
+    const { customer_id: customerId, user, detail, status, created_at: createdTime, exp_until: expiredTime } = props
     const { npsn, name, email, wa, type, level, about, location } = detail
     const { address, village, district, city, province, postal_code: postalCode } = location ?? {}
     const modalRef = useRef<HTMLDivElement>(null)
@@ -95,6 +95,10 @@ export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Prop
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Pendaftaran:</span>
                             <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(createdTime)}</span>
+                        </div>
+                        <div className="mt-2">
+                            <span className="text-base font-medium roboto text-gray-500">Expired pada:</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{expiredTime !== undefined ? parseDate(expiredTime) : '-'}</span>
                         </div>
                         <div className="mt-4 border-t pt-2.5 mb-2">
                             <span className="flex text-base font-medium roboto text-gray-500">Kilasan:</span>
