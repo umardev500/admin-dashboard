@@ -85,8 +85,8 @@ export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Prop
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
                             <span
-                                className={`${status === 'cancel' ? 'bg-amber-400 text-gray-100' : ''} ${status === 'pending' ? 'bg-indigo-300 text-gray-100' : ''} ${
-                                    status === 'settlement' ? 'bg-green-400 text-gray-100' : ''
+                                className={`${status === 'expired' ? 'bg-amber-400 text-gray-100' : ''} ${status === 'pending' ? 'bg-indigo-300 text-gray-100' : ''} ${
+                                    status === 'active' ? 'bg-green-400 text-gray-100' : ''
                                 } text-sm ml-2 whitespace-normal roboto rounded p-1`}
                             >
                                 {toUpperFirst(status)}

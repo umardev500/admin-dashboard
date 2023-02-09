@@ -23,7 +23,7 @@ export interface Customer {
     user: string
     pass: string
     detail: CustomerDetail
-    status: string
+    status: 'active' | 'expired' | 'pending'
     exp_until: number
     created_at: number
     updated_at: number
