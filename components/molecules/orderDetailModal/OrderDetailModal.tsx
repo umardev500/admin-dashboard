@@ -96,7 +96,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         <div className="text-right">
                             <button
                                 onClick={backHandler}
-                                className={`mt-4 roboto font-medium hover:bg-red-700 border border-red-600 rounded-md px-4 py-2 text-red-600 hover:text-gray-50`}
+                                className={`mt-4 roboto font-medium border border-gray-300 hover:border-gray-400 rounded-md px-4 py-2 text-gray-400 hover:text-gray-500`}
                             >
                                 Kembali
                             </button>
