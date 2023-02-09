@@ -61,7 +61,7 @@ export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
                 </div>
 
                 {detailModal ? <CustomerDetailModal {...props} setModalState={setDetailModal} /> : null}
-                {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} deletedTime={deletedTime} /> : null}
+                {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} deletedTime={deletedTime} id={customerId} /> : null}
             </td>
         </tr>
     )

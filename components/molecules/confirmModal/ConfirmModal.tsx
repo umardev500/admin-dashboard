@@ -28,7 +28,7 @@ export const ConfirmModal: React.FC<Props> = ({ loading, status, modalSetState, 
     }
 
     return (
-        <div className="modal pt-5 px-5" ref={modalRef}>
+        <div className="modal pt-20 px-5" ref={modalRef}>
             <div style={{ width: 330 }} className="modal-inner bg-white rounded-lg" ref={modalInnerRef}>
                 {/* header */}
                 {!loading && status === '' ? (
