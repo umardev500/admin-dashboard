@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { parseDate, toUpperFirst } from '../../../helpers'
+import { getCustomerStatusClass, parseDate, toUpperFirst } from '../../../helpers'
 import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 import { Customer } from '../../../types'
 
@@ -84,12 +84,8 @@ export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Prop
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span
-                                className={`${status === 'expired' ? 'bg-amber-400 text-gray-100' : ''} ${status === 'pending' ? 'bg-indigo-300 text-gray-100' : ''} ${
-                                    status === 'active' ? 'bg-green-400 text-gray-100' : ''
-                                } text-sm ml-2 whitespace-normal roboto rounded p-1`}
-                            >
-                                {toUpperFirst(status)}
+                            <span className={`${getCustomerStatusClass(status, expiredTime)} text-gray-100 text-sm ml-2 whitespace-normal roboto rounded p-1`}>
+                                {toUpperFirst(expiredTime !== undefined || status === 'expired' ? 'Expired' : status)}
                             </span>
                         </div>
                         <div className="mt-2">
