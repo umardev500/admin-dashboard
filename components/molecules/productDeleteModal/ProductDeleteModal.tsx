@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import { notify } from '../../../helpers'
 import { BasicAPIResponse } from '../../../types'
 import { ConfirmModal } from '../confirmModal'
 
@@ -8,15 +9,13 @@ interface Props {
 }
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
-const MODAL_RESPONSE_TIMEOUT = 1000
 
 export const ProductDeleteModal: React.FC<Props> = ({ productId, modalSetState }) => {
     const [loading, setLoading] = useState(false)
-    const [status, setStatus] = useState('')
     const msg = `Apakah kamu yakin? ini akan dihapus secara permanen`
 
     // Do delete
-    const deleteBook = async (closer: () => void): Promise<void> => {
+    const deleteBook = async (): Promise<void> => {
         const target = `${MEMBERSHIP_API}/products/${productId}`
         const response = await fetch(target, { method: 'DELETE' })
         const data: BasicAPIResponse = await response.json()
@@ -26,23 +25,27 @@ export const ProductDeleteModal: React.FC<Props> = ({ productId, modalSetState }
     }
 
     const confirmedCallback = useCallback((closer: () => void) => {
-        deleteBook(closer)
-            .then(() => {
-                setLoading(false)
-                setStatus('succeed')
+        setLoading(true)
+        notify
+            .promise(
+                deleteBook(),
+                {
+                    loading: 'Menghapus produk...',
+                    success: 'Produk berhasil dihapus!',
+                    error: 'Something went wrong!',
+                },
+                {
+                    className: 'roboto',
+                    position: 'bottom-right',
+                }
+            )
+            .catch(() => {})
+            .finally(() => {
                 setTimeout(() => {
-                    modalSetState(false)
-                }, MODAL_RESPONSE_TIMEOUT)
-            })
-            .catch((err) => {
-                setLoading(false)
-                setStatus('error')
-                setTimeout(() => {
-                    modalSetState(false)
-                }, MODAL_RESPONSE_TIMEOUT)
-                console.log(err)
+                    closer()
+                }, 1000)
             })
     }, [])
 
-    return <ConfirmModal loading={loading} status={status} confirmedCallback={confirmedCallback} modalSetState={modalSetState} text={msg} />
+    return <ConfirmModal loading={loading} confirmedCallback={confirmedCallback} modalSetState={modalSetState} text={msg} />
 }
