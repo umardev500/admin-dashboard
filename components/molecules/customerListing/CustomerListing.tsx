@@ -9,7 +9,7 @@ interface Props extends Customer {
 }
 
 export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
-    const { customer_id: customerId, user, detail, created_at: createdTime, exp_until: expiredTime, status } = props
+    const { customer_id: customerId, user, detail, created_at: createdTime, exp_until: expiredTime, deleted_at: deletedTime, status } = props
     const { name, email } = detail
     const [detailModal, setDetailModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
@@ -61,7 +61,7 @@ export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
                 </div>
 
                 {detailModal ? <CustomerDetailModal {...props} setModalState={setDetailModal} /> : null}
-                {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} /> : null}
+                {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} deletedTime={deletedTime} /> : null}
             </td>
         </tr>
     )
