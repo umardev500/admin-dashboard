@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useSyncServerTime } from '../hooks'
+import { PageProps } from '../types'
 
-interface Props {
+interface Props extends PageProps {
     children?: React.ReactNode
 }
 
-export interface AppContextType {
+export interface AppContextType extends PageProps {
     shown: boolean
     setShown: React.Dispatch<React.SetStateAction<boolean>>
     serverTime: number
@@ -13,7 +14,7 @@ export interface AppContextType {
 
 export const AppContext = React.createContext({})
 
-export const AppProvider: React.FC<Props> = ({ children }) => {
+export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
     const [shown, setShown] = useState(false)
     const [serverTime, setServerTime] = useState(0)
 
@@ -24,6 +25,7 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
             shown,
             setShown,
             serverTime,
+            ...pageProps,
         }
     }, [shown, serverTime])
 

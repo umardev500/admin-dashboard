@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout): React
 
     return (
         <MainProvider>
-            <AppProvider>{getLayout(<Component {...pageProps} />)}</AppProvider>
+            <AppProvider {...pageProps}>{getLayout(<Component {...pageProps} />)}</AppProvider>
         </MainProvider>
     )
 }

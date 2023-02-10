@@ -3,15 +3,10 @@ import Head from 'next/head'
 import { ReactElement, useEffect, useState } from 'react'
 import { Dashboard, FeaturedList } from '../components'
 import { setCookie } from '../helpers'
-import { CustomerResponse } from '../types'
+import { CustomerResponse, PageProps } from '../types'
 import { NextPageWithLayout } from './_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
-
-interface GetServerSidePropsResult {
-    pageId: string
-    userData: any
-}
 
 const Home: NextPageWithLayout = () => {
     const [customerCount, setCustomerCount] = useState(0)
@@ -95,9 +90,9 @@ Home.getLayout = (page: ReactElement) => {
     return <Dashboard>{page}</Dashboard>
 }
 
-export const getServerSideProps: GetServerSideProps<GetServerSidePropsResult> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
     const cipherText = setCookie(ctx)
-    const userData = ctx.res.getHeader('user-data')
+    const userData = ctx.res.getHeader('user-data') as string
 
     return {
         props: {
