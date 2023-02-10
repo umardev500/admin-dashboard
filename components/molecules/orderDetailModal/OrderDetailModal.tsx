@@ -11,6 +11,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
     const { order_id: orderId, buyer, product, status, created_at: createdTime, updated_at: updatedTime } = props
     const { name: buyerName } = buyer
     const { product_id: productId, name: productName, price: productPrice, duration, description } = product[0]
+    const { payment_type: paymentType, va_number: vaNumber, gross_amount: grossAmount, bank } = props.payment
 
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
@@ -51,6 +52,24 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                             <div className="mt-2 mb-4 flex items-center">
                                 {/* <span className="text-base font-semibold">Product ID:</span> */}
                                 <span className="text-base text-gray-400 whitespace-normal roboto">{orderId}</span>
+                            </div>
+                        </div>
+                        <div className="border-b mb-4 pb-4">
+                            <div className="mt-2">
+                                <span className="text-base font-medium roboto text-gray-500">ID Transfer:</span>
+                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{vaNumber}</span>
+                            </div>
+                            <div className="mt-2">
+                                <span className="text-base font-medium roboto text-gray-500">Pembayaran:</span>
+                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{paymentType}</span>
+                            </div>
+                            <div className="mt-2">
+                                <span className="text-base font-medium roboto text-gray-500">Vendor:</span>
+                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{bank.toUpperCase()}</span>
+                            </div>
+                            <div className="mt-2">
+                                <span className="text-base font-medium roboto text-gray-500">Jumlah:</span>
+                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(grossAmount)}</span>
                             </div>
                         </div>
                         <div className="mt-2">

@@ -12,10 +12,19 @@ export interface OrderProduct {
     description: string
 }
 
+export interface OrderPayment {
+    payment_type: string
+    order_id: string
+    bank: string
+    va_number: string
+    gross_amount: number
+}
+
 export interface Order {
     order_id: string
     buyer: OrderUser
     product: OrderProduct[]
+    payment: OrderPayment
     status: string
     created_at: number
     updated_at?: number
