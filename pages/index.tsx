@@ -16,6 +16,7 @@ const Home: NextPageWithLayout = () => {
     const [customerCount, setCustomerCount] = useState(0)
     const [expiredCount, setExpiredCount] = useState(0)
     const [orderPendingCount, setOrderPendingCount] = useState(0)
+    const [newMemberCount, setNewMemberCount] = useState(0)
 
     const fetchData = async (route: string): Promise<number> => {
         // localhost:8000/membership/api/customers?status=none&count_only=true
@@ -44,6 +45,14 @@ const Home: NextPageWithLayout = () => {
                 console.log(err)
                 setCustomerCount(0)
             })
+        fetchData('/customers?status=today&count_only=true')
+            .then((rows) => {
+                setNewMemberCount(rows)
+            })
+            .catch((err) => {
+                console.log(err)
+                setNewMemberCount(0)
+            })
         fetchData('/customers?status=expired&count_only=true')
             .then((rows) => {
                 setExpiredCount(rows)
@@ -67,7 +76,7 @@ const Home: NextPageWithLayout = () => {
             <Head>
                 <title>Dashboard</title>
             </Head>
-            <FeaturedList customerCount={customerCount} expiredCount={expiredCount} orderPendingCount={orderPendingCount} />
+            <FeaturedList customerCount={customerCount} newMemberCount={newMemberCount} expiredCount={expiredCount} orderPendingCount={orderPendingCount} />
         </>
     )
 }
