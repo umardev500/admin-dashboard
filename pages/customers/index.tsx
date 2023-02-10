@@ -65,7 +65,6 @@ const Customers: NextPageWithLayout = () => {
 
         fetchData()
             .then(() => {
-                console.log('then')
                 setLoading(false)
             })
             .catch((err) => {
