@@ -62,13 +62,15 @@ export const ProductDetailModal = React.memo(({ setModalState, ...props }: Props
                             <span className="text-base font-medium roboto text-gray-500">Dibuat Pada:</span>
                             <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(createdTime)}</span>
                         </div>
-                        <div className="mt-2">
-                            <span className="text-base font-medium roboto text-gray-500">Diupdate Pada:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">
-                                {(updatedTime !== undefined ? parseDate(updatedTime) : undefined) ?? 'not yet'}
-                            </span>
-                        </div>
-                        <div className="mt-2 pt-2.5 mb-2">
+
+                        {updatedTime !== undefined ? (
+                            <div className="mt-2">
+                                <span className="text-base font-medium roboto text-gray-500">Diupdate Pada:</span>
+                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{parseDate(updatedTime)}</span>
+                            </div>
+                        ) : null}
+
+                        <div className="mt-4 pt-2.5 mb-2 border-t">
                             <span className="flex text-base font-medium roboto text-gray-500">Deskripsi:</span>
                             <span className="flex mt-1 text-base text-gray-400 whitespace-normal roboto">{description}</span>
                         </div>
