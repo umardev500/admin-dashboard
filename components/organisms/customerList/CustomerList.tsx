@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSyncServerTime } from '../../../hooks'
 import { Customer } from '../../../types'
 import { NoDataTable } from '../../atoms'
 import { CustomerListing } from '../../molecules'
@@ -9,7 +10,20 @@ interface Props {
 
 export const CustomerList = React.memo((props: Props) => {
     const { customerList } = props
+    const [serverTime, setServerTime] = useState(0)
+    const handleSyncServerTime = useSyncServerTime()
+
     // const [data] = useState([])
+
+    useEffect(() => {
+        handleSyncServerTime()
+            .then((dt) => {
+                setServerTime(dt)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
     return (
         <div>
@@ -30,7 +44,7 @@ export const CustomerList = React.memo((props: Props) => {
 
                     <tbody>
                         {customerList.map((val, index) => (
-                            <CustomerListing index={index + 1} {...val} key={val.customer_id} />
+                            <CustomerListing serverTime={serverTime} index={index + 1} {...val} key={val.customer_id} />
                         ))}
 
                         <NoDataTable list={customerList} />

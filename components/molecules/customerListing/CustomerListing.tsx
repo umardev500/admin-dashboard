@@ -6,13 +6,18 @@ import { CustomerDetailModal } from '../customerDetailModal'
 
 interface Props extends Customer {
     index: number
+    serverTime: number
 }
 
-export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
+export const CustomerListing: React.FC<Props> = ({ index, serverTime, ...props }) => {
     const { customer_id: customerId, user, detail, created_at: createdTime, exp_until: expiredTime, deleted_at: deletedTime, status } = props
     const { name, email } = detail
     const [detailModal, setDetailModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
+
+    const calculatedTime = expiredTime - serverTime
+    const isExpired = calculatedTime < 0
+    console.log('calculated:', calculatedTime, isExpired)
 
     const handleClickDelete = useCallback(() => {
         setDeleteModal(true)
@@ -32,7 +37,7 @@ export const CustomerListing: React.FC<Props> = ({ index, ...props }) => {
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdTime)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">
                 <span className={`${getCustomerStatusClass(status, expiredTime)} text-gray-100 px-1.5 py-1 rounded text-sm`}>
-                    {toUpperFirst(expiredTime !== undefined || status === 'expired' ? 'Expired' : status)}
+                    {toUpperFirst(isExpired || status === 'expired' ? 'Expired' : status)}
                 </span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
