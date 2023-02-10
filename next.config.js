@@ -4,6 +4,7 @@ const nextConfig = {
   basePath: "/app",
   env: {
     MEMBERSHIP_API: 'http://localhost:8000/membership/api',
+    SERVER_TIME_API: 'http://localhost:8000/server-time',
     SECRET: 'taiAyam'
   },
   async redirects() {
