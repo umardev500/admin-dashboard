@@ -15,9 +15,9 @@ interface GetServerSidePropsResult {
 
 const Home: NextPageWithLayout = () => {
     const [customerCount, setCustomerCount] = useState(0)
+    const [newMemberCount, setNewMemberCount] = useState(0)
     const [expiredCount, setExpiredCount] = useState(0)
     const [orderPendingCount, setOrderPendingCount] = useState(0)
-    const [newMemberCount, setNewMemberCount] = useState(0)
 
     const fetchData = async (route: string): Promise<number> => {
         // localhost:8000/membership/api/customers?status=none&count_only=true
@@ -38,38 +38,47 @@ const Home: NextPageWithLayout = () => {
 
     // Fetch customer count
     useEffect(() => {
-        fetchData('/customers?status=none&count_only=true')
-            .then((rows) => {
-                setCustomerCount(rows)
-            })
-            .catch((err) => {
+        const batchUpdate = async (): Promise<void> => {
+            let total = 0
+            let today = 0
+            let expired = 0
+            let pending = 0
+
+            try {
+                const response = await fetchData('/customers?status=none&count_only=true')
+                total = response
+            } catch (err) {
                 console.log(err)
-                setCustomerCount(0)
-            })
-        fetchData('/customers?status=today&count_only=true')
-            .then((rows) => {
-                setNewMemberCount(rows)
-            })
-            .catch((err) => {
+            }
+
+            try {
+                const response = await fetchData('/customers?status=today&count_only=true')
+                today = response
+            } catch (err) {
                 console.log(err)
-                setNewMemberCount(0)
-            })
-        fetchData('/customers?status=expired&count_only=true')
-            .then((rows) => {
-                setExpiredCount(rows)
-            })
-            .catch((err) => {
+            }
+
+            try {
+                const response = await fetchData('/customers?status=expired&count_only=true')
+                expired = response
+            } catch (err) {
                 console.log(err)
-                setExpiredCount(0)
-            })
-        fetchData('/orders?status=pending&count_only=true')
-            .then((rows) => {
-                setOrderPendingCount(rows)
-            })
-            .catch((err) => {
+            }
+
+            try {
+                const response = await fetchData('/customers?status=pending&count_only=true')
+                pending = response
+            } catch (err) {
                 console.log(err)
-                setOrderPendingCount(0)
-            })
+            }
+
+            setCustomerCount(total)
+            setNewMemberCount(today)
+            setExpiredCount(expired)
+            setOrderPendingCount(pending)
+        }
+
+        batchUpdate().catch(() => {})
     }, [])
 
     return (
