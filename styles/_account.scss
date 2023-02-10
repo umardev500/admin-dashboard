@@ -3,6 +3,16 @@
     padding-right: 24px;
 }
 
+.detail {
+    /* flex-grow: 1; */
+    min-width: 384px !important;
+    flex-grow: 1;
+}
+
+.earning {
+    flex-grow: 10;
+}
+
 @media (min-width: 1025px) {
     .account-content {
         padding-left: 120px;

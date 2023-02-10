@@ -6,7 +6,7 @@ export const OverviewDetail: React.FC = () => {
     console.log(ctx.data)
 
     return (
-        <div className="bg-white rounded-xl px-6 py-5 w-full lg:w-96">
+        <div className="bg-white rounded-xl px-6 py-5 detail">
             <span className="roboto font-medium text-lg text-gray-500">Details</span>
             <div className="flex justify-between items-center mt-4 border-b h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Email</span>

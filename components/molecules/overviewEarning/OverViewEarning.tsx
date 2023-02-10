@@ -7,7 +7,7 @@ interface Props {
 
 export const OverviewEarning: React.FC<Props> = ({ isPage }) => {
     return (
-        <div className="bg-white flex flex-1 flex-col rounded-xl px-6 pt-2 pb-6">
+        <div className="bg-white flex earning flex-col rounded-xl px-6 pt-2 pb-6">
             <div className={`flex h-14 items-center ${isPage !== true ? 'justify-between' : 'gap-5'} roboto font-medium text-lg text-gray-500`}>
                 {isPage === true ? (
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
