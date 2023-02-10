@@ -65,7 +65,7 @@ export const CustomerListing: React.FC<Props> = ({ index, serverTime, ...props }
                     </button>
                 </div>
 
-                {detailModal ? <CustomerDetailModal {...props} setModalState={setDetailModal} /> : null}
+                {detailModal ? <CustomerDetailModal serverTime={serverTime} {...props} setModalState={setDetailModal} /> : null}
                 {deleteModal ? <CustomerDeleteModal modalSetState={setDeleteModal} deletedTime={deletedTime} id={customerId} /> : null}
             </td>
         </tr>

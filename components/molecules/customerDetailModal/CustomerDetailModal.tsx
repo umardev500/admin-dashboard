@@ -5,16 +5,18 @@ import { Customer } from '../../../types'
 
 interface Props extends Customer {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>
+    serverTime: number
 }
 
-export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Props) => {
+export const CustomerDetailModal = React.memo(({ setModalState, serverTime, ...props }: Props) => {
     const { customer_id: customerId, user, detail, status, created_at: createdTime, exp_until: expiredTime } = props
     const { npsn, name, email, wa, type, level, about, location } = detail
     const { address, village, district, city, province, postal_code: postalCode } = location ?? {}
     const modalRef = useRef<HTMLDivElement>(null)
     const modalInnerRef = useRef<HTMLDivElement>(null)
 
-    // console.log(bookCover)
+    const calculatedTime = expiredTime - serverTime
+    const isExpired = calculatedTime < 0
 
     useModalShowEffect({ modal: modalRef })
 
@@ -84,8 +86,8 @@ export const CustomerDetailModal = React.memo(({ setModalState, ...props }: Prop
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span className={`${getCustomerStatusClass(status, expiredTime)} text-gray-100 text-sm ml-2 whitespace-normal roboto rounded p-1`}>
-                                {toUpperFirst(expiredTime !== undefined || status === 'expired' ? 'Expired' : status)}
+                            <span className={`${getCustomerStatusClass(status, isExpired)} text-gray-100 text-sm ml-2 whitespace-normal roboto rounded p-1`}>
+                                {toUpperFirst(isExpired || status === 'expired' ? 'Expired' : status)}
                             </span>
                         </div>
                         <div className="mt-2">
