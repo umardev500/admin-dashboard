@@ -94,11 +94,11 @@ const Auth: NextPage = () => {
                     notify.success('Login succeed', { id: 'notify', className: 'roboto' })
 
                     const redirectRoute: string = decodeURI(router.query.redirect as string)
-                    if (redirectRoute !== undefined) {
+                    if (redirectRoute !== 'undefined') {
                         router.replace(redirectRoute).catch((err) => console.log(err))
                     }
 
-                    if (redirectRoute === undefined) router.replace('/').catch((err) => console.log(err))
+                    if (redirectRoute === 'undefined') router.replace('/').catch((err) => console.log(err))
                     return await Promise.resolve()
                 }
 
@@ -140,6 +140,7 @@ const Auth: NextPage = () => {
                                 className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
                                 type="text"
                                 placeholder="Username"
+                                value={'umardev500'}
                             />
                         </div>
                         <div
@@ -152,6 +153,7 @@ const Auth: NextPage = () => {
                                 className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
                                 type={showPass ? 'text' : 'password'}
                                 placeholder="Password"
+                                value={'umardev500pass'}
                             />
                             {isPassOn ? (
                                 <>
