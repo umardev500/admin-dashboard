@@ -57,7 +57,7 @@ const Auth: NextPage = () => {
     }, [retryTime])
 
     const handleSave = (): void => {
-        notify.loading('Loading...', { id: 'notify' })
+        notify.loading('Loading...', { id: 'notify', position: 'top-right' })
 
         const save = async (): Promise<void> => {
             const target = `http://localhost:8000/auth/admin`
@@ -85,7 +85,7 @@ const Auth: NextPage = () => {
                     return await Promise.resolve()
                 }
                 if (statusCode === 400) {
-                    notify.error('Bad request...', { id: 'notify', className: 'roboto' })
+                    notify.error('Something bad request...', { id: 'notify', className: 'roboto' })
                     return await Promise.resolve()
                 }
                 if (statusCode === 200) {
