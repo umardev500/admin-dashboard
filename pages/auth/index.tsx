@@ -10,6 +10,7 @@ import { BasicAPIResponse } from '../../types'
 const Auth: NextPage = () => {
     const [isPassOn, setIsPassOn] = useState(false)
     const [showPass, setShowPass] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [retryTime, setRetryTime] = useState(0)
     const wrapRef = useRef<HTMLDivElement>(null)
     const passRef = useRef<HTMLDivElement>(null)
@@ -57,6 +58,7 @@ const Auth: NextPage = () => {
     }, [retryTime])
 
     const handleSave = (): void => {
+        setLoading(true)
         notify.loading('Loading...', { id: 'notify', position: 'top-right' })
 
         const save = async (): Promise<void> => {
@@ -71,7 +73,7 @@ const Auth: NextPage = () => {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
-                        'page-ids': 'seyDhgklsmsnsiowrjhsdflkhsusalkfhlksahfsdio5',
+                        'page-id': 'seyDhgklsmsnsiowrjhsdflkhsusalkfhlksahfsdio5',
                         'Content-Type': 'application/json',
                     },
                     body: requestBody,
@@ -113,7 +115,11 @@ const Auth: NextPage = () => {
             }
         }
 
-        save().catch((err) => console.log(err))
+        save()
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     return (
@@ -183,7 +189,10 @@ const Auth: NextPage = () => {
                         </div>
                         <button
                             onClick={handleSave}
-                            className={`bg-indigo-500 hover:bg-indigo-600 w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-semibold quicksand`}
+                            disabled={loading}
+                            className={`${
+                                loading ? 'bg-indigo-400' : 'bg-indigo-500 hover:bg-indigo-600'
+                            } w-full mt-4 p-2 rounded-md outline-none text-gray-100 hover:text-gray-50 font-semibold quicksand`}
                         >
                             Submit
                         </button>
