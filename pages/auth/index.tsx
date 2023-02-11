@@ -71,14 +71,15 @@ const Auth: NextPage = () => {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
-                        userid: 'seyDhgklsmsnsiowrjhsdflkhsusalkfhlksahfsdio5',
+                        'page-ids': 'seyDhgklsmsnsiowrjhsdflkhsusalkfhlksahfsdio5',
                         'Content-Type': 'application/json',
                     },
                     body: requestBody,
                 })
 
                 const data: BasicAPIResponse = await response.json()
-                const statusCode = data.status_code
+                const statusCode = data.status_code ?? response.status
+
                 if (statusCode === 404) {
                     notify.error('Account not found', { id: 'notify', className: 'roboto' })
                     return await Promise.resolve()
