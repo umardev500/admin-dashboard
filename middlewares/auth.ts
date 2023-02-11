@@ -4,12 +4,11 @@ import { NextRequest } from 'next/server'
 
 export const auth = async (req: NextRequest): Promise<void> => {
     const tokenCookie = req.cookies.get('token')
-    let token = ''
+    const token = tokenCookie?.value
+
     if (token === undefined) {
-        const err = 'Uauthorized'
+        const err = 'Unauthorized'
         return await Promise.reject(err)
-    } else {
-        token = tokenCookie?.value as string
     }
 
     const key = process.env.SECRET
