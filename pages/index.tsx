@@ -92,12 +92,12 @@ Home.getLayout = (page: ReactElement) => {
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
     const cipherText = setCookie(ctx)
-    const userData = ctx.res.getHeader('user-data') as string
+    const userInfo = ctx.res.getHeader('user-data') as string
 
     return {
         props: {
             pageId: cipherText,
-            userData,
+            userInfo,
         },
     }
 }
