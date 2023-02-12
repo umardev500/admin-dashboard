@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
+const baseURL = 'https://b934-140-213-140-224.ap.ngrok.io'
+
 const nextConfig = {
   reactStrictMode: false,
   basePath: "/app",
   env: {
-    MEMBERSHIP_API: 'http://localhost:8000/membership/api',
-    SERVER_TIME_API: 'http://localhost:8000/server-time',
-    AUTH_API: 'http://localhost:8000/auth',
+    MEMBERSHIP_API: `${baseURL}/membership/api`,
+    SERVER_TIME_API: `${baseURL}/server-time`,
+    AUTH_API: `${baseURL}/auth`,
     SECRET: 'taiAyam'
   },
   async redirects() {

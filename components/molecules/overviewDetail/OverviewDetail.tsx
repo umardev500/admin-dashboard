@@ -10,21 +10,21 @@ export const OverviewDetail: React.FC = () => {
     return (
         <div className="bg-white rounded-xl px-6 py-5 detail">
             <span className="roboto font-medium text-lg text-gray-500">Details</span>
-            <div className="flex justify-between items-center mt-4 border-b h-11 border-b-gray-100">
-                <span className="roboto font-medium text-gray-500">Email</span>
-                <span className="roboto text-gray-400">{detail?.email}</span>
+            <div className="flex justify-between items-center mt-4 border-b py-3 flex-wrap border-b-gray-100">
+                <span className="roboto w-full lg:w-auto font-medium text-gray-500">Email</span>
+                <span className="roboto text-gray-400 text-right">{detail?.email}</span>
             </div>
-            <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
-                <span className="roboto font-medium text-gray-500">Username</span>
-                <span className="roboto text-gray-400">{userData?.user}</span>
+            <div className="flex justify-between items-center border-b py-3 flex-wrap border-b-gray-100">
+                <span className="roboto w-full lg:w-auto font-medium text-gray-500">Username</span>
+                <span className="roboto text-gray-400 text-right">{userData?.user}</span>
             </div>
-            <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
-                <span className="roboto font-medium text-gray-500 whitespace-nowrap">Full Name</span>
-                <span className="roboto mt-1 text-gray-400">{detail?.name}</span>
+            <div className="flex justify-between items-center border-b py-3 flex-wrap border-b-gray-100">
+                <span className="roboto w-full lg:w-auto font-medium text-gray-500 whitespace-nowrap">Full Name</span>
+                <span className="roboto mt-1 text-gray-400 text-right">{detail?.name}</span>
             </div>
-            <div className="flex justify-between items-center h-11 border-b-gray-100">
-                <span className="roboto font-medium text-gray-500">Address</span>
-                <span className="roboto mt-1 text-gray-400">
+            <div className="flex justify-between items-center py-3 flex-wrap border-b-gray-100">
+                <span className="roboto w-full lg:w-auto font-medium text-gray-500">Address</span>
+                <span className="roboto mt-1 text-gray-400 text-center">
                     {location?.city}, {location?.province}, Indonesia
                 </span>
             </div>
