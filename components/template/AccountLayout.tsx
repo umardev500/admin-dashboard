@@ -1,4 +1,5 @@
 import React from 'react'
+import { AccountProvider } from '../../contexts'
 import { AccountHeading } from '../organisms'
 
 interface Props {
@@ -6,12 +7,14 @@ interface Props {
 }
 export const AccountLayout: React.FC<Props> = ({ children }): React.ReactElement => {
     return (
-        <div className="no-padding pb-40">
-            {/* <Banner /> */}
-            <div className="account-content">
-                <AccountHeading />
-                {children}
+        <AccountProvider>
+            <div className="no-padding pb-40">
+                {/* <Banner /> */}
+                <div className="account-content">
+                    <AccountHeading />
+                    {children}
+                </div>
             </div>
-        </div>
+        </AccountProvider>
     )
 }

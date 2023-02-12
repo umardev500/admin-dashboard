@@ -1,6 +1,10 @@
 import React from 'react'
+import { AccountContext, AccountContextType } from '../../../contexts'
 
 export const OverviewDetail: React.FC = () => {
+    const ctx = React.useContext(AccountContext) as AccountContextType
+    console.log(ctx.data)
+
     return (
         <div className="bg-white rounded-xl px-6 py-5 w-96">
             <span className="roboto font-medium text-lg text-gray-500">Details</span>

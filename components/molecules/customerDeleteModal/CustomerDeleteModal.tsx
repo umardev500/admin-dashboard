@@ -19,7 +19,7 @@ export const CustomerDeleteModal: React.FC<Props> = ({ id, deletedTime, modalSet
     const msg = `Apakah kamu yakin? ini akan dihapus secara ${deletedType}`
 
     // Do delete
-    const deleteHandler = async (): Promise<void> => {
+    const deleteHandler = async (): Promise<any> => {
         const target = `${MEMBERSHIP_API}/customers/${id}?hard=${isPermanent ? 'false' : 'false'}`
 
         try {
@@ -32,10 +32,11 @@ export const CustomerDeleteModal: React.FC<Props> = ({ id, deletedTime, modalSet
 
             const data: BasicAPIResponse & modifyingResponse = await response.json()
             const isAffected = data.data.is_affected
+            const ms = 'something went wrong' as unknown
 
-            if (isAffected === undefined) return await Promise.reject('something went wrong')
+            if (isAffected === undefined) return await Promise.reject(ms)
         } catch (err) {
-            return await Promise.reject('something went wrong')
+            return await Promise.reject(err)
         }
     }
 
