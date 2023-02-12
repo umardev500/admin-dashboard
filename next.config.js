@@ -5,6 +5,7 @@ const nextConfig = {
   env: {
     MEMBERSHIP_API: 'http://localhost:8000/membership/api',
     SERVER_TIME_API: 'http://localhost:8000/server-time',
+    AUTH_API: 'http://localhost:8000/auth',
     SECRET: 'taiAyam'
   },
   async redirects() {

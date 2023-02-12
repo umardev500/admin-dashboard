@@ -7,6 +7,8 @@ import { getHeader, notify } from '../../helpers'
 import { useDetectOutsideClick } from '../../hooks'
 import { BasicAPIResponse } from '../../types'
 
+const AUTH_API = process.env.AUTH_API as string
+
 const Auth: NextPage = () => {
     const [isPassOn, setIsPassOn] = useState(false)
     const [showPass, setShowPass] = useState(false)
@@ -62,7 +64,7 @@ const Auth: NextPage = () => {
         notify.loading('Loading...', { id: 'notify', position: 'top-right' })
 
         const save = async (): Promise<void> => {
-            const target = `http://localhost:8000/auth/admin`
+            const target = `${AUTH_API}/admin`
             const requestBody = JSON.stringify({
                 username: userRef.current?.value,
                 password: passInputRef.current?.value,
