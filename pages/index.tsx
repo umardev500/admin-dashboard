@@ -1,8 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { ReactElement, useContext, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Dashboard, FeaturedList } from '../components'
-import { AppContext, AppContextType } from '../contexts'
 import { setCookie } from '../helpers'
 import { CustomerResponse, PageProps } from '../types'
 import { NextPageWithLayout } from './_app'
@@ -14,8 +13,6 @@ const Home: NextPageWithLayout = () => {
     const [newMemberCount, setNewMemberCount] = useState(0)
     const [expiredCount, setExpiredCount] = useState(0)
     const [orderPendingCount, setOrderPendingCount] = useState(0)
-    const ctx = useContext(AppContext) as AppContextType
-    console.log(ctx.userData)
 
     const fetchData = async (route: string): Promise<number> => {
         // localhost:8000/membership/api/customers?status=none&count_only=true

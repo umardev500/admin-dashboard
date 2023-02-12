@@ -1,1 +1,1 @@
-export * from './AccountHeadingLeftDetail'
+export * from './AccountHeadingInfo'
