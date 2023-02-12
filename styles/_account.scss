@@ -5,7 +5,7 @@
 
 .detail {
     /* flex-grow: 1; */
-    min-width: 384px !important;
+    min-width: 150px;
     flex-grow: 1;
 }
 
@@ -17,7 +17,11 @@
     .account-content {
         padding-left: 120px;
         padding-right: 120px;
-    }    
+    }
+
+    .detail {
+        min-width: 384px;
+    }
 }
 
 @media (min-width: 1280px) {

@@ -19,7 +19,7 @@ export const OverviewDetail: React.FC = () => {
                 <span className="roboto text-gray-400">{userData?.user}</span>
             </div>
             <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
-                <span className="roboto font-medium text-gray-500">Full Name</span>
+                <span className="roboto font-medium text-gray-500 whitespace-nowrap">Full Name</span>
                 <span className="roboto mt-1 text-gray-400">{detail?.name}</span>
             </div>
             <div className="flex justify-between items-center h-11 border-b-gray-100">
