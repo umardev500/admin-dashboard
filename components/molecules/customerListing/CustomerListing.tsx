@@ -17,7 +17,6 @@ export const CustomerListing: React.FC<Props> = ({ index, serverTime, ...props }
 
     const calculatedTime = expiredTime - serverTime
     const isExpired = calculatedTime < 0
-    console.log('calculated:', calculatedTime, isExpired)
 
     const handleClickDelete = useCallback(() => {
         setDeleteModal(true)
