@@ -35,9 +35,9 @@ export const OverviewEarning: React.FC<Props> = ({ isPage }) => {
                     </svg>
                 ) : null}
             </div>
-            <div className="flex-1 flex items-center justify-center py-4">
-                <Image className="ml-5 opacity-50" src={'/app/assets/icons/money-bag.png'} width={211} height={210} alt="icon" />
-                <span className="text-8xl font-bold ml-4 text-gray-500 roboto">80.000.000</span>
+            <div className="flex-1 flex flex-wrap items-center justify-center py-4">
+                <Image className="max-lg:w-36 ml-5 opacity-50" src={'/app/assets/icons/money-bag.png'} width={211} height={210} alt="icon" />
+                <span className="text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold ml-4 text-gray-500 roboto">80.000.000</span>
             </div>
         </div>
     )

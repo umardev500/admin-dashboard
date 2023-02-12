@@ -20,7 +20,7 @@ export const AccountHeadingNav: React.FC = () => {
     }
 
     return (
-        <ul className="flex gap-x-4">
+        <ul className="flex gap-x-4 overflow-auto">
             <li className="relative">
                 <Link href="/settings/account/" className={`${getClasses([''])} `}>
                     Overview

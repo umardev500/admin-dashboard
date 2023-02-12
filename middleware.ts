@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
             }
             return NextResponse.next()
         } catch (err) {
-            return NextResponse.rewrite(new URL(`/app/auth?redirect=${href}`, req.url))
+            // return NextResponse.rewrite(new URL(`/app/auth?redirect=${href}`, req.url))
         }
     }
 

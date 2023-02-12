@@ -14,7 +14,7 @@ export interface AppContextType {
 export const AppContext = React.createContext({})
 
 export const AppProvider: React.FC<Props> = ({ children }) => {
-    const [shown, setShown] = useState(true)
+    const [shown, setShown] = useState(false)
     const [serverTime, setServerTime] = useState(0)
 
     const handleSyncServerTime = useSyncServerTime()

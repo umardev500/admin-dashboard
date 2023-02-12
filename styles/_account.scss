@@ -1,4 +1,18 @@
 .account-content {
-    padding-left: 188px;
-    padding-right: 188px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+@media (min-width: 1025px) {
+    .account-content {
+        padding-left: 120px;
+        padding-right: 120px;
+    }    
+}
+
+@media (min-width: 1280px) {
+    .account-content {
+        padding-left: 188px;
+        padding-right: 188px;
+    }    
 }
