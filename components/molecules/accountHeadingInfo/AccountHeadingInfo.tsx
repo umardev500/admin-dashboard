@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-export const AccountHeadingLeftDetail: React.FC = () => {
+export const AccountHeadingInfo: React.FC = () => {
     return (
         <div className="flex flex-col ml-6">
             <div className="flex items-center text-lg font-semibold text-gray-600">

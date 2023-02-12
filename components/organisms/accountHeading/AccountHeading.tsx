@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { AccountHeadingLeftDetail, AccountHeadingNav } from '../../molecules'
+import { AccountHeadingInfo, AccountHeadingNav } from '../../molecules'
 
 export const AccountHeading: React.FC = () => {
     return (
@@ -13,7 +13,7 @@ export const AccountHeading: React.FC = () => {
                     height={150}
                     alt="avatar"
                 />
-                <AccountHeadingLeftDetail />
+                <AccountHeadingInfo />
             </div>
             <div className="mt-10 flex items-start justify-between">
                 <AccountHeadingNav />
