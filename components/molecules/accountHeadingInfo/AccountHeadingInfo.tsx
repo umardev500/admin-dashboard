@@ -1,11 +1,19 @@
 import React from 'react'
 import Image from 'next/image'
+import { User } from '../../../types'
 
-export const AccountHeadingInfo: React.FC = () => {
+interface Props {
+    userData?: User
+}
+
+export const AccountHeadingInfo: React.FC<Props> = ({ userData }) => {
+    const detail = userData?.detail
+    const location = detail?.location
+
     return (
         <div className="flex flex-col ml-6">
             <div className="flex items-center text-lg font-semibold text-gray-600">
-                <span className="lexend">Mark Wilson Smith</span>
+                <span className="lexend">{detail?.name}</span>
                 <Image className="ml-2.5" src={'/app/assets/icons/verify.png'} width={22} height={22} alt="icon" />
             </div>
             <span className="roboto text-15 text-gray-500 mt-2">Owner & Founder</span>
@@ -27,7 +35,9 @@ export const AccountHeadingInfo: React.FC = () => {
                         </clipPath>
                     </defs>
                 </svg>
-                <span className="ml-2">California, United States</span>
+                <span className="ml-2">
+                    {location?.city}, {location?.province}, Indonesia
+                </span>
             </div>
         </div>
     )

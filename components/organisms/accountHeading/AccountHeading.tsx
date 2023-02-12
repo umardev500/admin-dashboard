@@ -1,8 +1,12 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext, AppContextType } from '../../../contexts'
 import { AccountHeadingInfo, AccountHeadingNav } from '../../molecules'
 
 export const AccountHeading: React.FC = () => {
+    const ctx = useContext(AppContext) as AppContextType
+    const userData = ctx.userData
+
     return (
         <>
             <div className="mt-10 flex items-center">
@@ -13,7 +17,7 @@ export const AccountHeading: React.FC = () => {
                     height={150}
                     alt="avatar"
                 />
-                <AccountHeadingInfo />
+                <AccountHeadingInfo userData={userData} />
             </div>
             <div className="mt-10 flex items-start justify-between">
                 <AccountHeadingNav />

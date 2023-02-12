@@ -1,28 +1,32 @@
 import React from 'react'
-import { AccountContext, AccountContextType } from '../../../contexts'
+import { AppContext, AppContextType } from '../../../contexts'
 
 export const OverviewDetail: React.FC = () => {
-    const ctx = React.useContext(AccountContext) as AccountContextType
-    console.log(ctx.data)
+    const ctx = React.useContext(AppContext) as AppContextType
+    const userData = ctx.userData
+    const detail = userData?.detail
+    const location = detail?.location
 
     return (
         <div className="bg-white rounded-xl px-6 py-5 detail">
             <span className="roboto font-medium text-lg text-gray-500">Details</span>
             <div className="flex justify-between items-center mt-4 border-b h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Email</span>
-                <span className="roboto text-gray-400">smith.dev500@gmail.com</span>
+                <span className="roboto text-gray-400">{detail?.email}</span>
             </div>
             <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Username</span>
-                <span className="roboto text-gray-400">wilsmith</span>
+                <span className="roboto text-gray-400">{userData?.user}</span>
             </div>
             <div className="flex justify-between items-center border-b h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Full Name</span>
-                <span className="roboto mt-1 text-gray-400">Mark Wilson Smith</span>
+                <span className="roboto mt-1 text-gray-400">{detail?.name}</span>
             </div>
             <div className="flex justify-between items-center h-11 border-b-gray-100">
                 <span className="roboto font-medium text-gray-500">Address</span>
-                <span className="roboto mt-1 text-gray-400">California, United States</span>
+                <span className="roboto mt-1 text-gray-400">
+                    {location?.city}, {location?.province}, Indonesia
+                </span>
             </div>
             <div className="mt-6">
                 <button className="flex h-11 items-center justify-center roboto font-medium bg-blue-100 px-4 py-1.5 rounded text-blue-500 w-full">
