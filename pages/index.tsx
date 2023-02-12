@@ -10,6 +10,7 @@ const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
 interface GetServerSidePropsResult {
     userId: string
+    user_data: any
 }
 
 const Home: NextPageWithLayout = () => {
@@ -87,10 +88,12 @@ Home.getLayout = (page: ReactElement) => {
 
 export const getServerSideProps: GetServerSideProps<GetServerSidePropsResult> = async (ctx) => {
     const cipherText = setCookie(ctx)
+    const userData = ctx.res.getHeader('user-data')
 
     return {
         props: {
             userId: cipherText,
+            user_data: userData,
         },
     }
 }

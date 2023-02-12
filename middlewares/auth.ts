@@ -2,7 +2,7 @@
 import { jwtVerify } from 'jose'
 import { NextRequest } from 'next/server'
 
-export const auth = async (req: NextRequest): Promise<void> => {
+export const auth = async (req: NextRequest): Promise<any> => {
     const tokenCookie = req.cookies.get('token')
     const token = tokenCookie?.value
 
@@ -14,7 +14,7 @@ export const auth = async (req: NextRequest): Promise<void> => {
     const key = process.env.SECRET
     const secret = new TextEncoder().encode(key)
     try {
-        await jwtVerify(token, secret)
+        return await jwtVerify(token, secret)
     } catch (err) {
         return await Promise.reject(err)
     }
