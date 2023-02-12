@@ -6,15 +6,15 @@ import { generateId } from './generateId'
 export const setCookie = (ctx: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>): string => {
     let cipherText
     const cookies = nookies.get(ctx)
-    if (cookies.limiter !== undefined) {
-        cipherText = cookies.limiter
+    if (cookies['page-id'] !== undefined) {
+        cipherText = cookies['page-id']
     }
-    if (cookies.limiter === undefined) {
+    if (cookies['page-id'] === undefined) {
         cipherText = generateId()
     }
 
-    if (cookies.limiter === undefined && cipherText !== undefined) {
-        nookies.set(ctx, 'limiter', cipherText, {
+    if (cookies['page-id'] === undefined && cipherText !== undefined) {
+        nookies.set(ctx, 'page-id', cipherText, {
             maxAge: 30 * 24 * 60 * 60,
             path: '/',
             httpOnly: true,

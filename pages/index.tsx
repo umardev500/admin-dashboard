@@ -9,7 +9,7 @@ import { NextPageWithLayout } from './_app'
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
 interface GetServerSidePropsResult {
-    userId: string
+    page_id: string
     user_data: any
 }
 
@@ -92,7 +92,7 @@ export const getServerSideProps: GetServerSideProps<GetServerSidePropsResult> = 
 
     return {
         props: {
-            userId: cipherText,
+            page_id: cipherText,
             user_data: userData,
         },
     }
