@@ -11,8 +11,8 @@ export const AccountHeadingInfo: React.FC<Props> = ({ userData }) => {
     const location = detail?.location
 
     return (
-        <div className="flex flex-col ml-6">
-            <div className="flex items-center text-lg font-semibold text-gray-600">
+        <div className="flex flex-col lg:ml-6">
+            <div className="flex items-center text-sm lg:text-lg font-semibold text-gray-600">
                 <span className="lexend">{detail?.name}</span>
                 <Image className="ml-2.5" src={'/app/assets/icons/verify.png'} width={22} height={22} alt="icon" />
             </div>

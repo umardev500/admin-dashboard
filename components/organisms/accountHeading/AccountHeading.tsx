@@ -9,17 +9,17 @@ export const AccountHeading: React.FC = () => {
 
     return (
         <>
-            <div className="mt-10 flex items-center">
+            <div className="mt-10 flex flex-col lg:flex-row justify-center lg:justify-start items-center">
                 <Image
                     src={'/app/assets/avatars/avatar-2.png'}
-                    className="border-3 border-white rounded-full max-sm:w-20 max-sm:h-20 max-md:w-24 max-md:h-24 max-lg:w-28 max-lg:h-28"
+                    className="border-3 mb-4 lg:mb-0 border-white rounded-full max-sm:w-28 max-sm:h-28 max-md:w-24 max-md:h-24 max-lg:w-28 max-lg:h-28"
                     width={150}
                     height={150}
                     alt="avatar"
                 />
                 <AccountHeadingInfo userData={userData} />
             </div>
-            <div className="mt-10 flex items-start justify-between">
+            <div className="mt-10 flex flex-wrap-reverse gap-4 items-start justify-center lg:justify-between">
                 <AccountHeadingNav />
                 <button className="flex items-center roboto text-gray-500 hover:text-gray-600 bg-gray-200 hover:bg-gray-300 font-medium px-4 h-10 rounded-lg">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
