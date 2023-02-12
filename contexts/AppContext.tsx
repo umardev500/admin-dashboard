@@ -26,7 +26,7 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
             userData,
             ...pageProps,
         }
-    }, [shown])
+    }, [shown, userData])
 
     useEffect(() => {
         const fetchData = async (): Promise<void> => {
