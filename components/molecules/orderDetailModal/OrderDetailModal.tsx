@@ -69,7 +69,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                             </div>
                             <div className="mt-2">
                                 <span className="text-base font-medium roboto text-gray-500">Jumlah:</span>
-                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(grossAmount)}</span>
+                                <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(grossAmount, 'Rp')}</span>
                             </div>
                         </div>
                         <div className="mt-2">
@@ -82,7 +82,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Harga Produk:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(productPrice)}</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(productPrice, 'Rp')}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Durasi:</span>

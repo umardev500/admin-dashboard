@@ -52,7 +52,7 @@ export const ProductDetailModal = React.memo(({ setModalState, ...props }: Props
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Harga Produk:</span>
-                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(price ?? 0)}</span>
+                            <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(price ?? 0, 'Rp')}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Durasi:</span>

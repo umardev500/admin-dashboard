@@ -1,4 +1,6 @@
-export const toCurrency = (src: number): string => {
+export const toCurrency = (src: number, prefix?: string): string => {
+    if (prefix === undefined) prefix = ''
+
     const str = src.toString()
     const left = str.length % 3
     const leftNum = str.substring(0, left)
@@ -11,7 +13,7 @@ export const toCurrency = (src: number): string => {
         result = `${leftNum}${sep}${tho.join('.')}`
     }
 
-    if (result.length !== 0) result = 'Rp' + result
+    if (result.length !== 0) result = prefix + result
 
     return result
 }

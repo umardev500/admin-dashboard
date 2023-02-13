@@ -32,7 +32,7 @@ export const ProductListing: React.FC<Props> = ({ index, ...props }) => {
                 </span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{name}</td>
-            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toCurrency(price ?? 0)}</td>
+            <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toCurrency(price ?? 0, 'Rp')}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{duration} Hari</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdAt)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">

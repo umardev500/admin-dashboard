@@ -35,7 +35,7 @@ export const CreateProductModal: React.FC<Props> = ({ product_id: productId, nam
 
     useEffect(() => {
         if (nameRef.current != null && name !== undefined) nameRef.current.value = name
-        if (priceRef.current != null && price !== undefined) priceRef.current.value = toCurrency(price)
+        if (priceRef.current != null && price !== undefined) priceRef.current.value = toCurrency(price, 'Rp')
         if (durationRef.current != null && duration !== undefined) durationRef.current.value = duration.toString()
         if (descriptionRef.current != null && description !== undefined) descriptionRef.current.value = description
     }, [])
