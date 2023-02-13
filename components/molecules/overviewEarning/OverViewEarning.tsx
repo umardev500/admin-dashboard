@@ -1,11 +1,13 @@
 import Image from 'next/image'
 import React from 'react'
+import { toCurrency } from '../../../helpers'
 
 interface Props {
     isPage?: boolean
+    earning: number
 }
 
-export const OverviewEarning: React.FC<Props> = ({ isPage }) => {
+export const OverviewEarning: React.FC<Props> = ({ isPage, earning }) => {
     return (
         <div className="bg-white flex earning flex-col rounded-xl px-6 pt-2 pb-6">
             <div className={`flex h-14 items-center ${isPage !== true ? 'justify-between' : 'gap-5'} roboto font-medium text-lg text-gray-500`}>
@@ -37,7 +39,7 @@ export const OverviewEarning: React.FC<Props> = ({ isPage }) => {
             </div>
             <div className="flex-1 flex flex-wrap items-center justify-center py-4">
                 <Image className="max-lg:w-36 ml-5 opacity-50" src={'/app/assets/icons/money-bag.png'} width={211} height={210} alt="icon" />
-                <span className="text-4xl md:text-5xl lg:text-6xl 2xl:text-8xl font-bold ml-4 text-gray-500 roboto">80.000.000</span>
+                <span className="text-4xl md:text-5xl lg:text-6xl 2xl:text-8xl font-bold ml-4 text-gray-500 roboto">{toCurrency(earning)}</span>
             </div>
         </div>
     )

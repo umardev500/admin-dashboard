@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-const baseURL = 'https://b934-140-213-140-224.ap.ngrok.io'
+// const baseURL = 'https://b934-140-213-140-224.ap.ngrok.io'
+const baseURL = 'http://localhost:8000'
 
 const nextConfig = {
   reactStrictMode: false,
