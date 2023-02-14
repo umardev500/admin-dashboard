@@ -1,5 +1,6 @@
 export const toCurrency = (src: number, prefix?: string): string => {
     if (prefix === undefined) prefix = ''
+    src = src ?? 0
 
     const str = src.toString()
     const left = str.length % 3
