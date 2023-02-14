@@ -16,12 +16,12 @@ export const ProfileLayout: React.FC<Props> = ({ children, title }) => {
     return (
         <>
             <div className="mt-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <div className="flex flex-col lg:flex-row flex-wrap gap-5">
                     {/* Menu */}
                     <ProfileMenu />
 
                     {/* Content */}
-                    <div className="w-full col-span-full lg:col-span-9">
+                    <div className="flex-1 profile-content">
                         <div className="bg-white rounded-lg px-8 py-5 roboto">
                             <div className={`flex h-14 items-center gap-5 roboto font-medium text-lg text-gray-500`}>
                                 <button onClick={handleBack}>
@@ -36,7 +36,7 @@ export const ProfileLayout: React.FC<Props> = ({ children, title }) => {
                                         />
                                     </svg>
                                 </button>
-                                <span>{title}</span>
+                                <span className="whitespace-nowrap">{title}</span>
                             </div>
                             {children}
                         </div>

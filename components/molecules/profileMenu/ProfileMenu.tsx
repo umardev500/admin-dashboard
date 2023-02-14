@@ -16,7 +16,7 @@ export const ProfileMenu: React.FC = () => {
     }, [])
 
     return (
-        <div className="w-full col-span-full lg:col-span-3">
+        <div className="profile-menu">
             <div className="py-5 bg-white rounded-lg">
                 <Link
                     href={'/settings/account/profiles'}

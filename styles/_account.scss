@@ -44,7 +44,7 @@
     border-radius: 2.5px;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
     .account-content {
         padding-left: 120px;
         padding-right: 120px;
@@ -61,3 +61,5 @@
         padding-right: 188px;
     }    
 }
+
+@import "profile";
