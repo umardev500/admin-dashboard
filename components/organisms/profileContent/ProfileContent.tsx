@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
+import { AppContext, AppContextType } from '../../../contexts'
 import { Input, Radio } from '../../atoms'
 
 export const ProfileContent: React.FC = () => {
@@ -8,16 +9,28 @@ export const ProfileContent: React.FC = () => {
         router.back()
     }, [])
 
+    const ctx = useContext(AppContext) as AppContextType
+    const userData = ctx.userData
+    const userId = userData?.user_id
+    const detail = userData?.detail
+
+    const name = detail?.name.split(' ')
+    const lastName = name?.pop()
+    const firstName = name?.join(' ')
+    const email = detail?.email
+    const phone = detail?.phone
+    console.log('detail', detail)
+
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Nama Depan" placeholder="Masukan nama depan" required />
-                <Input title="Nama Belakang" placeholder="Nama belakang" required />
+                <Input title="Nama Depan" placeholder="Masukan nama depan" defaultValue={firstName} required />
+                <Input title="Nama Belakang" placeholder="Nama belakang" defaultValue={lastName} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Email" placeholder="schweinsteiger@gmail.com" required />
-                <Input title="Telepon" placeholder="+62 83879154310" required />
+                <Input title="Email" placeholder="schweinsteiger@gmail.com" defaultValue={email} required />
+                <Input title="Telepon" placeholder="+62 83879154310" defaultValue={phone} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
@@ -31,7 +44,7 @@ export const ProfileContent: React.FC = () => {
                     </div>
                 </div>
                 <div className="flex-1">
-                    <Input title="ID Pengguna" disabled placeholder="+62 83879154310" />
+                    <Input title="ID Pengguna" defaultValue={userId} disabled placeholder="+62 83879154310" />
                 </div>
             </div>
 

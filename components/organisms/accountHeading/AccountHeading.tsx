@@ -15,6 +15,7 @@ export const AccountHeading: React.FC = () => {
                 <Image
                     loader={imgLoader}
                     src={avatar}
+                    priority
                     className="border-3 bg-red-100 mb-4 lg:mb-0 border-white rounded-full max-sm:w-28 max-sm:h-28 max-md:w-24 max-md:h-24 max-lg:w-28 max-lg:h-28"
                     width={150}
                     height={150}
