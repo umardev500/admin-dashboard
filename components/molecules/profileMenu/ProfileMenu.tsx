@@ -20,7 +20,9 @@ export const ProfileMenu: React.FC = () => {
             <div className="py-5 bg-white rounded-lg">
                 <Link
                     href={'/settings/account/profiles'}
-                    className={`roboto border-l-4 ${getClasses(['/settings/account/profiles'])} py-3 flex items-center px-5 text-gray-500 hover:text-gray-400 font-medium`}
+                    className={`roboto whitespace-nowrap border-l-4 ${getClasses([
+                        '/settings/account/profiles',
+                    ])} py-3 flex items-center px-5 text-gray-500 hover:text-gray-400 font-medium`}
                 >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.59003 16.58L13.17 12L8.59003 7.41L10 6L16 12L10 18L8.59003 16.58Z" fill="currentColor" />
@@ -30,7 +32,9 @@ export const ProfileMenu: React.FC = () => {
                 </Link>
                 <Link
                     href={'/settings/account/profiles/address'}
-                    className={`roboto border-l-4 ${getClasses(['/settings/account/profiles/address'])} py-3 flex items-center px-5 text-gray-500 hover:text-gray-400 font-medium`}
+                    className={`roboto whitespace-nowrap border-l-4 ${getClasses([
+                        '/settings/account/profiles/address',
+                    ])} py-3 flex items-center px-5 text-gray-500 hover:text-gray-400 font-medium`}
                 >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.59003 16.58L13.17 12L8.59003 7.41L10 6L16 12L10 18L8.59003 16.58Z" fill="currentColor" />
@@ -40,7 +44,7 @@ export const ProfileMenu: React.FC = () => {
                 </Link>
                 <Link
                     href={'/settings/account/profiles/auhtentication'}
-                    className={`roboto border-l-4 ${getClasses([
+                    className={`roboto whitespace-nowrap border-l-4 ${getClasses([
                         '/settings/account/profiles/auhtentication',
                     ])} py-3 flex items-center px-5 text-gray-500 hover:text-gray-400 font-medium`}
                 >
