@@ -19,6 +19,7 @@ export const ProfileContent: React.FC = () => {
     const firstName = name?.join(' ')
     const email = detail?.email
     const phone = detail?.phone
+    const gender = detail?.gender
 
     return (
         <div className="mt-4 mb-4">
@@ -38,8 +39,8 @@ export const ProfileContent: React.FC = () => {
                         <span>Gender</span>
                     </div>
                     <div className="flex lg:flex-row gap-2 mt-2">
-                        <Radio name="gender" title='Laki"' />
-                        <Radio name="gender" title="Perempuan" />
+                        <Radio name="gender" checked={gender === 'male'} title='Laki"' />
+                        <Radio name="gender" checked={gender === 'female'} title="Perempuan" />
                     </div>
                 </div>
                 <div className="flex-1">

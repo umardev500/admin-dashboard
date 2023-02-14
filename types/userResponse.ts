@@ -14,6 +14,7 @@ export interface UserDetail {
     email: string
     phone: string
     avatar: string
+    gender: string
     location: UserLocation
 }
 
