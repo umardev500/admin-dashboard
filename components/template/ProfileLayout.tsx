@@ -22,7 +22,7 @@ export const ProfileLayout: React.FC<Props> = ({ children, title }) => {
 
                     {/* Content */}
                     <div className="w-full col-span-full lg:col-span-9">
-                        <div className="bg-white rounded-lg px-6 py-5 roboto">
+                        <div className="bg-white rounded-lg px-8 py-5 roboto">
                             <div className={`flex h-14 items-center gap-5 roboto font-medium text-lg text-gray-500`}>
                                 <button onClick={handleBack}>
                                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
