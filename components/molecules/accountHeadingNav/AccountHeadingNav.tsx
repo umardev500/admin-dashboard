@@ -32,7 +32,7 @@ export const AccountHeadingNav: React.FC = () => {
                 </Link>
             </li>
             <li className="relative">
-                <Link href="/settings/account/profile" className={getClasses(['/profile'])}>
+                <Link href="/settings/account/profiles" className={getClasses(['/profiles'])}>
                     Profiles
                 </Link>
             </li>
