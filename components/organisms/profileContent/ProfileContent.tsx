@@ -39,8 +39,8 @@ export const ProfileContent: React.FC = () => {
                         <span>Gender</span>
                     </div>
                     <div className="flex lg:flex-row gap-2 mt-2">
-                        <Radio name="gender" checked={gender === 'male'} title='Laki"' />
-                        <Radio name="gender" checked={gender === 'female'} title="Perempuan" />
+                        <Radio name="gender" defaultValue="male" checked={gender === 'male'} title='Laki"' />
+                        <Radio name="gender" defaultValue="female" checked={gender === 'female'} title="Perempuan" />
                     </div>
                 </div>
                 <div className="flex-1">
