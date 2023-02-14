@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
+import { AppContext, AppContextType } from '../../../contexts'
 import { Input } from '../../atoms'
 
 export const AddressContent: React.FC = () => {
@@ -8,21 +9,33 @@ export const AddressContent: React.FC = () => {
         router.back()
     }, [])
 
+    const ctx = useContext(AppContext) as AppContextType
+    const userData = ctx.userData
+    const detail = userData?.detail
+    const location = detail?.location
+
+    const province = location?.province
+    const city = location?.city
+    const district = location?.district
+    const village = location?.village
+    const postalCode = location?.postal_code
+    const address = location?.address
+
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Provinsi" placeholder="Masukan provinsi" required />
-                <Input title="Kota" placeholder="Kota" required />
+                <Input title="Provinsi" placeholder="Masukan provinsi" defaultValue={province} required />
+                <Input title="Kota" placeholder="Kota" defaultValue={city} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Kecamatan" placeholder="Kecamatan" required />
-                <Input title="Kelurahan" placeholder="Kelurahan" required />
+                <Input title="Kecamatan" placeholder="Kecamatan" defaultValue={district} required />
+                <Input title="Kelurahan" placeholder="Kelurahan" defaultValue={village} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input className="flex-none" title="Kode POS" placeholder="42290" required />
-                <Input title="Alamat" placeholder="Jl. Raya Labuan Km.120 Branch of Code" required />
+                <Input className="flex-none" title="Kode POS" placeholder="42290" defaultValue={postalCode} required />
+                <Input title="Alamat" placeholder="Jl. Raya Labuan Km.120 Branch of Code" defaultValue={address} required />
             </div>
 
             <div className="flex gap-2 mt-10 justify-end">

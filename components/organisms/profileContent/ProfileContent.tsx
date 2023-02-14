@@ -19,7 +19,6 @@ export const ProfileContent: React.FC = () => {
     const firstName = name?.join(' ')
     const email = detail?.email
     const phone = detail?.phone
-    console.log('detail', detail)
 
     return (
         <div className="mt-4 mb-4">
