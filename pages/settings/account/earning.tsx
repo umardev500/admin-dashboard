@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { ReactElement } from 'react'
 import { Dashboard } from '../../../components'
 import { OverviewEarning } from '../../../components/molecules'
@@ -9,9 +10,14 @@ const Earning: NextPageWithLayout = () => {
     const earning = useEarning()
 
     return (
-        <div className="mt-10">
-            <OverviewEarning earning={earning} isPage />
-        </div>
+        <>
+            <Head>
+                <title>Earning</title>
+            </Head>
+            <div className="mt-10">
+                <OverviewEarning earning={earning} isPage />
+            </div>
+        </>
     )
 }
 
