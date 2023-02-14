@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { ReactElement } from 'react'
-import { Dashboard, ProfileLayout } from '../../../../components'
+import { AddressContent, Dashboard, ProfileLayout } from '../../../../components'
 import { AccountLayout } from '../../../../components/template/AccountLayout'
 import { NextPageWithLayout } from '../../../_app'
 
@@ -11,7 +11,7 @@ const Address: NextPageWithLayout = () => {
                 <title>Address</title>
             </Head>
 
-            <div className="mt-4">address</div>
+            <AddressContent />
         </>
     )
 }

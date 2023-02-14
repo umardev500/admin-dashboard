@@ -5,14 +5,15 @@ interface Props {
     placeholder?: string
     disabled?: boolean
     required?: boolean
+    className?: string
 }
 
-export const Input: React.FC<Props> = ({ title, placeholder, disabled = false, required = false }) => {
+export const Input: React.FC<Props> = ({ title, placeholder, disabled = false, required = false, className = '' }) => {
     let disabledClasses = 'bg-gray-100'
     if (!disabled) disabledClasses = ''
 
     return (
-        <div className="flex-1">
+        <div className={`flex-1 ${className}`}>
             <div className="flex text-gray-500">
                 <span>{title}</span>
                 {required ? <span className="text-red-400">*</span> : null}
