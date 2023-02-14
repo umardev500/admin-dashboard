@@ -9,7 +9,7 @@ export const ProfileLayout: React.FC<Props> = ({ children }) => {
     return (
         <>
             <div className="mt-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-5">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                     {/* Menu */}
                     <ProfileMenu />
 
