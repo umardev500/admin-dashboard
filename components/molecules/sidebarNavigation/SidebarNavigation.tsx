@@ -108,7 +108,7 @@ const SidebarElement = (): any => {
                 <li ref={settingItemRef} className="overflow-hidden">
                     <a
                         onClick={(e) => onDropdownClick(e, settingSubShown, setSettingSubShown, settingItemRef)}
-                        className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/settings', '/settings/account'])}`}
+                        className={`flex px-4 items-center text-base my-1.5 ${getActiveClass(['/settings', '/settings/account', '/settings/account/earning'])}`}
                         href="#"
                     >
                         <div className="flex items-center flex-1">

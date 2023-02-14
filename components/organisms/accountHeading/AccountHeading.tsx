@@ -58,7 +58,7 @@ export const AccountHeading: React.FC = () => {
                         </defs>
                     </svg>
 
-                    <span className="ml-2 whitespace-nowrap">Edit Profile</span>
+                    <span className="ml-2 whitespace-nowrap">Change avatar</span>
                 </button>
             </div>
         </>
