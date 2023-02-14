@@ -1,8 +1,11 @@
 import { useRouter } from 'next/router'
-import React, { useCallback, useContext, useRef } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
 import { notify } from '../../../helpers'
+import { BasicAPIResponse, modifyingResponse, UserDetail } from '../../../types'
 import { Input, Radio } from '../../atoms'
+
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
 export const ProfileContent: React.FC = () => {
     const router = useRouter()
@@ -16,11 +19,19 @@ export const ProfileContent: React.FC = () => {
     const detail = userData?.detail
 
     const name = detail?.name.split(' ')
-    const lastName = name?.pop()
-    const firstName = name?.join(' ')
-    const email = detail?.email
-    const phone = detail?.phone
-    const gender = detail?.gender
+    const [lastName, setLastName] = useState<string | undefined>('')
+    const [firstName, setFirstName] = useState<string | undefined>('')
+    const [email, setEmail] = useState<string | undefined>('')
+    const [phone, setPhone] = useState<string | undefined>('')
+    const [gender, setGender] = useState<string | undefined>('')
+
+    useEffect(() => {
+        setLastName(name?.pop())
+        setFirstName(name?.join(' '))
+        setEmail(detail?.email)
+        setPhone(detail?.phone)
+        setGender(detail?.gender)
+    }, [detail?.name, detail?.email, detail?.phone, detail?.gender])
 
     const fNameRef = useRef<HTMLInputElement>(null)
     const lNameRef = useRef<HTMLInputElement>(null)
@@ -29,14 +40,23 @@ export const ProfileContent: React.FC = () => {
     const maleRef = useRef<HTMLInputElement>(null)
     const femaleRef = useRef<HTMLInputElement>(null)
 
-    const handleSave = (): void => {
-        const fNameValue = fNameRef.current?.value
-        const lNameValue = lNameRef.current?.value
-        const emailValue = emailRef.current?.value
-        const phoneValue = phoneRef.current?.value
-        let genderSelected
-        if (maleRef.current?.checked === true) genderSelected = 'male'
-        if (femaleRef.current?.checked === true) genderSelected = 'female'
+    const inputs = [fNameRef, lNameRef, emailRef, phoneRef]
+
+    const checkValue = (): boolean => {
+        let ok = true
+        for (let i = 0; i < inputs.length; i++) {
+            const val = inputs[i].current?.value
+            if (val === '') {
+                ok = false
+                break
+            }
+        }
+
+        return ok
+    }
+
+    const checkForChanged = (fNameValue: string, lNameValue: string, emailValue: string, phoneValue: string, genderSelected: string): boolean => {
+        let ok = true
 
         const changedFname = fNameValue !== firstName
         const changedLName = lNameValue !== lastName
@@ -46,15 +66,68 @@ export const ProfileContent: React.FC = () => {
 
         // Check for have not changing
         if (!(changedFname || changedLName || changedEmail || changedPhone || changedGender)) {
-            notify.error('Tidak ada perubahan untuk di update!', { className: 'roboto', position: 'bottom-right' })
+            ok = false
         }
+
+        return ok
+    }
+
+    const fetchPost = async (name: string, email: string, phone: string, gender: string): Promise<void> => {
+        const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/detail`
+        const userDetail: Omit<UserDetail, 'avatar' | 'location'> = {
+            name,
+            email,
+            phone,
+            gender,
+        }
+        const reqBody = JSON.stringify(userDetail)
+
+        try {
+            const response = await fetch(target, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: reqBody,
+            })
+
+            const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
+            const isUpdated = jsonData.data.is_affected
+            if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
+        } catch {}
+    }
+
+    const handleSave = (): void => {
+        const ok = checkValue()
+
+        if (!ok) {
+            notify.error('Yg bertanda bintang tidak boleh kosong!', { position: 'bottom-right', className: 'roboto' })
+            return
+        }
+
+        const fNameValue = fNameRef.current?.value ?? ''
+        const lNameValue = lNameRef.current?.value ?? ''
+        const emailValue = emailRef.current?.value ?? ''
+        const phoneValue = phoneRef.current?.value ?? ''
+        let genderSelected = ''
+        if (maleRef.current?.checked === true) genderSelected = 'male'
+        if (femaleRef.current?.checked === true) genderSelected = 'female'
+
+        const isChanged = checkForChanged(fNameValue, lNameValue, emailValue, phoneValue, genderSelected)
+        if (!isChanged) {
+            notify.error('Tidak ada perubahan untuk di update!', { className: 'roboto', position: 'bottom-right' })
+            return
+        }
+
+        const fullName = `${fNameValue} ${lNameValue}`.trim()
+        fetchPost(fullName, emailValue, phoneValue, genderSelected).catch(() => {})
     }
 
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
                 <Input ref={fNameRef} title="Nama Depan" placeholder="Masukan nama depan" defaultValue={firstName} required />
-                <Input ref={lNameRef} title="Nama Belakang" placeholder="Nama belakang" defaultValue={lastName} required />
+                <Input ref={lNameRef} title="Nama Belakang" placeholder="Nama belakang" defaultValue={lastName} />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
