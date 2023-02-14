@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useRef } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
+import { notify } from '../../../helpers'
 import { Input, Radio } from '../../atoms'
 
 export const ProfileContent: React.FC = () => {
@@ -25,20 +26,28 @@ export const ProfileContent: React.FC = () => {
     const lNameRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
     const phoneRef = useRef<HTMLInputElement>(null)
-    const genderRef = useRef<HTMLInputElement>(null)
+    const maleRef = useRef<HTMLInputElement>(null)
+    const femaleRef = useRef<HTMLInputElement>(null)
 
     const handleSave = (): void => {
         const fNameValue = fNameRef.current?.value
         const lNameValue = lNameRef.current?.value
         const emailValue = emailRef.current?.value
         const phoneValue = phoneRef.current?.value
-        const genderValue = genderRef.current?.value
+        let genderSelected
+        if (maleRef.current?.checked === true) genderSelected = 'male'
+        if (femaleRef.current?.checked === true) genderSelected = 'female'
 
         const changedFname = fNameValue !== firstName
         const changedLName = lNameValue !== lastName
         const changedEmail = emailValue !== email
         const changedPhone = phoneValue !== phone
-        const changedGender = genderValue !== gender
+        const changedGender = genderSelected !== gender
+
+        // Check for have not changing
+        if (!(changedFname || changedLName || changedEmail || changedPhone || changedGender)) {
+            notify.error('Tidak ada perubahan untuk di update!', { className: 'roboto', position: 'bottom-right' })
+        }
     }
 
     return (
@@ -49,8 +58,8 @@ export const ProfileContent: React.FC = () => {
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Email" placeholder="schweinsteiger@gmail.com" defaultValue={email} required />
-                <Input title="Telepon" placeholder="+62 83879154310" defaultValue={phone} required />
+                <Input ref={emailRef} title="Email" placeholder="schweinsteiger@gmail.com" defaultValue={email} required />
+                <Input ref={phoneRef} title="Telepon" placeholder="+62 83879154310" defaultValue={phone} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
@@ -59,8 +68,8 @@ export const ProfileContent: React.FC = () => {
                         <span>Gender</span>
                     </div>
                     <div className="flex lg:flex-row gap-2 mt-2">
-                        <Radio name="gender" defaultValue="male" checked={gender === 'male'} title='Laki"' />
-                        <Radio name="gender" defaultValue="female" checked={gender === 'female'} title="Perempuan" />
+                        <Radio ref={maleRef} name="gender" defaultValue="male" checked={gender === 'male'} title='Laki"' />
+                        <Radio ref={femaleRef} name="gender" defaultValue="female" checked={gender === 'female'} title="Perempuan" />
                     </div>
                 </div>
                 <div className="flex-1">
