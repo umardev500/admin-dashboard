@@ -94,6 +94,14 @@ export const ProfileContent: React.FC = () => {
             const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
             const isUpdated = jsonData.data.is_affected
             if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
+            if (isUpdated) {
+                const fullName = name.split(' ')
+                setLastName(fullName.pop())
+                setFirstName(fullName.join(' '))
+                setEmail(email)
+                setPhone(phone)
+                setGender(gender)
+            }
         } catch {}
     }
 
