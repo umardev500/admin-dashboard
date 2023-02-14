@@ -6,9 +6,10 @@ interface Props {
     disabled?: boolean
     required?: boolean
     className?: string
+    type?: string
 }
 
-export const Input: React.FC<Props> = ({ title, placeholder, disabled = false, required = false, className = '' }) => {
+export const Input: React.FC<Props> = ({ title, placeholder, disabled = false, required = false, className = '', type = 'text' }) => {
     let disabledClasses = 'bg-gray-100'
     if (!disabled) disabledClasses = ''
 
@@ -19,7 +20,7 @@ export const Input: React.FC<Props> = ({ title, placeholder, disabled = false, r
                 {required ? <span className="text-red-400">*</span> : null}
             </div>
             <input
-                type="text"
+                type={type}
                 disabled={disabled}
                 required={required}
                 className={`${disabledClasses} border text-gray-500 outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 px-4 h-12 w-full mt-2 rounded-lg`}

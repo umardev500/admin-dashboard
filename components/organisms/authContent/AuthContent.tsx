@@ -11,7 +11,7 @@ export const AuthContent: React.FC = () => {
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Password Lama" placeholder="Masukan password" required />
+                <Input type="password" title="Password Lama" placeholder="Masukan password" required />
                 <Input title="Password Baru" placeholder="Password baru" required />
             </div>
 
