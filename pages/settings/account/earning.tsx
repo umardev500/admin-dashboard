@@ -7,7 +7,7 @@ import { NextPageWithLayout } from '../../_app'
 const Earning: NextPageWithLayout = () => {
     return (
         <div className="mt-10">
-            <OverviewEarning isPage />
+            <OverviewEarning earning={100} isPage />
         </div>
     )
 }
