@@ -10,7 +10,7 @@ interface Props {
     defaultValue?: string
 }
 
-export const Input: React.FC<Props> = React.forwardRef(
+export const Input = React.forwardRef(
     ({ title, placeholder, disabled = false, required = false, className = '', type = 'text', defaultValue }: Props, ref?: React.LegacyRef<HTMLInputElement>) => {
         let disabledClasses = 'bg-gray-100'
         if (!disabled) disabledClasses = ''
