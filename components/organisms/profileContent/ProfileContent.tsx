@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useRef } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
 import { Input, Radio } from '../../atoms'
 
@@ -21,11 +21,31 @@ export const ProfileContent: React.FC = () => {
     const phone = detail?.phone
     const gender = detail?.gender
 
+    const fNameRef = useRef<HTMLInputElement>(null)
+    const lNameRef = useRef<HTMLInputElement>(null)
+    const emailRef = useRef<HTMLInputElement>(null)
+    const phoneRef = useRef<HTMLInputElement>(null)
+    const genderRef = useRef<HTMLInputElement>(null)
+
+    const handleSave = (): void => {
+        const fNameValue = fNameRef.current?.value
+        const lNameValue = lNameRef.current?.value
+        const emailValue = emailRef.current?.value
+        const phoneValue = phoneRef.current?.value
+        const genderValue = genderRef.current?.value
+
+        const changedFname = fNameValue !== firstName
+        const changedLName = lNameValue !== lastName
+        const changedEmail = emailValue !== email
+        const changedPhone = phoneValue !== phone
+        const changedGender = genderValue !== gender
+    }
+
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Nama Depan" placeholder="Masukan nama depan" defaultValue={firstName} required />
-                <Input title="Nama Belakang" placeholder="Nama belakang" defaultValue={lastName} required />
+                <Input ref={fNameRef} title="Nama Depan" placeholder="Masukan nama depan" defaultValue={firstName} required />
+                <Input ref={lNameRef} title="Nama Belakang" placeholder="Nama belakang" defaultValue={lastName} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
@@ -52,7 +72,10 @@ export const ProfileContent: React.FC = () => {
                 <button onClick={handleBack} className="flex outline-none border items-center gap-2 hover:bg-gray-100 text-gray-500 px-4 py-1.5 rounded-lg">
                     <span>Kembali</span>
                 </button>
-                <button className="flex outline-none border border-blue-500 items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg">
+                <button
+                    onClick={handleSave}
+                    className="flex outline-none border border-blue-500 items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg"
+                >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_220_67)">
                             <path

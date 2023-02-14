@@ -9,11 +9,22 @@ interface Props {
     defaultValue?: string
 }
 
-export const Radio: React.FC<Props> = ({ name, title, disabled = false, required = false, checked = false, defaultValue }) => {
+export const Radio = React.forwardRef(({ name, title, disabled = false, required = false, checked = false, defaultValue }: Props, ref?: React.LegacyRef<HTMLInputElement>) => {
     return (
         <div className="flex flex-1 bg-white whitespace-nowrap text-gray-500 items-center px-4 h-12 border rounded-lg">
-            <input type="radio" defaultValue={defaultValue} checked={checked} name={name} disabled={disabled} required={required} className="w-4 h-4 bg-red-500 m-0 p-0" />
+            <input
+                ref={ref}
+                type="radio"
+                defaultValue={defaultValue}
+                defaultChecked={checked}
+                name={name}
+                disabled={disabled}
+                required={required}
+                className="w-4 h-4 bg-red-500 m-0 p-0"
+            />
             <span className="ml-4">{title}</span>
         </div>
     )
-}
+})
+
+Radio.displayName = 'Radio'
