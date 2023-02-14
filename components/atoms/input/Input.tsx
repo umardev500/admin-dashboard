@@ -17,7 +17,7 @@ export const Input = React.forwardRef(
 
         return (
             <div className={`flex-1 ${className}`}>
-                <div className="flex text-gray-500">
+                <div className="flex whitespace-nowrap text-gray-500">
                     <span>{title}</span>
                     {required ? <span className="text-red-400">*</span> : null}
                 </div>
