@@ -11,7 +11,7 @@ const Address: NextPageWithLayout = () => {
                 <title>Address</title>
             </Head>
 
-            <div className="bg-white rounded-lg p-6 roboto">address</div>
+            <div className="mt-4">address</div>
         </>
     )
 }
@@ -20,7 +20,7 @@ Address.getLayout = (page: ReactElement) => {
     return (
         <Dashboard>
             <AccountLayout>
-                <ProfileLayout>{page}</ProfileLayout>
+                <ProfileLayout title="Pengaturan alamat">{page}</ProfileLayout>
             </AccountLayout>
         </Dashboard>
     )

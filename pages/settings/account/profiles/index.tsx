@@ -10,7 +10,7 @@ const Profiles: NextPageWithLayout = () => {
             <Head>
                 <title>Address</title>
             </Head>
-            <div className="bg-white rounded-lg p-6 roboto">Content</div>
+            <div className="mt-4">Content here</div>
         </>
     )
 }
@@ -19,7 +19,7 @@ Profiles.getLayout = (page: ReactElement) => {
     return (
         <Dashboard>
             <AccountLayout>
-                <ProfileLayout>{page}</ProfileLayout>
+                <ProfileLayout title="Pengaturan profil">{page}</ProfileLayout>
             </AccountLayout>
         </Dashboard>
     )
