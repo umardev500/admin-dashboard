@@ -1,18 +1,21 @@
 import Image from 'next/image'
 import React, { useContext } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
+import { imgLoader } from '../../../helpers'
 import { AccountHeadingInfo, AccountHeadingNav } from '../../molecules'
 
 export const AccountHeading: React.FC = () => {
     const ctx = useContext(AppContext) as AppContextType
     const userData = ctx.userData
+    const avatar = userData?.detail.avatar ?? 'avatar.png'
 
     return (
         <>
             <div className="mt-10 flex flex-col lg:flex-row justify-center lg:justify-start items-center">
                 <Image
-                    src={'/app/assets/avatars/avatar-2.png'}
-                    className="border-3 mb-4 lg:mb-0 border-white rounded-full max-sm:w-28 max-sm:h-28 max-md:w-24 max-md:h-24 max-lg:w-28 max-lg:h-28"
+                    loader={imgLoader}
+                    src={avatar}
+                    className="border-3 bg-red-100 mb-4 lg:mb-0 border-white rounded-full max-sm:w-28 max-sm:h-28 max-md:w-24 max-md:h-24 max-lg:w-28 max-lg:h-28"
                     width={150}
                     height={150}
                     alt="avatar"

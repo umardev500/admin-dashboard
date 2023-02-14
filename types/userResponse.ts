@@ -13,6 +13,7 @@ export interface UserDetail {
     name: string
     email: string
     phone: string
+    avatar: string
     location: UserLocation
 }
 

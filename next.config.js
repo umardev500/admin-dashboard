@@ -6,6 +6,7 @@ const nextConfig = {
   reactStrictMode: false,
   basePath: "/app",
   env: {
+    MEMBERSHIP_STATIC: `${baseURL}/membership/static`,
     MEMBERSHIP_API: `${baseURL}/membership/api`,
     SERVER_TIME_API: `${baseURL}/server-time`,
     AUTH_API: `${baseURL}/auth`,
