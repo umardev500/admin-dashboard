@@ -113,6 +113,8 @@ const SidebarElement = (): any => {
                             '/settings/account',
                             '/settings/account/earning',
                             '/settings/account/profiles',
+                            '/settings/account/profiles/address',
+                            '/settings/account/profiles/authentication',
                         ])}`}
                         href="#"
                     >
