@@ -1,10 +1,12 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
 import { Dashboard } from '../../components'
 import { Search } from '../../components/atoms'
 import { CreateProductModal, TableDataInfo } from '../../components/molecules'
 import { ProductList } from '../../components/organisms'
-import { Product, ProductResponse } from '../../types'
+import { setCookie } from '../../helpers'
+import { PageProps, Product, ProductResponse } from '../../types'
 import { NextPageWithLayout } from '../_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
@@ -92,6 +94,18 @@ const ProductPage: NextPageWithLayout = () => {
 
 ProductPage.getLayout = (page: ReactElement) => {
     return <Dashboard>{page}</Dashboard>
+}
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
+    const cipherText = setCookie(ctx)
+    const userInfo = ctx.res.getHeader('user-data') as string
+
+    return {
+        props: {
+            pageId: cipherText,
+            userInfo,
+        },
+    }
 }
 
 export default ProductPage

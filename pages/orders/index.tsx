@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
@@ -5,7 +6,8 @@ import { Dashboard, OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
-import { Order, OrderResponse } from '../../types'
+import { setCookie } from '../../helpers'
+import { Order, OrderResponse, PageProps } from '../../types'
 import { NextPageWithLayout } from '../_app'
 
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
@@ -110,6 +112,18 @@ const Orders: NextPageWithLayout = () => {
 
 Orders.getLayout = (page: ReactElement) => {
     return <Dashboard>{page}</Dashboard>
+}
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
+    const cipherText = setCookie(ctx)
+    const userInfo = ctx.res.getHeader('user-data') as string
+
+    return {
+        props: {
+            pageId: cipherText,
+            userInfo,
+        },
+    }
 }
 
 export default Orders
