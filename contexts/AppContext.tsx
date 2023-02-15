@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { PageProps, User, UserResponse } from '../types'
+import { PageProps, User, UserInfo, UserResponse } from '../types'
 
 interface Props extends PageProps {
     children?: React.ReactNode
@@ -19,6 +19,8 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
     const [shown, setShown] = useState(true)
     const [userData, setUserData] = useState<User>()
 
+    const userInfo: UserInfo = JSON.parse(pageProps.userInfo ?? '{}')
+
     const data = useMemo<AppContextType>(() => {
         return {
             shown,
@@ -29,21 +31,23 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
     }, [shown, userData])
 
     useEffect(() => {
-        const fetchData = async (): Promise<void> => {
-            const target = `${MEMBERSHIP_API}/users/16678292763`
+        if (pageProps.userInfo !== undefined) {
+            const fetchData = async (): Promise<void> => {
+                const target = `${MEMBERSHIP_API}/users/${userInfo.user_id}`
 
-            try {
-                const response = await fetch(target, { method: 'GET' })
-                const jsonData: UserResponse = await response.json()
-                const isEmpty = jsonData.data.is_empty ?? false
-                if (!isEmpty) setUserData(jsonData.data.payload)
-            } catch (err) {
-                console.log(err)
+                try {
+                    const response = await fetch(target, { method: 'GET' })
+                    const jsonData: UserResponse = await response.json()
+                    const isEmpty = jsonData.data.is_empty ?? false
+                    if (!isEmpty) setUserData(jsonData.data.payload)
+                } catch (err) {
+                    console.log(err)
+                }
             }
-        }
 
-        fetchData().catch(() => {})
-    }, [])
+            fetchData().catch(() => {})
+        }
+    }, [pageProps.userInfo])
 
     return <AppContext.Provider value={data}>{children}</AppContext.Provider>
 }

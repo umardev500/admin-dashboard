@@ -141,6 +141,7 @@ const Auth: NextPage = () => {
                                 ref={userRef}
                                 className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
                                 type="text"
+                                defaultValue={'username'}
                                 placeholder="Username"
                             />
                         </div>
@@ -153,6 +154,7 @@ const Auth: NextPage = () => {
                                 onFocus={() => setIsPassOn(true)}
                                 className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
                                 type={showPass ? 'text' : 'password'}
+                                defaultValue="password"
                                 placeholder="Password"
                             />
                             {isPassOn ? (
