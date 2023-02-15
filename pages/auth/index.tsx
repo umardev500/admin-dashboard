@@ -8,6 +8,8 @@ import { useDetectOutsideClick } from '../../hooks'
 import { BasicAPIResponse } from '../../types'
 
 const AUTH_API = process.env.AUTH_API as string
+const DUMY_USERNAME = process.env.DUMY_PASSWORD as string
+const DUMY_PASSWORD = process.env.DUMY_PASSWORD as string
 
 const Auth: NextPage = () => {
     const [isPassOn, setIsPassOn] = useState(false)
@@ -141,7 +143,7 @@ const Auth: NextPage = () => {
                                 ref={userRef}
                                 className="w-full border border-gray-200 focus:border-indigo-200 focus:ring-2 ring-indigo-400  outline-none px-4 py-2 rounded-md text-gray-500 text-base font-medium roboto"
                                 type="text"
-                                defaultValue={'username'}
+                                defaultValue={DUMY_USERNAME}
                                 placeholder="Username"
                             />
                         </div>
@@ -154,7 +156,7 @@ const Auth: NextPage = () => {
                                 onFocus={() => setIsPassOn(true)}
                                 className="w-full outline-none rounded-md text-gray-500 text-base font-medium roboto"
                                 type={showPass ? 'text' : 'password'}
-                                defaultValue="password"
+                                defaultValue={DUMY_PASSWORD}
                                 placeholder="Password"
                             />
                             {isPassOn ? (

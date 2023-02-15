@@ -10,7 +10,9 @@ const nextConfig = {
     MEMBERSHIP_API: `${baseURL}/membership/api`,
     SERVER_TIME_API: `${baseURL}/server-time`,
     AUTH_API: `${baseURL}/auth`,
-    SECRET: 'taiAyam'
+    SECRET: 'taiAyam',
+    DUMY_USERNAME: "username",
+    DUMY_PASSWORD: "password"
   },
   async redirects() {
     return [
