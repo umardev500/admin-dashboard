@@ -8,7 +8,7 @@ import { useDetectOutsideClick } from '../../hooks'
 import { BasicAPIResponse } from '../../types'
 
 const AUTH_API = process.env.AUTH_API as string
-const DUMY_USERNAME = process.env.DUMY_PASSWORD as string
+const DUMY_USERNAME = process.env.DUMY_USERNAME as string
 const DUMY_PASSWORD = process.env.DUMY_PASSWORD as string
 
 const Auth: NextPage = () => {
