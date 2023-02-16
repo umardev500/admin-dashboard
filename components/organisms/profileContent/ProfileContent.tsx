@@ -65,7 +65,6 @@ export const ProfileContent: React.FC = () => {
 
             const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
             const isUpdated = jsonData.data.is_affected
-            if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
             if (isUpdated) {
                 const fullName = name.split(' ')
                 setLastName(fullName.pop() ?? '')
@@ -74,8 +73,11 @@ export const ProfileContent: React.FC = () => {
                 setPhone(phone)
                 setTempGender(gender)
                 ctx.setReload((val) => val + 1)
+                return await Promise.resolve()
             }
-        } catch {}
+        } catch (err) {
+            return await Promise.reject(err)
+        }
     }
 
     const handleSave = (): void => {
@@ -105,6 +107,20 @@ export const ProfileContent: React.FC = () => {
 
         const fullName = `${fNameValue} ${lNameValue}`.trim()
         fetchPost(fullName, emailValue, phoneValue, gender).catch(() => {})
+        notify
+            .promise(
+                fetchPost(fullName, emailValue, phoneValue, gender),
+                {
+                    loading: 'Mengupdate profile',
+                    success: 'Update avatar berhasil',
+                    error: 'Something went wrong!',
+                },
+                {
+                    className: 'roboto',
+                    position: 'bottom-right',
+                }
+            )
+            .catch(() => {})
     }
 
     const handleChangeGender = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

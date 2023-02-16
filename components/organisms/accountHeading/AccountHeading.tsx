@@ -68,7 +68,7 @@ export const AccountHeading: React.FC = () => {
             .promise(
                 fetchPost(),
                 {
-                    loading: 'Mengupadte avatar',
+                    loading: 'Mengupdate avatar',
                     success: 'Update avatar berhasil',
                     error: 'Something went wrong!',
                 },
