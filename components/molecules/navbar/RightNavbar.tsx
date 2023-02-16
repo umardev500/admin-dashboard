@@ -22,7 +22,7 @@ export const RightNavbar: React.FC = () => {
         <ul className="navigation flex" ref={navRef}>
             <li className="flex relative">
                 <a onClick={(e) => onDropdownToggle(e, setAvatarMenu)} className="navigation-link avatar-item flex items-center px-4" href="#">
-                    <Image loader={imgLoader} src={avatar} width={38} height={38} alt="avatar" quality={100} priority />
+                    <Image loader={imgLoader} src={avatar} width={36} height={36} className="object-cover w-9 h-9 object-top rounded-full" alt="avatar" quality={100} priority />
                 </a>
                 {avatarMenu ? <Dropdown setState={setAvatarMenu} right /> : null}
             </li>
