@@ -9,6 +9,7 @@ export interface AppContextType extends PageProps {
     shown: boolean
     setShown: React.Dispatch<React.SetStateAction<boolean>>
     userData?: User
+    setReload: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const AppContext = React.createContext({})
@@ -18,6 +19,7 @@ const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
     const [shown, setShown] = useState(true)
     const [userData, setUserData] = useState<User>()
+    const [reload, setReload] = useState<number>(0)
 
     const userInfo: UserInfo = JSON.parse(pageProps.userInfo ?? '{}')
 
@@ -26,6 +28,7 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
             shown,
             setShown,
             userData,
+            setReload,
             ...pageProps,
         }
     }, [shown, userData])
@@ -47,7 +50,7 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
 
             fetchData().catch(() => {})
         }
-    }, [pageProps.userInfo])
+    }, [pageProps.userInfo, reload])
 
     return <AppContext.Provider value={data}>{children}</AppContext.Provider>
 }

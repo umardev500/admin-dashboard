@@ -103,6 +103,7 @@ export const ProfileContent: React.FC = () => {
                 setEmail(email)
                 setPhone(phone)
                 setTempGender(gender)
+                ctx.setReload((val) => val + 1)
             }
         } catch {}
     }
