@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
 import { getHeader, notify } from '../../helpers'
 import { useDetectOutsideClick } from '../../hooks'
 import { BasicAPIResponse } from '../../types'
@@ -212,7 +211,6 @@ const Auth: NextPage = () => {
                     ) : null}
                 </div>
             </div>
-            <Toaster />
         </>
     )
 }
