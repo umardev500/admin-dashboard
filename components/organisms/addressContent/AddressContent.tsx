@@ -1,9 +1,20 @@
 import { useRouter } from 'next/router'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
+import { checkInputValue, checkValuesChanged, notify } from '../../../helpers'
+import { BasicAPIResponse, modifyingResponse, UserDetail } from '../../../types'
 import { Input } from '../../atoms'
 
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
+
 export const AddressContent: React.FC = () => {
+    const provinceRef = useRef<HTMLInputElement>(null)
+    const cityRef = useRef<HTMLInputElement>(null)
+    const districtRef = useRef<HTMLInputElement>(null)
+    const villageRef = useRef<HTMLInputElement>(null)
+    const postalCodeRef = useRef<HTMLInputElement>(null)
+    const addressRef = useRef<HTMLInputElement>(null)
+
     const router = useRouter()
     const handleBack = useCallback(() => {
         router.back()
@@ -11,38 +22,121 @@ export const AddressContent: React.FC = () => {
 
     const ctx = useContext(AppContext) as AppContextType
     const userData = ctx.userData
+    const userId = userData?.user_id
     const detail = userData?.detail
     const location = detail?.location
 
-    const province = location?.province
-    const city = location?.city
-    const district = location?.district
-    const village = location?.village
-    const postalCode = location?.postal_code
-    const address = location?.address
+    const [province, setProvince] = useState<string>('')
+    const [city, setCity] = useState<string>('')
+    const [district, setDistrict] = useState<string>('')
+    const [village, setVillage] = useState<string>('')
+    const [postalCode, setPostalCode] = useState<string>('')
+    const [address, setAddress] = useState<string>('')
+
+    useEffect(() => {
+        setProvince(location?.province ?? '')
+        setCity(location?.city ?? '')
+        setDistrict(location?.district ?? '')
+        setVillage(location?.village ?? '')
+        setPostalCode(location?.postal_code ?? '')
+        setAddress(location?.address ?? '')
+    }, [])
+
+    const fetchPost = async (province: string, city: string, district: string, village: string, postalCode: string, address: string): Promise<void> => {
+        const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/locations`
+        const userDetail: Omit<UserDetail, 'name' | 'email' | 'phone' | 'avatar' | 'gender'> = {
+            location: {
+                province,
+                city,
+                district,
+                village,
+                postal_code: postalCode,
+                address,
+            },
+        }
+        const reqBody = JSON.stringify(userDetail)
+        try {
+            const response = await fetch(target, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: reqBody,
+            })
+
+            const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
+            const isUpdated = jsonData.data.is_affected
+            if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
+            if (isUpdated) {
+                setProvince(province)
+                setCity(city)
+                setDistrict(district)
+                setVillage(village)
+                setPostalCode(postalCode)
+                setAddress(address)
+                ctx.setReload((val) => val + 1)
+            }
+        } catch {
+            notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
+        }
+    }
+
+    const handleSave = (): void => {
+        const inputs = [provinceRef, cityRef, districtRef, villageRef, postalCodeRef, addressRef]
+        const ok = checkInputValue(inputs)
+        if (!ok) {
+            notify.error('Yg bertanda bintang tidak boleh kosong!', { position: 'bottom-right', className: 'roboto' })
+            return
+        }
+
+        const provinceValue = provinceRef.current?.value ?? ''
+        const cityValue = cityRef.current?.value ?? ''
+        const districtValue = districtRef.current?.value ?? ''
+        const villageValue = villageRef.current?.value ?? ''
+        const postalCodeValue = postalCodeRef.current?.value ?? ''
+        const addressValue = addressRef.current?.value ?? ''
+
+        const hasChanged = checkValuesChanged([
+            [provinceValue, province],
+            [cityValue, city],
+            [districtValue, district],
+            [villageValue, village],
+            [postalCodeValue, postalCode],
+            [addressValue, address],
+        ])
+        if (!hasChanged) {
+            notify.error('Tidak ada perubahan untuk di update!', { className: 'roboto', position: 'bottom-right' })
+            return
+        }
+
+        fetchPost(provinceValue, cityValue, districtValue, villageValue, postalCodeValue, addressValue).catch(() => {})
+    }
 
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Provinsi" placeholder="Masukan provinsi" defaultValue={province} required />
-                <Input title="Kota" placeholder="Kota" defaultValue={city} required />
+                <Input ref={provinceRef} title="Provinsi" placeholder="Masukan provinsi" defaultValue={province} required />
+                <Input ref={cityRef} title="Kota" placeholder="Kota" defaultValue={city} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input title="Kecamatan" placeholder="Kecamatan" defaultValue={district} required />
-                <Input title="Kelurahan" placeholder="Kelurahan" defaultValue={village} required />
+                <Input ref={districtRef} title="Kecamatan" placeholder="Kecamatan" defaultValue={district} required />
+                <Input ref={villageRef} title="Kelurahan" placeholder="Kelurahan" defaultValue={village} required />
             </div>
 
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input className="flex-none" title="Kode POS" placeholder="42290" defaultValue={postalCode} required />
-                <Input title="Alamat" placeholder="Jl. Raya Labuan Km.120 Branch of Code" defaultValue={address} required />
+                <Input ref={postalCodeRef} className="flex-none" title="Kode POS" placeholder="42290" defaultValue={postalCode} required />
+                <Input ref={addressRef} title="Alamat" placeholder="Jl. Raya Labuan Km.120 Branch of Code" defaultValue={address} required />
             </div>
 
             <div className="flex gap-2 mt-10 justify-end">
                 <button onClick={handleBack} className="flex outline-none border items-center gap-2 hover:bg-gray-100 text-gray-500 px-4 py-1.5 rounded-lg">
                     <span>Kembali</span>
                 </button>
-                <button className="flex outline-none border border-blue-500 items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg">
+                <button
+                    onClick={handleSave}
+                    className="flex outline-none border border-blue-500 items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg"
+                >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_220_67)">
                             <path
