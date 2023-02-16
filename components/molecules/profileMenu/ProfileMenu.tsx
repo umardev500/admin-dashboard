@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { checkRouteClass } from '../../../helpers'
 
 export const ProfileMenu: React.FC = () => {
@@ -10,10 +10,6 @@ export const ProfileMenu: React.FC = () => {
     const getClasses = (paths: string[]): string => {
         return checkRouteClass(paths, pathName, 'border-l-slate-500 hover:border-l-slate-400', 'border-l-transparent')
     }
-
-    useEffect(() => {
-        console.log('useEffect')
-    }, [])
 
     return (
         <div className="profile-menu">
