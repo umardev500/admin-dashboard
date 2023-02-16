@@ -67,7 +67,6 @@ export const AddressContent: React.FC = () => {
 
             const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
             const isUpdated = jsonData.data.is_affected
-            if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
             if (isUpdated) {
                 setProvince(province)
                 setCity(city)
@@ -76,9 +75,10 @@ export const AddressContent: React.FC = () => {
                 setPostalCode(postalCode)
                 setAddress(address)
                 ctx.setReload((val) => val + 1)
+                return await Promise.resolve()
             }
-        } catch {
-            notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
+        } catch (err) {
+            return await Promise.reject(err)
         }
     }
 
@@ -110,7 +110,20 @@ export const AddressContent: React.FC = () => {
             return
         }
 
-        fetchPost(provinceValue, cityValue, districtValue, villageValue, postalCodeValue, addressValue).catch(() => {})
+        notify
+            .promise(
+                fetchPost(provinceValue, cityValue, districtValue, villageValue, postalCodeValue, addressValue),
+                {
+                    loading: 'Mengupdate alamat',
+                    success: 'Update alamat berhasil',
+                    error: 'Something went wrong!',
+                },
+                {
+                    className: 'roboto',
+                    position: 'bottom-right',
+                }
+            )
+            .catch(() => {})
     }
 
     return (

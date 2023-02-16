@@ -112,7 +112,7 @@ export const ProfileContent: React.FC = () => {
                 fetchPost(fullName, emailValue, phoneValue, gender),
                 {
                     loading: 'Mengupdate profile',
-                    success: 'Update avatar berhasil',
+                    success: 'Update profile berhasil',
                     error: 'Something went wrong!',
                 },
                 {
