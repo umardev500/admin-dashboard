@@ -50,20 +50,34 @@ export const AccountHeading: React.FC = () => {
 
                 const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
                 const isUpdated = jsonData.data.is_affected
-                if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
+                // if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
                 if (isUpdated) {
                     ctx.setReload((val) => val + 1)
                     setChoosed('')
                     setFile(undefined)
+                    return await Promise.resolve()
                 }
-            } catch {
-                notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
+            } catch (err) {
+                return await Promise.reject(err)
             }
         }
     }
 
     const handleApply = useCallback(() => {
-        fetchPost().catch(() => {})
+        notify
+            .promise(
+                fetchPost(),
+                {
+                    loading: 'Mengupadte avatar',
+                    success: 'Update avatar berhasil',
+                    error: 'Something went wrong!',
+                },
+                {
+                    className: 'roboto',
+                    position: 'bottom-right',
+                }
+            )
+            .catch(() => {})
     }, [file])
 
     return (
