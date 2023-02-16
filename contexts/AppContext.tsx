@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { PageProps, User, UserInfo, UserResponse } from '../types'
 
 interface Props extends PageProps {
@@ -20,6 +21,7 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
     const [shown, setShown] = useState(true)
     const [userData, setUserData] = useState<User>()
     const [reload, setReload] = useState<number>(0)
+    const [loading, setLoading] = useState(true)
 
     const userInfo: UserInfo = JSON.parse(pageProps.userInfo ?? '{}')
 
@@ -52,5 +54,18 @@ export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
         }
     }, [pageProps.userInfo, reload])
 
-    return <AppContext.Provider value={data}>{children}</AppContext.Provider>
+    useEffect(() => {
+        setLoading(false)
+    }, [])
+
+    return (
+        <AppContext.Provider value={data}>
+            {!loading ? (
+                <>
+                    {children}
+                    <Toaster />
+                </>
+            ) : null}
+        </AppContext.Provider>
+    )
 }
