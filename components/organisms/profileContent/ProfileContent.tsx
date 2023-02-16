@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
-import { checkInputValue, notify } from '../../../helpers'
+import { checkInputValue, checkValuesChanged, notify } from '../../../helpers'
 import { BasicAPIResponse, modifyingResponse, UserDetail } from '../../../types'
 import { Input, Radio } from '../../atoms'
 
@@ -43,23 +43,6 @@ export const ProfileContent: React.FC = () => {
     const femaleRef = useRef<HTMLInputElement>(null)
 
     const inputs = [fNameRef, lNameRef, emailRef, phoneRef]
-
-    const checkForChanged = (fNameValue: string, lNameValue: string, emailValue: string, phoneValue: string, genderSelected: string): boolean => {
-        let ok = true
-
-        const changedFname = fNameValue !== firstName
-        const changedLName = lNameValue !== lastName
-        const changedEmail = emailValue !== email
-        const changedPhone = phoneValue !== phone
-        const changedGender = genderSelected !== tempGender
-
-        // Check for have not changing
-        if (!(changedFname || changedLName || changedEmail || changedPhone || changedGender)) {
-            ok = false
-        }
-
-        return ok
-    }
 
     const fetchPost = async (name: string, email: string, phone: string, gender: string): Promise<void> => {
         const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/detail`
@@ -107,18 +90,21 @@ export const ProfileContent: React.FC = () => {
         const lNameValue = lNameRef.current?.value ?? ''
         const emailValue = emailRef.current?.value ?? ''
         const phoneValue = phoneRef.current?.value ?? ''
-        let genderSelected = ''
-        if (maleRef.current?.checked === true) genderSelected = 'male'
-        if (femaleRef.current?.checked === true) genderSelected = 'female'
 
-        const isChanged = checkForChanged(fNameValue, lNameValue, emailValue, phoneValue, genderSelected)
+        const isChanged = checkValuesChanged([
+            [fNameValue, firstName],
+            [lNameValue, lastName],
+            [emailValue, email],
+            [phoneValue, phone],
+            [gender, tempGender],
+        ])
         if (!isChanged) {
             notify.error('Tidak ada perubahan untuk di update!', { className: 'roboto', position: 'bottom-right' })
             return
         }
 
         const fullName = `${fNameValue} ${lNameValue}`.trim()
-        fetchPost(fullName, emailValue, phoneValue, genderSelected).catch(() => {})
+        fetchPost(fullName, emailValue, phoneValue, gender).catch(() => {})
     }
 
     const handleChangeGender = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
