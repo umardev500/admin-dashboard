@@ -44,7 +44,6 @@ export const AuthContent: React.FC = () => {
 
             const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
             const isUpdated = jsonData.data.is_affected
-            if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
             if (isUpdated) {
                 setPass(pass)
                 setNewPass(newPass)
@@ -53,13 +52,14 @@ export const AuthContent: React.FC = () => {
                 // reset value
                 if (passRef.current != null) passRef.current.value = ''
                 if (newPassRef.current != null) newPassRef.current.value = ''
+                return await Promise.resolve()
             }
 
             if (!isUpdated) {
-                notify.error('Data tidak terupdate!', { className: 'roboto', position: 'bottom-right' })
+                return await Promise.reject(new Error('Data tidak terupdate'))
             }
-        } catch {
-            notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
+        } catch (err) {
+            return await Promise.reject(err)
         }
     }
 
@@ -84,7 +84,20 @@ export const AuthContent: React.FC = () => {
             return
         }
 
-        fetchPost(passValue, newPassValue).catch(() => {})
+        notify
+            .promise(
+                fetchPost(passValue, newPassValue),
+                {
+                    loading: 'Mengupdate avatar',
+                    success: 'Update avatar berhasil',
+                    error: 'Something went wrong!',
+                },
+                {
+                    className: 'roboto',
+                    position: 'bottom-right',
+                }
+            )
+            .catch(() => {})
     }
 
     return (
