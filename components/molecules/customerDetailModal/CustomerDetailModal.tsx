@@ -86,7 +86,7 @@ export const CustomerDetailModal = React.memo(({ setModalState, serverTime, ...p
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span className={`${getCustomerStatusClass(status, isExpired)} text-gray-100 text-sm ml-2 whitespace-normal roboto rounded p-1`}>
+                            <span className={`${getCustomerStatusClass(status, isExpired)} ml-2 whitespace-normal roboto rounded p-1`}>
                                 {toUpperFirst(isExpired || status === 'expired' ? 'Expired' : status)}
                             </span>
                         </div>
