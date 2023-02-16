@@ -1,15 +1,20 @@
 import Image from 'next/image'
 import React, { useCallback, useContext, useRef, useState } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
-import { imgLoader } from '../../../helpers'
+import { imgLoader, notify } from '../../../helpers'
+import { BasicAPIResponse, modifyingResponse } from '../../../types'
 import { AccountHeadingInfo, AccountHeadingNav } from '../../molecules'
+
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
 export const AccountHeading: React.FC = () => {
     const ctx = useContext(AppContext) as AppContextType
     const userData = ctx.userData
+    const userId = userData?.user_id
     const avatar = userData?.detail.avatar ?? 'avatar.png'
 
     const [choosed, setChoosed] = useState<string | ArrayBuffer>('')
+    const [file, setFile] = useState<File>()
     const inputFileRef = useRef<HTMLInputElement>(null)
 
     const handleAvatarChange = useCallback(() => {
@@ -21,12 +26,43 @@ export const AccountHeading: React.FC = () => {
         if (files !== null && files.length > 0) {
             const reader = new FileReader()
             reader.onload = () => {
-                if (reader.result !== null) setChoosed(reader.result)
+                if (reader.result !== null) {
+                    setChoosed(reader.result)
+                    setFile(files[0])
+                }
             }
 
             reader.readAsDataURL(files[0])
         }
     }, [])
+
+    const fetchPost = async (): Promise<void> => {
+        const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/avatar`
+        if (file !== undefined) {
+            const bodyContent = new FormData()
+            bodyContent.append('file', file)
+
+            try {
+                const response = await fetch(target, {
+                    method: 'PUT',
+                    body: bodyContent,
+                })
+
+                const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
+                const isUpdated = jsonData.data.is_affected
+                if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
+                if (isUpdated) {
+                    ctx.setReload((val) => val + 1)
+                }
+            } catch {
+                notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
+            }
+        }
+    }
+
+    const handleApply = useCallback(() => {
+        fetchPost().catch(() => {})
+    }, [file])
 
     return (
         <>
@@ -97,7 +133,10 @@ export const AccountHeading: React.FC = () => {
                         <span className="ml-2 whitespace-nowrap">Ganti avatar</span>
                     </button>
                     {choosed !== '' ? (
-                        <button className="outline-none ml-2 flex items-center roboto text-white bg-blue-500 hover:bg-blue-600 font-medium px-4 h-10 rounded-lg">
+                        <button
+                            onClick={handleApply}
+                            className="outline-none ml-2 flex items-center roboto text-white bg-blue-500 hover:bg-blue-600 font-medium px-4 h-10 rounded-lg"
+                        >
                             <span className="whitespace-nowrap">Gunakan</span>
                         </button>
                     ) : null}
