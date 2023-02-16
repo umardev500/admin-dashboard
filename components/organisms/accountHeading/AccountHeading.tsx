@@ -53,6 +53,8 @@ export const AccountHeading: React.FC = () => {
                 if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
                 if (isUpdated) {
                     ctx.setReload((val) => val + 1)
+                    setChoosed('')
+                    setFile(undefined)
                 }
             } catch {
                 notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
