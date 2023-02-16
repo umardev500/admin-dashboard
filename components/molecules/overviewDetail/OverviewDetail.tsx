@@ -9,7 +9,7 @@ export const OverviewDetail: React.FC = () => {
     const location = detail?.location
 
     const router = useRouter()
-    const gotoDetail = useCallback(() => {
+    const gotoProfile = useCallback(() => {
         router.push('account/profiles').catch(() => {})
     }, [])
 
@@ -35,7 +35,7 @@ export const OverviewDetail: React.FC = () => {
                 </span>
             </div>
             <div className="mt-6">
-                <button onClick={gotoDetail} className="flex h-11 items-center justify-center roboto font-medium bg-blue-100 px-4 py-1.5 rounded text-blue-500 w-full">
+                <button onClick={gotoProfile} className="flex h-11 items-center justify-center roboto font-medium bg-blue-100 px-4 py-1.5 rounded text-blue-500 w-full">
                     <span className="mr-2">See more</span>
                     <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
