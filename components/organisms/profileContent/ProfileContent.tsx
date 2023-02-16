@@ -23,8 +23,8 @@ export const ProfileContent: React.FC = () => {
     const [firstName, setFirstName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
-    const [tempGender, setTempGender] = useState<string>('male')
-    const [gender, setGender] = useState<string>('male')
+    const [tempGender, setTempGender] = useState<string>('')
+    const [gender, setGender] = useState<string>('')
 
     useEffect(() => {
         setLastName(name?.pop() ?? '')
