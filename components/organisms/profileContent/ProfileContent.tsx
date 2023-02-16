@@ -23,7 +23,8 @@ export const ProfileContent: React.FC = () => {
     const [firstName, setFirstName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
-    const [gender, setGender] = useState<string>('')
+    const [tempGender, setTempGender] = useState<string>('male')
+    const [gender, setGender] = useState<string>('male')
 
     useEffect(() => {
         setLastName(name?.pop() ?? '')
@@ -31,6 +32,7 @@ export const ProfileContent: React.FC = () => {
         setEmail(detail?.email ?? '')
         setPhone(detail?.phone ?? '')
         setGender(detail?.gender ?? '')
+        setTempGender(detail?.gender ?? '')
     }, [detail?.name, detail?.email, detail?.phone, detail?.gender])
 
     const fNameRef = useRef<HTMLInputElement>(null)
@@ -62,7 +64,7 @@ export const ProfileContent: React.FC = () => {
         const changedLName = lNameValue !== lastName
         const changedEmail = emailValue !== email
         const changedPhone = phoneValue !== phone
-        const changedGender = genderSelected !== gender
+        const changedGender = genderSelected !== tempGender
 
         // Check for have not changing
         if (!(changedFname || changedLName || changedEmail || changedPhone || changedGender)) {
@@ -100,7 +102,7 @@ export const ProfileContent: React.FC = () => {
                 setFirstName(fullName.join(' '))
                 setEmail(email)
                 setPhone(phone)
-                setGender(gender)
+                setTempGender(gender)
             }
         } catch {}
     }
@@ -132,7 +134,8 @@ export const ProfileContent: React.FC = () => {
     }
 
     const handleChangeGender = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e)
+        const val = e.target.value
+        setGender(val)
     }, [])
 
     return (
