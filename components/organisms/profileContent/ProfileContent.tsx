@@ -23,14 +23,14 @@ export const ProfileContent: React.FC = () => {
     const [firstName, setFirstName] = useState<string | undefined>('')
     const [email, setEmail] = useState<string | undefined>('')
     const [phone, setPhone] = useState<string | undefined>('')
-    const [gender, setGender] = useState<string | undefined>('')
+    const [gender, setGender] = useState<boolean>(false)
 
     useEffect(() => {
         setLastName(name?.pop())
         setFirstName(name?.join(' '))
         setEmail(detail?.email)
         setPhone(detail?.phone)
-        setGender(detail?.gender)
+        if (detail?.gender === 'female') setGender(true)
     }, [detail?.name, detail?.email, detail?.phone, detail?.gender])
 
     const fNameRef = useRef<HTMLInputElement>(null)
@@ -55,7 +55,7 @@ export const ProfileContent: React.FC = () => {
         return ok
     }
 
-    const checkForChanged = (fNameValue: string, lNameValue: string, emailValue: string, phoneValue: string, genderSelected: string): boolean => {
+    const checkForChanged = (fNameValue: string, lNameValue: string, emailValue: string, phoneValue: string, genderSelected: boolean): boolean => {
         let ok = true
 
         const changedFname = fNameValue !== firstName
@@ -100,7 +100,7 @@ export const ProfileContent: React.FC = () => {
                 setFirstName(fullName.join(' '))
                 setEmail(email)
                 setPhone(phone)
-                setGender(gender)
+                if (gender === 'female') setGender(true)
             }
         } catch {}
     }
@@ -117,9 +117,16 @@ export const ProfileContent: React.FC = () => {
         const lNameValue = lNameRef.current?.value ?? ''
         const emailValue = emailRef.current?.value ?? ''
         const phoneValue = phoneRef.current?.value ?? ''
-        let genderSelected = ''
-        if (maleRef.current?.checked === true) genderSelected = 'male'
-        if (femaleRef.current?.checked === true) genderSelected = 'female'
+        let genderSelected = false
+        let genderSelectedStr = ''
+        if (maleRef.current?.checked === true) {
+            genderSelected = false
+            genderSelectedStr = 'male'
+        }
+        if (femaleRef.current?.checked === true) {
+            genderSelected = true
+            genderSelectedStr = 'female'
+        }
 
         const isChanged = checkForChanged(fNameValue, lNameValue, emailValue, phoneValue, genderSelected)
         if (!isChanged) {
@@ -128,7 +135,7 @@ export const ProfileContent: React.FC = () => {
         }
 
         const fullName = `${fNameValue} ${lNameValue}`.trim()
-        fetchPost(fullName, emailValue, phoneValue, genderSelected).catch(() => {})
+        fetchPost(fullName, emailValue, phoneValue, genderSelectedStr).catch(() => {})
     }
 
     return (
@@ -149,8 +156,8 @@ export const ProfileContent: React.FC = () => {
                         <span>Gender</span>
                     </div>
                     <div className="flex lg:flex-row gap-2 mt-2">
-                        <Radio ref={maleRef} name="gender" defaultValue="male" checked={gender === 'male'} title='Laki"' />
-                        <Radio ref={femaleRef} name="gender" defaultValue="female" checked={gender === 'female'} title="Perempuan" />
+                        <Radio ref={maleRef} name="gender" defaultValue="male" checked={!gender} title='Laki"' />
+                        <Radio ref={femaleRef} name="gender" defaultValue="female" checked={gender} title="Perempuan" />
                     </div>
                 </div>
                 <div className="flex-1">
