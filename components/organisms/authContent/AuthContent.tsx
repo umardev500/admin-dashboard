@@ -1,25 +1,107 @@
 import { useRouter } from 'next/router'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext, useRef, useState } from 'react'
+import { AppContext, AppContextType } from '../../../contexts'
+import { checkInputValue, checkValuesChanged, notify } from '../../../helpers'
+import { BasicAPIResponse, modifyingResponse, NewCreds } from '../../../types'
 import { Input } from '../../atoms'
 
+const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
+
 export const AuthContent: React.FC = () => {
+    const [pass, setPass] = useState<string>('')
+    const [newPass, setNewPass] = useState<string>('')
+    const passRef = useRef<HTMLInputElement>(null)
+    const newPassRef = useRef<HTMLInputElement>(null)
+
     const router = useRouter()
     const handleBack = useCallback(() => {
         router.back()
     }, [])
 
+    const ctx = useContext(AppContext) as AppContextType
+    const userData = ctx.userData
+    const userId = userData?.user_id
+    const user = userData?.user ?? ''
+
+    const fetchPost = async (pass: string, newPass: string): Promise<void> => {
+        const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/creds`
+        const creds: NewCreds = {
+            user,
+            pass: passRef.current?.value ?? '',
+            new_pass: newPassRef.current?.value ?? '',
+        }
+
+        const reqBody = JSON.stringify(creds)
+
+        try {
+            const response = await fetch(target, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: reqBody,
+            })
+
+            const jsonData: modifyingResponse & BasicAPIResponse = await response.json()
+            const isUpdated = jsonData.data.is_affected
+            if (isUpdated) notify.success('Data berhasil di update!', { className: 'roboto', position: 'bottom-right' })
+            if (isUpdated) {
+                setPass(pass)
+                setNewPass(newPass)
+                ctx.setReload((val) => val + 1)
+
+                // reset value
+                if (passRef.current != null) passRef.current.value = ''
+                if (newPassRef.current != null) newPassRef.current.value = ''
+            }
+
+            if (!isUpdated) {
+                notify.error('Data tidak terupdate!', { className: 'roboto', position: 'bottom-right' })
+            }
+        } catch {
+            notify.error('Something went wrong!', { className: 'roboto', position: 'bottom-right' })
+        }
+    }
+
+    const handleSave = (): void => {
+        const inputs = [passRef, newPassRef]
+        const ok = checkInputValue(inputs)
+        if (!ok) {
+            notify.error('Yg bertanda bintang tidak boleh kosong!', { position: 'bottom-right', className: 'roboto' })
+            return
+        }
+
+        const passValue = passRef.current?.value ?? ''
+        const newPassValue = newPassRef.current?.value ?? ''
+
+        const hasChanged = checkValuesChanged([
+            [passValue, pass],
+            [newPassValue, newPass],
+        ])
+
+        if (!hasChanged) {
+            notify.error('Tidak ada perubahan untuk di update!', { className: 'roboto', position: 'bottom-right' })
+            return
+        }
+
+        fetchPost(passValue, newPassValue).catch(() => {})
+    }
+
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
-                <Input type="password" title="Password Lama" placeholder="Masukan password" required />
-                <Input title="Password Baru" placeholder="Password baru" required />
+                <Input ref={passRef} type="password" title="Password Lama" placeholder="Masukan password" required />
+                <Input ref={newPassRef} title="Password Baru" placeholder="Password baru" required />
             </div>
 
             <div className="flex gap-2 mt-10 justify-end">
                 <button onClick={handleBack} className="flex outline-none border items-center gap-2 hover:bg-gray-100 text-gray-500 px-4 py-1.5 rounded-lg">
                     <span>Kembali</span>
                 </button>
-                <button className="flex outline-none border border-blue-500 items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg">
+                <button
+                    onClick={handleSave}
+                    className="flex outline-none border border-blue-500 items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg"
+                >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_220_67)">
                             <path
