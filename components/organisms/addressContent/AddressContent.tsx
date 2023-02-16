@@ -43,7 +43,7 @@ export const AddressContent: React.FC = () => {
     }, [])
 
     const fetchPost = async (province: string, city: string, district: string, village: string, postalCode: string, address: string): Promise<void> => {
-        const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/locations`
+        const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/location`
         const userDetail: Omit<UserDetail, 'name' | 'email' | 'phone' | 'avatar' | 'gender'> = {
             location: {
                 province,
