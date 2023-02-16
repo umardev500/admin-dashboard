@@ -90,13 +90,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span
-                                className={`text-base ml-2 ${status === 'pending' ? 'text-yellow-600' : ''} ${status === 'settlement' ? 'text-emerald-600' : ''} ${
-                                    status === 'cancel' ? 'text-red-400' : ''
-                                } whitespace-normal roboto`}
-                            >
-                                {toUpperFirst(status)}
-                            </span>
+                            <span className={`text-base ml-2 text-gray-400 whitespace-normal roboto`}>{toUpperFirst(status)}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Pemesanan:</span>
