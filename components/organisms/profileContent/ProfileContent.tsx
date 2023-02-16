@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AppContext, AppContextType } from '../../../contexts'
-import { notify } from '../../../helpers'
+import { checkInputValue, notify } from '../../../helpers'
 import { BasicAPIResponse, modifyingResponse, UserDetail } from '../../../types'
 import { Input, Radio } from '../../atoms'
 
@@ -43,19 +43,6 @@ export const ProfileContent: React.FC = () => {
     const femaleRef = useRef<HTMLInputElement>(null)
 
     const inputs = [fNameRef, lNameRef, emailRef, phoneRef]
-
-    const checkValue = (): boolean => {
-        let ok = true
-        for (let i = 0; i < inputs.length; i++) {
-            const val = inputs[i].current?.value
-            if (val === '') {
-                ok = false
-                break
-            }
-        }
-
-        return ok
-    }
 
     const checkForChanged = (fNameValue: string, lNameValue: string, emailValue: string, phoneValue: string, genderSelected: string): boolean => {
         let ok = true
@@ -109,7 +96,7 @@ export const ProfileContent: React.FC = () => {
     }
 
     const handleSave = (): void => {
-        const ok = checkValue()
+        const ok = checkInputValue(inputs)
 
         if (!ok) {
             notify.error('Yg bertanda bintang tidak boleh kosong!', { position: 'bottom-right', className: 'roboto' })
