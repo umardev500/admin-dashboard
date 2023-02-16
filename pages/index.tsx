@@ -61,7 +61,7 @@ const Home: NextPageWithLayout = () => {
             }
 
             try {
-                const response = await fetchData('/customers?status=pending&count_only=true')
+                const response = await fetchData('/orders?count_only=true&status=pending')
                 pending = response
             } catch (err) {
                 console.log(err)
