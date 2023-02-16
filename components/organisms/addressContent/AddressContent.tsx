@@ -22,6 +22,7 @@ export const AddressContent: React.FC = () => {
 
     const ctx = useContext(AppContext) as AppContextType
     const userData = ctx.userData
+    const userDataStr = JSON.stringify(userData)
     const userId = userData?.user_id
     const detail = userData?.detail
     const location = detail?.location
@@ -40,7 +41,7 @@ export const AddressContent: React.FC = () => {
         setVillage(location?.village ?? '')
         setPostalCode(location?.postal_code ?? '')
         setAddress(location?.address ?? '')
-    }, [])
+    }, [userDataStr])
 
     const fetchPost = async (province: string, city: string, district: string, village: string, postalCode: string, address: string): Promise<void> => {
         const target = `${MEMBERSHIP_API}/users/${userId ?? '000'}/location`
