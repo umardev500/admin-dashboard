@@ -8,14 +8,16 @@ interface Props {
     defaultChecked?: boolean
     checked?: boolean
     defaultValue?: string
+    onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
 export const Radio = React.forwardRef(
-    ({ name, title, disabled = false, required = false, checked = false, defaultChecked, defaultValue }: Props, ref?: React.LegacyRef<HTMLInputElement>) => {
+    ({ name, title, disabled = false, required = false, checked = false, defaultChecked, defaultValue, onChange }: Props, ref?: React.LegacyRef<HTMLInputElement>) => {
         return (
             <div className="flex flex-1 bg-white whitespace-nowrap text-gray-500 items-center px-4 h-12 border rounded-lg">
                 <input
                     ref={ref}
+                    onChange={onChange}
                     type="radio"
                     defaultValue={defaultValue}
                     defaultChecked={defaultChecked}

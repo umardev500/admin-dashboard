@@ -138,6 +138,10 @@ export const ProfileContent: React.FC = () => {
         fetchPost(fullName, emailValue, phoneValue, genderSelectedStr).catch(() => {})
     }
 
+    const handleChangeGender = useCallback(() => {
+        setGender((val) => !val)
+    }, [])
+
     return (
         <div className="mt-4 mb-4">
             <div className="flex flex-col lg:flex-row flex-wrap gap-4 mb-5">
@@ -156,8 +160,8 @@ export const ProfileContent: React.FC = () => {
                         <span>Gender</span>
                     </div>
                     <div className="flex lg:flex-row gap-2 mt-2">
-                        <Radio ref={maleRef} name="gender" defaultValue="male" checked={!gender} title='Laki"' />
-                        <Radio ref={femaleRef} name="gender" defaultValue="female" checked={gender} title="Perempuan" />
+                        <Radio ref={maleRef} onChange={handleChangeGender} name="gender" defaultValue="male" checked={!gender} title='Laki"' />
+                        <Radio ref={femaleRef} name="gender" onChange={handleChangeGender} defaultValue="female" checked={gender} title="Perempuan" />
                     </div>
                 </div>
                 <div className="flex-1">
