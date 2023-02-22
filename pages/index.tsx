@@ -18,12 +18,13 @@ const Home: NextPageWithLayout = () => {
         // localhost:8000/membership/api/customers?status=none&count_only=true
         const target = `${MEMBERSHIP_API}${route}`
         const response = await fetch(target)
-        const data: CustomerResponse = await response.json()
+        const jsonData: CustomerResponse = await response.json()
 
-        if (data.status_code !== 200) return await Promise.reject(data.message)
-        const customersData = data.data
+        if (jsonData.status_code !== 200) return await Promise.reject(jsonData.message)
+        const customersData = jsonData.data.payload
+        const isEmpty = jsonData.data.is_empty
         const rows = customersData.rows
-        if (rows !== undefined) {
+        if (!isEmpty) {
             return await Promise.resolve(rows)
         }
 

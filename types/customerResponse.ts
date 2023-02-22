@@ -42,5 +42,8 @@ export interface CustomerData {
 export interface CustomerResponse {
     status_code: number
     message: string
-    data: CustomerData
+    data: {
+        is_empty: boolean
+        payload: CustomerData
+    }
 }
