@@ -23,7 +23,7 @@ export interface OrderPayment {
 export interface Order {
     order_id: string
     buyer: OrderUser
-    product: OrderProduct[]
+    product: OrderProduct
     payment: OrderPayment
     status: string
     created_at: number
@@ -31,7 +31,7 @@ export interface Order {
 }
 
 export interface OrderData {
-    orders?: Order[]
+    orders: Order[]
     rows: number
     pages: number
     per_page: number
@@ -42,5 +42,8 @@ export interface OrderData {
 export interface OrderResponse {
     status_code: number
     message: string
-    data: OrderData
+    data: {
+        is_empty: boolean
+        payload: OrderData
+    }
 }

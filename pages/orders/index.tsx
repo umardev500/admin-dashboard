@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement, useCallback, useEffect, useState } from 'react'
-import { Dashboard, OrderList } from '../../components'
+import { useCallback, useEffect, useState } from 'react'
+import { OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
@@ -46,19 +46,20 @@ const Orders: NextPageWithLayout = () => {
             if (keyword !== '') target += `&search=${keyword}`
 
             const response = await fetch(target)
-            const data: OrderResponse = await response.json()
+            const jsonData: OrderResponse = await response.json()
 
-            if (data.status_code !== 200) return await Promise.reject(data.message)
-            const ordersData = data.data
-            const orders = ordersData.orders
-            if (orders !== undefined) {
+            if (jsonData.status_code !== 200) return await Promise.reject(jsonData.message)
+            const payload = jsonData.data.payload
+            const isEmpty = jsonData.data.is_empty
+            const orders = payload.orders
+            if (!isEmpty) {
                 setOrderList(orders)
-                setPages(ordersData.pages)
-                setTotal(ordersData.total)
-                setRows(ordersData.rows)
-                setPerPage(ordersData.per_page ?? 0)
+                setPages(payload.pages)
+                setTotal(payload.total)
+                setRows(payload.rows)
+                setPerPage(payload.per_page ?? 0)
             }
-            if (orders === undefined) {
+            if (isEmpty) {
                 if (orderList.length > 0) setOrderList([])
                 if (pages !== 0) setPages(0)
                 if (total !== 0) setTotal(0)
@@ -108,10 +109,6 @@ const Orders: NextPageWithLayout = () => {
             {filterModalShown ? <OrderFilterModal saveCallback={filterHandler} modalSetState={setFilterModalShown} /> : null}
         </>
     )
-}
-
-Orders.getLayout = (page: ReactElement) => {
-    return <Dashboard>{page}</Dashboard>
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {

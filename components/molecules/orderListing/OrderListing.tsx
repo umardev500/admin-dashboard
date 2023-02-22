@@ -10,7 +10,7 @@ interface Props extends Order {
 export const OrderListing = React.memo(({ index, ...props }: Props) => {
     const { order_id: orderId, status, buyer, product, created_at: createdTime } = props
     const { name } = buyer
-    const { name: productName, price: productPrice } = product[0]
+    const { name: productName, price: productPrice } = product
     const [detailModal, setDetailModal] = useState(false)
 
     const handleClickDetail = useCallback(() => {
