@@ -46,18 +46,19 @@ const Customers: NextPageWithLayout = () => {
             if (keyword !== '') target += `&search=${keyword}`
 
             const response = await fetch(target)
-            const data: CustomerResponse = await response.json()
+            const jsondData: CustomerResponse = await response.json()
 
-            if (data.status_code !== 200) return await Promise.reject(data.message)
-            const customersData = data.data
-            const customers = customersData.customers
-            if (customers !== undefined) {
+            if (jsondData.status_code !== 200) return await Promise.reject(jsondData.message)
+            const payload = jsondData.data.payload
+            const isEmpty = jsondData.data.is_empty
+            const customers = payload.customers
+            if (!isEmpty) {
                 setCustomerList(customers)
-                setPages(customersData.pages)
-                setTotal(customersData.total)
-                setRows(customersData.rows)
+                setPages(payload.pages)
+                setTotal(payload.total)
+                setRows(payload.rows)
             }
-            if (customers === undefined) {
+            if (isEmpty) {
                 if (customerList.length > 0) setCustomerList([])
                 if (pages > 0) setPages(0)
                 if (total > 0) setTotal(0)
