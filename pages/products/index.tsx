@@ -5,7 +5,7 @@ import { Dashboard } from '../../components'
 import { Search } from '../../components/atoms'
 import { CreateProductModal, TableDataInfo } from '../../components/molecules'
 import { ProductList } from '../../components/organisms'
-import { setCookie } from '../../helpers'
+import { notify, setCookie } from '../../helpers'
 import { PageProps, Product, ProductResponse } from '../../types'
 import { NextPageWithLayout } from '../_app'
 
@@ -35,31 +35,38 @@ const ProductPage: NextPageWithLayout = () => {
             if (keyword !== '') target += `?search=${keyword}`
 
             const response = await fetch(target)
-            const data: ProductResponse = await response.json()
+            const jsonData: ProductResponse = await response.json()
 
-            if (data.status_code !== 200) return await Promise.reject(data.message)
-            const productsData = data.data
-            const products = productsData.products
-            if (products !== undefined) {
+            if (jsonData.status_code !== 200) return await Promise.reject(jsonData.message)
+            const payload = jsonData.data.payload
+            const isEmpty = jsonData.data.is_empty
+            const products = payload.products
+            if (!isEmpty) {
                 setProductList(products)
-                setTotal(productsData.total)
-                setRows(productsData.rows)
+                setTotal(payload.total)
+                setRows(payload.rows)
             }
-            if (products === undefined) {
+            if (isEmpty) {
                 if (productList.length > 0) setProductList([])
                 if (total > 0) setTotal(0)
                 if (rows > 0) setRows(0)
             }
         }
 
-        fetchData()
-            .then(() => {
-                setLoading(false)
-            })
-            .catch((err) => {
-                setLoading(false)
-                console.log('err catched', err)
-            })
+        notify
+            .promise(
+                fetchData(),
+                {
+                    loading: 'Loading data...',
+                    success: 'Loading selesai!',
+                    error: 'Something went wrong!',
+                },
+                {
+                    className: 'roboto',
+                    position: 'bottom-right',
+                }
+            )
+            .catch(() => {})
     }, [keyword])
 
     return (

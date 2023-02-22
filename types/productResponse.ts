@@ -20,5 +20,8 @@ export interface ProductData {
 export interface ProductResponse {
     status_code: number
     message: string
-    data: ProductData
+    data: {
+        is_empty: boolean
+        payload: ProductData
+    }
 }
