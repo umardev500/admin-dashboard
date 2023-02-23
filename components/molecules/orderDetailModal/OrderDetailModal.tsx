@@ -10,7 +10,7 @@ interface Props extends Order {
 export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) => {
     const { order_id: orderId, buyer, product, status, created_at: createdTime, updated_at: updatedTime } = props
     const { name: buyerName } = buyer
-    const { product_id: productId, name: productName, price: productPrice, duration, description } = product[0]
+    const { product_id: productId, name: productName, price: productPrice, duration, description } = product
     const { payment_type: paymentType, va_number: vaNumber, gross_amount: grossAmount, bank } = props.payment
 
     const modalRef = useRef<HTMLDivElement>(null)
