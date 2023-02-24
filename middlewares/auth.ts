@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose'
 import { NextRequest } from 'next/server'
 
 export const auth = async (req: NextRequest): Promise<any> => {
-    const tokenCookie = req.cookies.get('token')
+    const tokenCookie = req.cookies.get('membership-token')
     const token = tokenCookie?.value
 
     if (token === undefined) {

@@ -99,6 +99,7 @@ const Auth: NextPage = () => {
                     const redirectRoute: string = decodeURI(router.query.redirect as string)
                     if (redirectRoute !== 'undefined') {
                         router.replace(redirectRoute).catch((err) => console.log(err))
+                        return await Promise.resolve()
                     }
 
                     if (redirectRoute === 'undefined') router.replace('/').catch((err) => console.log(err))
