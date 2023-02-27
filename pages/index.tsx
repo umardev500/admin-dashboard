@@ -42,28 +42,28 @@ const Home: NextPageWithLayout = () => {
 
             try {
                 const response = await fetchData('/customers?status=none&count_only=true')
-                total = response
+                if (response !== undefined) total = response
             } catch (err) {
                 console.log(err)
             }
 
             try {
                 const response = await fetchData('/customers?status=today&count_only=true')
-                today = response
+                if (response !== undefined) today = response
             } catch (err) {
                 console.log(err)
             }
 
             try {
                 const response = await fetchData('/customers?status=expired&count_only=true')
-                expired = response
+                if (response !== undefined) expired = response
             } catch (err) {
                 console.log(err)
             }
 
             try {
                 const response = await fetchData('/orders?count_only=true&status=pending')
-                pending = response
+                if (response !== undefined) pending = response
             } catch (err) {
                 console.log(err)
             }
