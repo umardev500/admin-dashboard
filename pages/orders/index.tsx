@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import { OrderList } from '../../components'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { Dashboard, OrderList } from '../../components'
 import { Search } from '../../components/atoms'
 import { OrderFilterModal, TableDataInfo } from '../../components/molecules'
 import { Pagination } from '../../components/molecules/pagination/Pagination'
@@ -111,6 +111,12 @@ const Orders: NextPageWithLayout = () => {
     )
 }
 
+Orders.getLayout = (page: ReactElement) => {
+    return <Dashboard>{page}</Dashboard>
+}
+
+export default Orders
+
 export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => {
     const cipherText = setCookie(ctx)
     const userInfo = ctx.res.getHeader('user-data') as string
@@ -122,5 +128,3 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => 
         },
     }
 }
-
-export default Orders
