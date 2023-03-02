@@ -18,7 +18,7 @@ export const AppContext = React.createContext({})
 const MEMBERSHIP_API = process.env.MEMBERSHIP_API as string
 
 export const AppProvider: React.FC<Props> = ({ children, ...pageProps }) => {
-    const [shown, setShown] = useState(false)
+    const [shown, setShown] = useState(true)
     const [userData, setUserData] = useState<User>()
     const [reload, setReload] = useState<number>(0)
     const [loading, setLoading] = useState(true)
