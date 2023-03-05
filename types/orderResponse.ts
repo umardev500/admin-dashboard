@@ -28,6 +28,9 @@ export interface Order {
     status: string
     created_at: number
     updated_at?: number
+    settlement_time?: number
+    trx_time: number
+    pay_exp: number
 }
 
 export interface OrderData {

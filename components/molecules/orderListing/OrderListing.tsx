@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { parseDate, toCurrency, toUpperFirst } from '../../../helpers'
+import { useExpTime } from '../../../hooks'
 import { Order } from '../../../types'
 import { OrderDetailModal } from '../orderDetailModal'
 
@@ -8,7 +9,7 @@ interface Props extends Order {
 }
 
 export const OrderListing = React.memo(({ index, ...props }: Props) => {
-    const { order_id: orderId, status, buyer, product, created_at: createdTime } = props
+    const { order_id: orderId, status, buyer, product, created_at: createdTime, pay_exp: payExpiry, settlement_time: settlementTime } = props
     const { name } = buyer
     const { name: productName, price: productPrice } = product
     const [detailModal, setDetailModal] = useState(false)
@@ -16,6 +17,13 @@ export const OrderListing = React.memo(({ index, ...props }: Props) => {
     const handleClickDetail = useCallback(() => {
         setDetailModal(true)
     }, [])
+
+    const expired = useExpTime(payExpiry)
+
+    const getStatus = (): string => {
+        if (expired && status !== 'cancel' && settlementTime === undefined) return 'Expired'
+        return toUpperFirst(status)
+    }
 
     return (
         <tr>
@@ -30,7 +38,7 @@ export const OrderListing = React.memo(({ index, ...props }: Props) => {
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{toCurrency(productPrice, 'Rp')}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap">{parseDate(createdTime)}</td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap text-left">
-                <span className={`py-1 px-1.5 rounded`}>{toUpperFirst(status)}</span>
+                <span className={`py-1 px-1.5 rounded`}>{getStatus()}</span>
             </td>
             <td className="px-4 border-r border-b border-slate-200 py-2 whitespace-nowrap w-10">
                 <div className="text-center">

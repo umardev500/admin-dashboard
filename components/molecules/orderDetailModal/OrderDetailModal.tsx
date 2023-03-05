@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { parseDate, toCurrency, toUpperFirst } from '../../../helpers'
-import { useDetectOutsideClick, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
+import { useDetectOutsideClick, useExpTime, useModalCloseHandler, useModalShowEffect } from '../../../hooks'
 import { Order } from '../../../types'
 
 interface Props extends Order {
@@ -8,7 +8,7 @@ interface Props extends Order {
 }
 
 export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) => {
-    const { order_id: orderId, buyer, product, status, created_at: createdTime, updated_at: updatedTime } = props
+    const { order_id: orderId, buyer, product, status, created_at: createdTime, updated_at: updatedTime, pay_exp: payExpiry, settlement_time: settlementTime } = props
     const { name: buyerName } = buyer
     const { product_id: productId, name: productName, price: productPrice, duration, description } = product
     const { payment_type: paymentType, va_number: vaNumber, gross_amount: grossAmount, bank } = props.payment
@@ -24,6 +24,14 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
 
     // back handler
     const backHandler = useModalCloseHandler({ status: setModalState })
+
+    const payExp = parseDate(payExpiry)
+    const expired = useExpTime(payExpiry)
+
+    const getStatus = (): string => {
+        if (expired && status !== 'cancel' && settlementTime === undefined) return 'Expired'
+        return toUpperFirst(status)
+    }
 
     return (
         <>
@@ -71,6 +79,12 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                                 <span className="text-base font-medium roboto text-gray-500">Jumlah:</span>
                                 <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{toCurrency(grossAmount, 'Rp')}</span>
                             </div>
+                            {payExp !== undefined ? (
+                                <div className="mt-2">
+                                    <span className="text-base font-medium roboto text-gray-500">Lunasi sebelum:</span>
+                                    <span className="text-base ml-2 text-gray-400 whitespace-normal roboto">{payExp}</span>
+                                </div>
+                            ) : null}
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Produk:</span>
@@ -90,7 +104,7 @@ export const OrderDetailModal: React.FC<Props> = ({ setModalState, ...props }) =
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Status:</span>
-                            <span className={`text-base ml-2 text-gray-400 whitespace-normal roboto`}>{toUpperFirst(status)}</span>
+                            <span className={`text-base ml-2 text-gray-400 whitespace-normal roboto`}>{getStatus()}</span>
                         </div>
                         <div className="mt-2">
                             <span className="text-base font-medium roboto text-gray-500">Pemesanan:</span>
