@@ -13,7 +13,7 @@ export const AccountHeadingInfo: React.FC<Props> = ({ userData }) => {
     return (
         <div className="flex justify-center flex-col lg:ml-6">
             <div className="flex justify-center lg:justify-start items-center text-base lg:text-lg xl:text-xl font-semibold text-gray-600">
-                <span className="lexend">{detail?.name}</span>
+                <span className="roboto">{detail?.name}</span>
                 <Image className="ml-2.5" src={'/app/assets/icons/verify.png'} width={22} height={22} alt="icon" />
             </div>
             <span className="roboto text-center lg:text-left text-15 text-gray-500 mt-2">Owner & Founder</span>
