@@ -51,8 +51,8 @@ const Orders: NextPageWithLayout = () => {
             if (jsonData.status_code !== 200) return await Promise.reject(jsonData.message)
             const payload = jsonData.data.payload
             const isEmpty = jsonData.data.is_empty
-            const orders = payload.orders
             if (!isEmpty) {
+                const orders = payload.orders
                 setOrderList(orders)
                 setPages(payload.pages)
                 setTotal(payload.total)
