@@ -26,7 +26,7 @@ const Orders: NextPageWithLayout = () => {
     const router = useRouter()
     const params = router.query
     const PAGE = params.page as string
-    const SORT = (params.sort as string) ?? 'asc'
+    const SORT = (params.sort as string) ?? 'desc'
     const STATUS = (params.status as string) ?? 'none'
 
     const searchHandler = useCallback((value: string) => {
